@@ -1,6 +1,6 @@
 # ChildCare Platform Local Development Guide
 
-This project is built with React + Vite + Tailwind CSS and has been containerised with docker for consistent devlopment.
+This project is built with React + Vite + Tailwind CSS and has been containerised with docker for consistent development.
 
 ## Prerequisites
 
