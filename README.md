@@ -1,12 +1,86 @@
-# React + Vite
+# ChildCare Platform Local Development Guide
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+This project is built with React + Vite + Tailwind CSS and has been containerised with docker for consistent devlopment.
 
-Currently, two official plugins are available:
+## Prerequisites
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+- [Docker Desktop](https://www.docker.com/products/docker-desktop/) (Windows/Mac)
+- [Docker Engine](https://docs.docker.com/engine/install/) (Linux)
 
-## Expanding the ESLint configuration
+## Getting Started
 
-If you are developing a production application, we recommend using TypeScript and enable type-aware lint rules. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
+1. Clone the repository
+```bash
+git clone https://github.com/wsu-comp3018/final-system-pa2511.git
+cd final-system-pa2511
+```
+
+2. Start the development container
+```bash
+docker-compose up --build
+```
+
+3. Access the application
+- Open [http://localhost:5173](http://localhost:5173) in your browser
+- You should see the React application running with Tailwind styles
+
+## Useful Docker Commands
+
+```bash
+#Stop the container
+docker-compose down
+
+#View logs
+docker-compose logs
+
+#Rebuild container (after dependency changes)
+docker-compose up --build
+
+#Install new packages
+docker-compose exec web npm install <package-name>
+```
+
+## Project Structure
+
+```
+final-system-pa2511/
+├── src/               # Source files
+├── public/           # Static files
+├── Dockerfile        # Docker configuration
+├── docker-compose.yml # Docker Compose configuration
+└── ...
+```
+
+## Technology Stack
+
+- React 19
+- Vite 6
+- Tailwind CSS 4
+- Docker
+- ESLint
+
+## Contributing
+
+1. Make sure Docker is running
+2. Follow the Getting Started steps
+3. Make your changes
+4. Changes will automatically reflect in the browser
+
+## Troubleshooting
+
+If you encounter issues:
+
+1. Make sure Docker is running
+2. Try rebuilding the container:
+   ```bash
+   docker-compose down
+   docker-compose up --build
+   ```
+3. Check the logs:
+   ```bash
+   docker-compose logs
+   ```
+
+## License
+
+[MIT License]
