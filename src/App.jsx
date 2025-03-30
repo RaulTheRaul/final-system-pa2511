@@ -1,35 +1,71 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
+import { useAuth } from "./context/AuthContext";
+import AuthPage from "./pages/AuthPage";
 
 function App() {
-  const [count, setCount] = useState(0);
+  const { currentUser, userData, logout } = useAuth();
+  const [isLoading, setIsLoading] = useState(true);
+
+  useEffect(() => {
+    // Simple loading effect to prevent flashing of login screen
+    // if we already have a logged in user
+    if (currentUser !== undefined) {
+      setIsLoading(false);
+    }
+  }, [currentUser]);
+
+  const handleLogout = async () => {
+    try {
+      await logout();
+    } catch (error) {
+      console.error("Error logging out:", error);
+    }
+  };
+
+  if (isLoading) {
+    return (
+      <div className="min-h-screen flex items-center justify-center bg-gray-50">
+        <div className="text-blue-600 text-xl font-semibold">Loading...</div>
+      </div>
+    );
+  }
+
+  // If user is not logged in, show AuthPage for login/signup
+  if (!currentUser) {
+    return <AuthPage />;
+  }
 
   return (
-    <div className="min-h-screen bg-gray-100 p-8">
-      {/* Test Tailwind Styles */}
-      <div className="max-w-md mx-auto bg-white rounded-xl shadow-md overflow-hidden md:max-w-2xl p-8">
-        <h1 className="text-3xl font-bold text-blue-600 mb-4">
-          Vite + React + Tailwind Test
-        </h1>
+    <div className="min-h-screen bg-gray-50 p-8">
+      <div className="max-w-md mx-auto bg-white rounded-xl shadow-md overflow-hidden p-6">
+        <h1 className="text-2xl font-bold text-blue-600 mb-6">User Profile</h1>
 
-        {/* Test React State */}
         <div className="space-y-4">
-          <p className="text-gray-700">
-            Count is: <span className="font-bold text-green-600">{count}</span>
-          </p>
+          <div>
+            <p className="text-gray-600 font-medium">Name:</p>
+            <p className="text-gray-900">
+              {userData?.fullName || userData?.businessName || "Not provided"}
+            </p>
+          </div>
 
-          <button
-            onClick={() => setCount(count + 1)}
-            className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded transition-colors duration-200"
-          >
-            Increment
-          </button>
+          <div>
+            <p className="text-gray-600 font-medium">Email:</p>
+            <p className="text-gray-900">{currentUser.email}</p>
+          </div>
+
+          <div>
+            <p className="text-gray-600 font-medium">Account Type:</p>
+            <p className="text-gray-900 capitalize">{userData?.userType || "Not specified"}</p>
+          </div>
         </div>
 
-        {/* Test Hover and Transitions */}
-        <div className="mt-4">
-          <div className="transform hover:scale-105 transition-transform duration-200 bg-purple-100 p-4 rounded-lg cursor-pointer">
-            Hover me for animation!
-          </div>
+        <div className="mt-8">
+          <button
+            onClick={handleLogout}
+            className="w-full px-4 py-2 bg-red-600 text-white rounded-lg hover:bg-red-700 transition-colors flex items-center justify-center gap-2"
+          >
+            Logout
+          </button>
         </div>
       </div>
     </div>
