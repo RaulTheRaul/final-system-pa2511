@@ -34,6 +34,7 @@ export const AuthProvider = ({ children }) => {
                 email,
                 userType,
                 ...profileData,
+                setupCompleted: false,
                 createdAt: new Date()
             });
 
@@ -106,7 +107,8 @@ export const AuthProvider = ({ children }) => {
         signup,
         login,
         logout,
-        getUserData
+        getUserData,
+        loading
     };
 
     return (
