@@ -4,14 +4,18 @@ import AuthPage from "../pages/AuthPage";
 import BusinessSetup from "../pages/BusinessSetup";
 import SeekerHome from "../pages/seekerHomePage/SeekerHome";
 
+import JobseekerSetup from "../pages/JobseekerSetup";
 //Change this below to whatever page you want to test.
 import Dashboard from "../pages/Dashboard";
 
+
 const Router = () => {
     const { currentUser, userData, loading } = useAuth();
+    //Used this to fix seeing dashboard before setup
+    const isUserDataLoading = currentUser && !userData;
 
     // Show loading state while authentication is being determined
-    if (loading) {
+    if (loading || isUserDataLoading) {
         return (
             <div className="min-h-screen flex items-center justify-center bg-gray-50">
                 <div className="text-blue-600 text-xl font-semibold">Loading...</div>
@@ -35,7 +39,11 @@ const Router = () => {
                     path="/setup"
                     element={
                         currentUser && userData && !userData.setupCompleted ?
-                            (userData.userType === "business" ? <BusinessSetup /> : <Navigate to="/" replace />) :
+                            (userData.userType === "business" ?
+                                <BusinessSetup /> :
+                                (userData.userType === "jobseeker" ?
+                                    <JobseekerSetup />
+                                    : <Navigate to="/" replace />)) :
                             <Navigate to="/" replace />
                     }
                 />
@@ -44,25 +52,25 @@ const Router = () => {
                 <Route
                     path="/"
                     element={
-                      currentUser ? (
-                        userData ? (
-                          userData.userType === "business" ? (
-                            !userData.setupCompleted ? (
-                              <Navigate to="/setup" replace />
+                        currentUser ? (
+                            userData ? (
+                                userData.userType === "business" ? (
+                                    !userData.setupCompleted ? (
+                                        <Navigate to="/setup" replace />
+                                    ) : (
+                                        <Dashboard />
+                                    )
+                                ) : userData.userType === "seeker" || userData.userType === "jobseeker" ? (
+                                    <SeekerHome />
+                                ) : (
+                                    <div>User type not recognized</div>
+                                )
                             ) : (
-                              <Dashboard />
+                                <div>Loading user data...</div>
                             )
-                          ) : userData.userType === "seeker"||userData.userType === "jobseeker"  ? (
-                            <SeekerHome />
-                          ) : (
-                            <div>User type not recognized</div>
-                          )
                         ) : (
-                          <div>Loading user data...</div>
+                            <Navigate to="/login" replace />
                         )
-                      ) : (
-                        <Navigate to="/login" replace />
-                      )
                     }
                 />
 
