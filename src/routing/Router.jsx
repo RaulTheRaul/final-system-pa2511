@@ -2,6 +2,8 @@ import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
 import { useAuth } from "../context/AuthContext";
 import AuthPage from "../pages/AuthPage";
 import BusinessSetup from "../pages/BusinessSetup";
+import SeekerHome from "../pages/seekerHomePage/SeekerHome";
+
 //Change this below to whatever page you want to test.
 import Dashboard from "../pages/Dashboard";
 
@@ -42,11 +44,25 @@ const Router = () => {
                 <Route
                     path="/"
                     element={
-                        currentUser ?
-                            (userData && !userData.setupCompleted ?
-                                <Navigate to="/setup" replace /> :
-                                <Dashboard />) /* Change this to whatever page you want to test. Make sure to import at the top! */ :
-                            <Navigate to="/login" replace />
+                      currentUser ? (
+                        userData ? (
+                          userData.userType === "business" ? (
+                            !userData.setupCompleted ? (
+                              <Navigate to="/setup" replace />
+                            ) : (
+                              <Dashboard />
+                            )
+                          ) : userData.userType === "seeker"||userData.userType === "jobseeker"  ? (
+                            <SeekerHome />
+                          ) : (
+                            <div>User type not recognized</div>
+                          )
+                        ) : (
+                          <div>Loading user data...</div>
+                        )
+                      ) : (
+                        <Navigate to="/login" replace />
+                      )
                     }
                 />
 
