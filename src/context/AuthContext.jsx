@@ -85,14 +85,18 @@ export const AuthProvider = ({ children }) => {
             setCurrentUser(user);
 
             if (user) {
-                try {
-                    await getUserData(user.uid);
-                } catch (error) {
-                    console.error("Error fetching user data:", error);
+                // Only fetch user data if not already set or if it’s a new user
+                if (!userData) {
+                    try {
+                        await getUserData(user.uid);
+                    } catch (error) {
+                        console.error("Error fetching user data:", error);
+                    }
                 }
             } else {
                 setUserData(null);
             }
+            
 
             setLoading(false);
         });
