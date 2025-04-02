@@ -7,9 +7,11 @@ import Dashboard from "../pages/Dashboard";
 
 const Router = () => {
     const { currentUser, userData, loading } = useAuth();
+    //Used this to fix seeing dashboard before setup
+    const isUserDataLoading = currentUser && !userData;
 
     // Show loading state while authentication is being determined
-    if (loading) {
+    if (loading || isUserDataLoading) {
         return (
             <div className="min-h-screen flex items-center justify-center bg-gray-50">
                 <div className="text-blue-600 text-xl font-semibold">Loading...</div>
