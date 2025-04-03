@@ -11,7 +11,15 @@ const SeekerHome = () => {
   const { userData } = useAuth();
 
   return (
-    <div className="p-4 max-w-4xl mx-auto">
+    <div className=" max-w-4xl mx-auto">
+      <div className="text-xl flex gap-4 mb-6 font-semibold bg-gray-300 rounded-md">
+        <div className="p-1">PlatformNameHere</div>
+        <a className="hover:bg-blue-300 rounded-md p-1" href="#dashboard">Dashboard</a>
+        <a className="hover:bg-blue-300 rounded-md p-1" href="#searchEngine">Vacancies</a>
+        <a className="hover:bg-blue-300 rounded-md p-1" href="#searchEngine">Job Seekers</a>
+        <a className="hover:bg-blue-300 rounded-md p-1" href="#searchEngine">Businesses</a>
+      </div>
+
       <h1 className="text-2xl font-bold mb-4">Welcome, Seeker </h1>
 
       {/*  Setup reminder if profile isn't completed */}
