@@ -24,6 +24,7 @@ const SeekerHome = () => {
     <div className="min-h-screen bg-gray-50 py-8 px-4">
       <div className="max-w-4xl mx-auto bg-white rounded-xl shadow-md p-6">
         <h1 className="text-3xl font-bold text-gray-800 mb-4">Welcome, {userData?.fullName || "Seeker"}</h1>
+      </div>
     <div className=" max-w-4xl mx-auto">
       <div className="text-xl flex gap-4 mb-6 font-semibold bg-gray-300 rounded-md">
         <div className="p-1">PlatformNameHere</div>
