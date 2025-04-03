@@ -23,14 +23,13 @@ const SeekerHome = () => {
   return (
     <div className="min-h-screen bg-gray-50 py-1 px-4">
       <div className=" max-w-4xl mx-auto">
-        
         {/* Top bar to eventually access the search engine to refine searches for vacancies, seeker and business profiles */}
         <div className="text-xl flex gap-4 font-semibold bg-gray-200 rounded-md">
           <div className="p-1">PlatformNameHere</div>
           <a className="hover:bg-blue-300 rounded-md p-1" href="#dashboard">Dashboard</a>
           <a className="hover:bg-blue-300 rounded-md p-1" href="#searchEngine">Vacancies</a>
           <a className="hover:bg-blue-300 rounded-md p-1" href="#searchEngine">Job Seekers</a>
-        <a className="hover:bg-blue-300 rounded-md p-1" href="#searchEngine">Businesses</a>
+          <a className="hover:bg-blue-300 rounded-md p-1" href="#searchEngine">Businesses</a>
         </div>
         <div className="border-b mb-1">
         </div>
