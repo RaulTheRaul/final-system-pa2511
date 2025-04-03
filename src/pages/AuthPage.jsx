@@ -79,7 +79,19 @@ function AuthPage() {
     };
 
     return (
-        <div className="min-h-screen flex items-center justify-center bg-gray-50 py-12 px-4 sm:px-6 lg:px-8">
+
+        <div className="min-h-screen flex items-center justify-center bg-cover bg-center bg-no-repeat w-full bg-[url('/images/login.jpg')] py-12 px-4 sm:px-6 lg:px-8">
+
+            {/* Top bar to eventually access the search engine to refine searches for vacancies, seeker and business profiles */}
+            <div className="text-xl fixed justify-center top-0 font-semibold bg-gray-200 rounded-md">
+                <div className="text-sm p-1 flex justify-center">Wish to search freely beforehand?</div>
+                <a className="hover:bg-blue-300 rounded-md p-1" href="#searchEngine">Vacancies</a>
+                <a className="hover:bg-blue-300 rounded-md p-1" href="#searchEngine">Job Seekers</a>
+                <a className="hover:bg-blue-300 rounded-md p-1" href="#searchEngine">Businesses</a>
+                <div className="border-b mt-1">
+                </div>
+            </div>
+
             <div className="max-w-md w-full space-y-8">
                 <div>
                     <h1 className="text-center text-4xl font-bold text-blue-600">Childcare Connect</h1>
