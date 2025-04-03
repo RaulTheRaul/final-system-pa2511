@@ -12,7 +12,7 @@ const SeekerHome = () => {
 
   return (
     <div className="p-4 max-w-4xl mx-auto">
-      <h1 className="text-2xl font-bold mb-4">Welcome, Seeker </h1>
+      <h1 className="text-2xl font-bold mb-4">Welcome, {userData?.fullName || "Seeker"}</h1>
 
       {/*  Setup reminder if profile isn't completed */}
       {!userData?.setupCompleted && (
