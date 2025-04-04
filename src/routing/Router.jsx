@@ -4,9 +4,14 @@ import AuthPage from "../pages/AuthPage";
 import BusinessSetup from "../pages/BusinessSetup";
 import SeekerHome from "../pages/seekerHomePage/SeekerHome";
 
+import BusinessHome from "../pages/businessHomePage/BusinessHome";
+
+
+
 import JobseekerSetup from "../pages/JobseekerSetup";
 //Change this below to whatever page you want to test.
-import Dashboard from "../pages/Dashboard";
+//import Dashboard from "../pages/Dashboard";
+import BusinessProfile from "../pages/businessHomePage/tabs/BusinessProfile";
 
 
 const Router = () => {
@@ -58,7 +63,7 @@ const Router = () => {
                                     !userData.setupCompleted ? (
                                         <Navigate to="/setup" replace />
                                     ) : (
-                                        <Dashboard />
+                                        <BusinessProfile />
                                     )
                                 ) : userData.userType === "seeker" || userData.userType === "jobseeker" ? (
                                     <SeekerHome />
