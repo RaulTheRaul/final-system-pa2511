@@ -94,7 +94,7 @@ function AuthPage() {
 
             <div className="max-w-md w-full space-y-8">
                 <div>
-                    <h1 className="text-center text-4xl font-bold text-blue-600">Childcare Connect</h1>
+                    <h1 className="text-center text-4xl font-bold text-blue-500">Childcare Connect</h1>
                     <h2 className="mt-6 text-center text-3xl font-extrabold text-gray-900">
                         {isLogin ? "Sign in to your account" : "Create a new account"}
                     </h2>
@@ -102,7 +102,7 @@ function AuthPage() {
                         {isLogin ? "New to our platform? " : "Already have an account? "}
                         <button
                             type="button"
-                            className="font-medium text-blue-600 hover:text-blue-500"
+                            className="font-medium text-blue-500 hover:text-blue-500"
                             onClick={toggleForm}
                         >
                             {isLogin ? "Sign up" : "Sign in"}
@@ -114,7 +114,7 @@ function AuthPage() {
                         <button
                             type="button"
                             className={`px-4 py-2 rounded-md ${userType === "jobseeker"
-                                ? "bg-blue-600 text-white"
+                                ? "bg-blue-500 text-white"
                                 : "bg-gray-200 text-gray-800"
                                 }`}
                             onClick={() => setUserType("jobseeker")}
@@ -124,7 +124,7 @@ function AuthPage() {
                         <button
                             type="button"
                             className={`px-4 py-2 rounded-md ${userType === "business"
-                                ? "bg-blue-600 text-white"
+                                ? "bg-blue-500 text-white"
                                 : "bg-gray-200 text-gray-800"
                                 }`}
                             onClick={() => setUserType("business")}
@@ -239,7 +239,7 @@ function AuthPage() {
                         <button
                             type="submit"
                             disabled={loading}
-                            className={`group relative w-full flex justify-center py-2 px-4 border border-transparent text-sm font-medium rounded-md text-white bg-blue-600 ${loading ? "opacity-70 cursor-not-allowed" : "hover:bg-blue-700"
+                            className={`group relative w-full flex justify-center py-2 px-4 border border-transparent text-sm font-medium rounded-md text-white bg-blue-500 ${loading ? "opacity-70 cursor-not-allowed" : "hover:bg-blue-700"
                                 } focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 transition-colors`}
                         >
                             {loading ? "Processing..." : isLogin ? "Sign in" : "Sign up"}
