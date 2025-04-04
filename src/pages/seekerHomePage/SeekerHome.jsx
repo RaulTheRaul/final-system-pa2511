@@ -12,68 +12,142 @@ const SeekerHome = () => {
 
   const handleLogout = async () => {
     try {
-      //This calls logout from authContext
       await logout();
     } catch (error) {
       console.error("Error logging out:", error);
     }
   };
 
-
   return (
-    <div className="min-h-screen bg-gray-50 py-1 px-4">
-      <div className=" max-w-4xl mx-auto">
-        {/* Top bar to eventually access the search engine to refine searches for vacancies, seeker and business profiles */}
-        <div className="text-xl flex gap-4 font-semibold bg-gray-200 rounded-md">
-          <div className="p-1">PlatformNameHere</div>
-          <a className="hover:bg-blue-300 rounded-md p-1" href="#dashboard">Dashboard</a>
-          <a className="hover:bg-blue-300 rounded-md p-1" href="#searchEngine">Vacancies</a>
-          <a className="hover:bg-blue-300 rounded-md p-1" href="#searchEngine">Job Seekers</a>
-          <a className="hover:bg-blue-300 rounded-md p-1" href="#searchEngine">Businesses</a>
-        </div>
-        <div className="border-b mb-1">
+    <div
+      style={{
+        backgroundColor: "var(--nude)",
+        color: "var(--night)",
+        minHeight: "100vh",
+        padding: "1rem",
+      }}
+    >
+      <div style={{ maxWidth: "1024px", margin: "0 auto" }}>
+        {/* Top Navigation Bar */}
+        <div
+          style={{
+            backgroundColor: "var(--misto)",
+            display: "flex",
+            gap: "1rem",
+            padding: "0.75rem",
+            fontWeight: "600",
+            borderRadius: "0.5rem",
+          }}
+        >
+          <div>CentreConnect</div>
+          {["Dashboard", "Vacancies", "Job Seekers", "Businesses"].map((label) => (
+            <a
+              key={label}
+              style={{
+                padding: "0.25rem 0.5rem",
+                borderRadius: "0.375rem",
+                cursor: "pointer",
+              }}
+              onMouseEnter={(e) =>
+                (e.currentTarget.style.backgroundColor = "var(--honey)")
+              }
+              onMouseLeave={(e) =>
+                (e.currentTarget.style.backgroundColor = "transparent")
+              }
+            >
+              {label}
+            </a>
+          ))}
         </div>
 
-        <div className="max-w-4xl mx-auto bg-white rounded-xl shadow-md p-6">
-          <h1 className="text-3xl font-bold text-gray-800 mb-4">Welcome, {userData?.fullName || "Seeker"}</h1>
+        {/* Welcome Box */}
+        <div
+          style={{
+            backgroundColor: "#ffffff",
+            padding: "1.5rem",
+            marginTop: "1rem",
+            borderRadius: "1rem",
+            boxShadow: "0 2px 6px rgba(0,0,0,0.1)",
+          }}
+        >
+          <h1 style={{ fontSize: "2rem", fontWeight: "bold" }}>
+            Welcome, {userData?.fullName || "Seeker"} 👋
+          </h1>
         </div>
 
         {/* Setup Reminder */}
         {!userData?.setupCompleted && (
-          <div className="bg-yellow-100 text-yellow-800 p-4 rounded-lg mb-6 border border-yellow-300">
+          <div
+            style={{
+              backgroundColor: "var(--honey)",
+              color: "#000",
+              padding: "1rem",
+              marginTop: "1rem",
+              marginBottom: "1.5rem",
+              borderRadius: "0.75rem",
+              border: "1px solid #e2c044",
+            }}
+          >
             Your profile setup is incomplete.{" "}
-            <Link to="/setup" className="underline text-blue-600 font-medium">
+            <Link to="/setup" style={{ textDecoration: "underline", color: "var(--ocean)" }}>
               Click here to complete it
             </Link>
           </div>
         )}
 
         {/* Tab Buttons */}
-        <div className="flex space-x-4 mb-6 border-b">
+        <div
+          style={{
+            display: "flex",
+            gap: "1.5rem",
+            borderBottom: "2px solid var(--misto)",
+            marginBottom: "1.5rem",
+            marginTop: "1.5rem",
+          }}
+        >
           {["jobs", "activity", "profile"].map((tab) => (
             <button
               key={tab}
               onClick={() => setActiveTab(tab)}
-              className={`py-2 px-4 font-medium border-b-2 transition duration-150 ${activeTab === tab
-                ? "border-blue-600 text-blue-600"
-                : "border-transparent text-gray-500 hover:text-blue-500"
-                }`}
+              style={{
+                padding: "0.5rem 1rem",
+                border: "none",
+                borderBottom:
+                  activeTab === tab ? "3px solid var(--ocean)" : "3px solid transparent",
+                color: activeTab === tab ? "var(--ocean)" : "var(--misto)",
+                background: "transparent",
+                fontWeight: "500",
+                cursor: "pointer",
+              }}
             >
-              {tab === "jobs" ? "Job Postings" : tab === "activity" ? "Activity" : "Profile"}
+              {tab === "jobs"
+                ? "Job Postings"
+                : tab === "activity"
+                ? "Activity"
+                : "Profile"}
             </button>
           ))}
         </div>
 
         {/* Tab Content */}
-        <div className="mt-4">
+        <div>
           {activeTab === "jobs" && <JobPostings />}
           {activeTab === "activity" && <Activity />}
           {activeTab === "profile" && <ProfileOverview />}
         </div>
-        <div className="pt-6 mt-6">
+
+        {/* Logout Button */}
+        <div style={{ marginTop: "2rem", paddingTop: "1rem" }}>
           <button
             onClick={handleLogout}
-            className="px-4 py-2 bg-red-600 text-white rounded-lg hover:bg-red-700 transition-colors"
+            style={{
+              backgroundColor: "var(--ocean)",
+              color: "white",
+              padding: "0.5rem 1.25rem",
+              borderRadius: "0.5rem",
+              border: "none",
+              cursor: "pointer",
+            }}
           >
             Logout
           </button>

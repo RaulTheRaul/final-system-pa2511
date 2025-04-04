@@ -1,3 +1,11 @@
+:root {
+  --night: #0D1C2E;
+  --ocean: #284566;
+  --misto: #7D8D91;
+  --honey: #F2C94C;
+  --nude: #F4EDE8;
+}
+
 #root {
   max-width: 1280px;
   margin: 0 auto;
