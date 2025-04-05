@@ -80,21 +80,15 @@ function AuthPage() {
 
     return (
 
-        <div className="min-h-screen flex items-center justify-center bg-cover bg-center bg-no-repeat w-full bg-[url('/images/login.jpg')] py-12 px-4 sm:px-6 lg:px-8">
-
-            {/* Top bar to eventually access the search engine to refine searches for vacancies, seeker and business profiles */}
-            <div className="text-xl fixed justify-center top-0 font-semibold bg-gray-200 rounded-md">
-                <div className="text-sm p-1 flex justify-center">Wish to search freely beforehand?</div>
-                <a className="hover:bg-blue-300 rounded-md p-1" href="#searchEngine">Vacancies</a>
-                <a className="hover:bg-blue-300 rounded-md p-1" href="#searchEngine">Job Seekers</a>
-                <a className="hover:bg-blue-300 rounded-md p-1" href="#searchEngine">Businesses</a>
-                <div className="border-b mt-1">
-                </div>
+        <div className="min-h-screen flex items-center justify-center bg-cover bg-center bg-no-repeat bg-[#f2ece4] w-full py-6 px-4 sm:px-6 lg:px-8">
+            <div>
+                <img src="/images/login1sthalf.png" className="bg-no-repeat max-w-s max-h-250" />
             </div>
-
             <div className="max-w-md w-full space-y-8">
                 <div>
-                    <h1 className="text-center text-4xl font-bold text-blue-500">Childcare Connect</h1>
+                    <div>
+                        <img src="/images/Untitled-5.png" className="bg-no-repeat max-w-s max-h-auto" />
+                    </div>
                     <h2 className="mt-6 text-center text-3xl font-extrabold text-gray-900">
                         {isLogin ? "Sign in to your account" : "Create a new account"}
                     </h2>
@@ -102,7 +96,7 @@ function AuthPage() {
                         {isLogin ? "New to our platform? " : "Already have an account? "}
                         <button
                             type="button"
-                            className="font-medium text-blue-500 hover:text-blue-500"
+                            className="font-medium text-[#f2be5c] hover:text-[#254159]"
                             onClick={toggleForm}
                         >
                             {isLogin ? "Sign up" : "Sign in"}
@@ -114,8 +108,8 @@ function AuthPage() {
                         <button
                             type="button"
                             className={`px-4 py-2 rounded-md ${userType === "jobseeker"
-                                ? "bg-blue-500 text-white"
-                                : "bg-gray-200 text-gray-800"
+                                ? "bg-[#f2be5c] text-white"
+                                : "bg-[#F1D195] text-gray-800"
                                 }`}
                             onClick={() => setUserType("jobseeker")}
                         >
@@ -124,8 +118,8 @@ function AuthPage() {
                         <button
                             type="button"
                             className={`px-4 py-2 rounded-md ${userType === "business"
-                                ? "bg-blue-500 text-white"
-                                : "bg-gray-200 text-gray-800"
+                                ? "bg-[#f2be5c] text-white"
+                                : "bg-[#F1D195] text-gray-800"
                                 }`}
                             onClick={() => setUserType("business")}
                         >
@@ -149,7 +143,7 @@ function AuthPage() {
                                     name="fullName"
                                     type="text"
                                     required
-                                    className="mt-1 appearance-none relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 rounded-md focus:outline-none focus:ring-blue-500 focus:border-blue-500 focus:z-10 sm:text-sm"
+                                    className="mt-1 appearance-none relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 rounded-md focus:outline-none focus:ring-blue-500 focus:border-[#f2be5c] focus:z-10 sm:text-sm"
                                     placeholder="John Smith"
                                     value={fullName}
                                     onChange={(e) => setFullName(e.target.value)}
@@ -167,7 +161,7 @@ function AuthPage() {
                                     name="businessName"
                                     type="text"
                                     required
-                                    className="mt-1 appearance-none relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 rounded-md focus:outline-none focus:ring-blue-500 focus:border-blue-500 focus:z-10 sm:text-sm"
+                                    className="mt-1 appearance-none relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 rounded-md focus:outline-none focus:ring-blue-500 focus:border-[#f2be5c] focus:z-10 sm:text-sm"
                                     placeholder="ABC Childcare Center"
                                     value={businessName}
                                     onChange={(e) => setBusinessName(e.target.value)}
@@ -185,7 +179,7 @@ function AuthPage() {
                                 type="email"
                                 autoComplete="email"
                                 required
-                                className="mt-1 appearance-none relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 rounded-md focus:outline-none focus:ring-blue-500 focus:border-blue-500 focus:z-10 sm:text-sm"
+                                className="mt-1 appearance-none relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 rounded-md focus:outline-none focus:ring-blue-500 focus:border-[#f2be5c] focus:z-10 sm:text-sm"
                                 placeholder="email@example.com"
                                 value={email}
                                 onChange={(e) => setEmail(e.target.value)}
@@ -202,7 +196,7 @@ function AuthPage() {
                                 type="password"
                                 autoComplete={isLogin ? "current-password" : "new-password"}
                                 required
-                                className="mt-1 appearance-none relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 rounded-md focus:outline-none focus:ring-blue-500 focus:border-blue-500 focus:z-10 sm:text-sm"
+                                className="mt-1 appearance-none relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 rounded-md focus:outline-none focus:ring-blue-500 focus:border-[#f2be5c] focus:z-10 sm:text-sm"
                                 placeholder={isLogin ? "Your password" : "Create a password"}
                                 value={password}
                                 onChange={(e) => setPassword(e.target.value)}
@@ -220,7 +214,7 @@ function AuthPage() {
                                     type="password"
                                     autoComplete="new-password"
                                     required
-                                    className="mt-1 appearance-none relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 rounded-md focus:outline-none focus:ring-blue-500 focus:border-blue-500 focus:z-10 sm:text-sm"
+                                    className="mt-1 appearance-none relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 rounded-md focus:outline-none focus:ring-blue-500 focus:border-[#f2be5c] focus:z-10 sm:text-sm"
                                     placeholder="Confirm your password"
                                     value={confirmPassword}
                                     onChange={(e) => setConfirmPassword(e.target.value)}
@@ -239,13 +233,16 @@ function AuthPage() {
                         <button
                             type="submit"
                             disabled={loading}
-                            className={`group relative w-full flex justify-center py-2 px-4 border border-transparent text-sm font-medium rounded-md text-white bg-blue-500 ${loading ? "opacity-70 cursor-not-allowed" : "hover:bg-blue-700"
+                            className={`group relative w-full flex justify-center py-2 px-4 border border-transparent text-sm font-medium rounded-md text-white bg-[#254159] ${loading ? "opacity-70 cursor-not-allowed" : "hover:bg-[#f2be5c]"
                                 } focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 transition-colors`}
                         >
                             {loading ? "Processing..." : isLogin ? "Sign in" : "Sign up"}
                         </button>
                     </div>
                 </form>
+            </div>
+            <div>
+                <img src="/images/login2ndhalf.png" className="bg-no-repeat max-w-s max-h-250" />
             </div>
         </div >
     );

@@ -32,12 +32,12 @@ const SeekerJobsPage = () => {
     }, []);
 
     return (
-        <div className="min-h-screen bg-gray-50">
+        <div className="min-h-screen bg-[#f2ece4]">
             <SeekerNavigation />
 
             <div className="max-w-6xl mx-auto p-6">
-                <div className="bg-white rounded-lg shadow-sm p-6 mb-6">
-                    <h2 className="text-2xl font-bold text-gray-800 mb-6">Available Job Postings</h2>
+                <div className="bg-[#EEEEEE] rounded-lg shadow-sm p-6 mb-6">
+                    <h2 className="text-2xl font-bold text-[#254159] mb-6">Available Job Postings</h2>
 
                     {loading ? (
                         <div className="text-center py-8">
@@ -48,7 +48,7 @@ const SeekerJobsPage = () => {
                             {error}
                         </div>
                     ) : jobs.length === 0 ? (
-                        <div className="text-center py-8 bg-gray-50 rounded-lg">
+                        <div className="text-center py-8 bg-[#F1EEEB] rounded-lg">
                             <p className="text-gray-600">No job listings available at this time.</p>
                             <p className="text-gray-500 text-sm mt-2">Check back later for new opportunities.</p>
                         </div>
