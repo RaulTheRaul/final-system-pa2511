@@ -120,9 +120,9 @@ const BusinessSetup = () => {
     };
 
     return (
-        <div className="min-h-screen bg-gray-50 p-4 md:p-8">
+        <div className="min-h-screen bg-[#f2ece4] p-4 md:p-8">
             <div className="max-w-2xl mx-auto bg-white rounded-lg shadow-md p-6 md:p-8">
-                <h1 className="text-2xl font-bold text-blue-600 mb-6">Complete Your Centre Profile</h1>
+                <h1 className="text-2xl font-bold text-[#254159] mb-6">Complete Your Centre Profile</h1>
                 <p className="text-gray-600 mb-6">
                     Before you can access the platform, please provide some important information about your centre.
                 </p>
@@ -148,7 +148,7 @@ const BusinessSetup = () => {
                             </h2>
                             <div className="space-y-4">
                                 <div>
-                                    <label htmlFor="centreName" className="block text-sm font-medium text-gray-700 mb-1">
+                                    <label htmlFor="centreName" className="block text-sm font-medium text-[#0d1826] mb-1">
                                         Centre Name *
                                     </label>
                                     <input
@@ -163,7 +163,7 @@ const BusinessSetup = () => {
                                 </div>
 
                                 <div>
-                                    <label htmlFor="centreAddress" className="block text-sm font-medium text-gray-700 mb-1">
+                                    <label htmlFor="centreAddress" className="block text-sm font-medium text-[#0d1826] mb-1">
                                         Centre Address *
                                     </label>
                                     <input
@@ -179,7 +179,7 @@ const BusinessSetup = () => {
                                 </div>
 
                                 <div>
-                                    <label htmlFor="centrePhone" className="block text-sm font-medium text-gray-700 mb-1">
+                                    <label htmlFor="centrePhone" className="block text-sm font-medium text-[#0d1826] mb-1">
                                         Centre Phone *
                                     </label>
                                     <input
@@ -195,7 +195,7 @@ const BusinessSetup = () => {
                                 </div>
 
                                 <div>
-                                    <label htmlFor="centreType" className="block text-sm font-medium text-gray-700 mb-1">
+                                    <label htmlFor="centreType" className="block text-sm font-medium text-[#0d1826] mb-1">
                                         Centre Type *
                                     </label>
                                     <select
@@ -216,7 +216,7 @@ const BusinessSetup = () => {
                                 </div>
 
                                 <div>
-                                    <label htmlFor="licenseNumber" className="block text-sm font-medium text-gray-700 mb-1">
+                                    <label htmlFor="licenseNumber" className="block text-sm font-medium text-[#0d1826] mb-1">
                                         License Number / Service Approval Number
                                     </label>
                                     <input
@@ -230,7 +230,7 @@ const BusinessSetup = () => {
                                 </div>
 
                                 <div>
-                                    <label htmlFor="operatingHours" className="block text-sm font-medium text-gray-700 mb-1">
+                                    <label htmlFor="operatingHours" className="block text-sm font-medium text-[#0d1826] mb-1">
                                         Operating Hours
                                     </label>
                                     <input
@@ -245,7 +245,7 @@ const BusinessSetup = () => {
                                 </div>
 
                                 <div>
-                                    <label htmlFor="acecqaRating" className="block text-sm font-medium text-gray-700 mb-1">
+                                    <label htmlFor="acecqaRating" className="block text-sm font-medium text-[#0d1826] mb-1">
                                         ACECQA Rating
                                     </label>
                                     <select
@@ -274,7 +274,7 @@ const BusinessSetup = () => {
                             </h2>
                             <div className="space-y-4">
                                 <div>
-                                    <label htmlFor="teachingApproach" className="block text-sm font-medium text-gray-700 mb-1">
+                                    <label htmlFor="teachingApproach" className="block text-sm font-medium text-[#0d1826] mb-1">
                                         Teaching Approach
                                     </label>
                                     <select
@@ -296,7 +296,7 @@ const BusinessSetup = () => {
 
                                 <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                                     <div>
-                                        <label htmlFor="centreCapacity" className="block text-sm font-medium text-gray-700 mb-1">
+                                        <label htmlFor="centreCapacity" className="block text-sm font-medium text-[#0d1826] mb-1">
                                             Centre Capacity (Children)
                                         </label>
                                         <input
@@ -311,7 +311,7 @@ const BusinessSetup = () => {
                                     </div>
 
                                     <div>
-                                        <label htmlFor="roomCount" className="block text-sm font-medium text-gray-700 mb-1">
+                                        <label htmlFor="roomCount" className="block text-sm font-medium text-[#0d1826] mb-1">
                                             Number of Rooms
                                         </label>
                                         <input
@@ -327,7 +327,7 @@ const BusinessSetup = () => {
                                 </div>
 
                                 <div>
-                                    <label htmlFor="staffToChildRatio" className="block text-sm font-medium text-gray-700 mb-1">
+                                    <label htmlFor="staffToChildRatio" className="block text-sm font-medium text-[#0d1826] mb-1">
                                         Staff-to-Child Ratios
                                     </label>
                                     <input
@@ -342,7 +342,7 @@ const BusinessSetup = () => {
                                 </div>
 
                                 <div>
-                                    <label htmlFor="staffBenefits" className="block text-sm font-medium text-gray-700 mb-1">
+                                    <label htmlFor="staffBenefits" className="block text-sm font-medium text-[#0d1826] mb-1">
                                         Staff Benefits
                                     </label>
                                     <input
@@ -358,7 +358,7 @@ const BusinessSetup = () => {
                                 </div>
 
                                 <div>
-                                    <label htmlFor="careerOpportunities" className="block text-sm font-medium text-gray-700 mb-1">
+                                    <label htmlFor="careerOpportunities" className="block text-sm font-medium text-[#0d1826] mb-1">
                                         Career Progression Opportunities
                                     </label>
                                     <textarea
@@ -373,7 +373,7 @@ const BusinessSetup = () => {
                                 </div>
 
                                 <div>
-                                    <label htmlFor="centreDescription" className="block text-sm font-medium text-gray-700 mb-1">
+                                    <label htmlFor="centreDescription" className="block text-sm font-medium text-[#0d1826] mb-1">
                                         Centre Description *
                                     </label>
                                     <textarea
@@ -394,7 +394,7 @@ const BusinessSetup = () => {
                             <button
                                 type="submit"
                                 disabled={loading}
-                                className={`w-full py-2 px-4 border border-transparent rounded-md shadow-sm text-white bg-blue-600 hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 ${loading ? "opacity-70 cursor-not-allowed" : ""
+                                className={`w-full py-2 px-4 border border-transparent rounded-md shadow-sm text-white bg-[#254159] hover:bg-[#f2be5c] focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 ${loading ? "opacity-70 cursor-not-allowed" : ""
                                     }`}
                             >
                                 {loading ? "Saving..." : "Save and Continue"}

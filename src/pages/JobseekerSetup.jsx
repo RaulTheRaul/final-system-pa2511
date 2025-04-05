@@ -161,7 +161,7 @@ const JobseekerSetup = () => {
     return (
         <div className="min-h-screen bg-gray-50 p-4 md:p-8">
             <div className="max-w-2xl mx-auto bg-white rounded-lg shadow-md p-6 md:p-8">
-                <h1 className="text-2xl font-bold text-blue-600 mb-6">Complete Your Profile</h1>
+                <h1 className="text-2xl font-bold text-[#254159] mb-6">Complete Your Profile</h1>
                 <p className="text-gray-600 mb-6">
                     Please fill in these basic details, you can change them later in the user profile.
                 </p>
@@ -195,7 +195,7 @@ const JobseekerSetup = () => {
                                         value={formData.fullName}
                                         onChange={handleChange}
                                         placeholder="Enter Name"
-                                        className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-blue-500 focus:border-blue-500"
+                                        className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-[#f2be5c] focus:border-[#f2be5c]"
                                     />
                                 </div>
 
@@ -211,7 +211,7 @@ const JobseekerSetup = () => {
                                         value={formData.location}
                                         onChange={handleChange}
                                         placeholder="Enter Location"
-                                        className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-blue-500 focus:border-blue-500"
+                                        className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-[#f2be5c] focus:border-[#f2be5c]"
                                     />
                                 </div>
 
@@ -225,7 +225,7 @@ const JobseekerSetup = () => {
                                         required
                                         value={formData.availability}
                                         onChange={handleChange}
-                                        className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-blue-500 focus:border-blue-500"
+                                        className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-[#f2be5c] focus:border-[#f2be5c]"
                                     >
                                         <option value="full-time">Full-time</option>
                                         <option value="part-time">Part-time</option>
@@ -244,7 +244,7 @@ const JobseekerSetup = () => {
                                         required
                                         value={formData.educationLevel}
                                         onChange={handleChange}
-                                        className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-blue-500 focus:border-blue-500"
+                                        className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-[#f2be5c] focus:border-[#f2be5c]"
                                     >
                                         <option value="">Select Education Level</option>
                                         <option value="Certificate III">Certificate III in Early Childhood Education</option>
@@ -265,7 +265,7 @@ const JobseekerSetup = () => {
                                         required
                                         value={formData.preferredRole}
                                         onChange={handleChange}
-                                        className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-blue-500 focus:border-blue-500"
+                                        className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-[#f2be5c] focus:border-[#f2be5c]"
                                     >
                                         <option value="educator">Educator</option>
                                         <option value="room-leader">Room Leader</option>
@@ -287,7 +287,7 @@ const JobseekerSetup = () => {
                                         value={formData.bio}
                                         onChange={handleChange}
                                         placeholder="Tell us a bit about yourself and your experience..."
-                                        className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-blue-500 focus:border-blue-500"
+                                        className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-[#f2be5c] focus:border-[#f2be5c]"
                                     ></textarea>
                                     <p className="text-xs text-gray-500 mt-1">
                                         {formData.bio.length}/500 characters
@@ -298,7 +298,7 @@ const JobseekerSetup = () => {
                                     <button
                                         type="submit"
                                         disabled={loading}
-                                        className={`w-full py-2 px-4 border border-transparent rounded-md shadow-sm text-white bg-blue-600 hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 ${loading ? "opacity-70 cursor-not-allowed" : ""}`}
+                                        className={`w-full py-2 px-4 border border-transparent rounded-md shadow-sm text-white bg-[#254159] hover:bg-[#f2be5c] focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-[#f2be5c] ${loading ? "opacity-70 cursor-not-allowed" : ""}`}
                                     >
                                         {loading ? "Saving..." : "Complete Setup"}
                                     </button>
