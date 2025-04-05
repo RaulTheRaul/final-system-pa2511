@@ -121,7 +121,7 @@ const BusinessSetup = () => {
 
     return (
         <div className="min-h-screen bg-[#f2ece4] p-4 md:p-8">
-            <div className="max-w-2xl mx-auto bg-white rounded-lg shadow-md p-6 md:p-8">
+            <div className="max-w-2xl mx-auto bg-[#f2ece4] rounded-lg shadow-md p-6 md:p-8">
                 <h1 className="text-2xl font-bold text-[#254159] mb-6">Complete Your Centre Profile</h1>
                 <p className="text-gray-600 mb-6">
                     Before you can access the platform, please provide some important information about your centre.
@@ -158,7 +158,7 @@ const BusinessSetup = () => {
                                         required
                                         value={formData.centreName}
                                         onChange={handleChange}
-                                        className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-blue-500 focus:border-blue-500"
+                                        className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-[#f2be5c] focus:border-[#f2be5c]"
                                     />
                                 </div>
 
@@ -174,7 +174,7 @@ const BusinessSetup = () => {
                                         value={formData.centreAddress}
                                         onChange={handleChange}
                                         placeholder="123 Main Street, Suburb, State, Postcode"
-                                        className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-blue-500 focus:border-blue-500"
+                                        className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-[#f2be5c] focus:border-[#f2be5c]"
                                     />
                                 </div>
 
@@ -190,7 +190,7 @@ const BusinessSetup = () => {
                                         value={formData.centrePhone}
                                         onChange={handleChange}
                                         placeholder="+61 x xxxx xxxx"
-                                        className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-blue-500 focus:border-blue-500"
+                                        className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-[#f2be5c] focus:border-[#f2be5c]"
                                     />
                                 </div>
 
@@ -204,7 +204,7 @@ const BusinessSetup = () => {
                                         required
                                         value={formData.centreType}
                                         onChange={handleChange}
-                                        className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-blue-500 focus:border-blue-500"
+                                        className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-[#f2be5c] focus:border-[#f2be5c]"
                                     >
                                         <option value="childcare">Childcare Center</option>
                                         <option value="long-day-care">Long Day Care</option>
@@ -225,7 +225,7 @@ const BusinessSetup = () => {
                                         type="text"
                                         value={formData.licenseNumber}
                                         onChange={handleChange}
-                                        className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-blue-500 focus:border-blue-500"
+                                        className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-[#f2be5c] focus:border-[#f2be5c]"
                                     />
                                 </div>
 
@@ -240,7 +240,7 @@ const BusinessSetup = () => {
                                         value={formData.operatingHours}
                                         onChange={handleChange}
                                         placeholder="e.g., Monday-Friday: 7am-6pm"
-                                        className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-blue-500 focus:border-blue-500"
+                                        className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-[#f2be5c] focus:border-[#f2be5c]"
                                     />
                                 </div>
 
@@ -253,7 +253,7 @@ const BusinessSetup = () => {
                                         name="acecqaRating"
                                         value={formData.acecqaRating}
                                         onChange={handleChange}
-                                        className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-blue-500 focus:border-blue-500"
+                                        className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-[#f2be5c] focus:border-[#f2be5c]"
                                     >
                                         <option value="">Select Rating</option>
                                         <option value="Excellent">Excellent</option>
@@ -282,7 +282,7 @@ const BusinessSetup = () => {
                                         name="teachingApproach"
                                         value={formData.teachingApproach}
                                         onChange={handleChange}
-                                        className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-blue-500 focus:border-blue-500"
+                                        className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-[#f2be5c] focus:border-[#f2be5c]"
                                     >
                                         <option value="play-based">Play-Based Learning</option>
                                         <option value="reggio-emilia">Reggio Emilia</option>
@@ -306,7 +306,7 @@ const BusinessSetup = () => {
                                             min="0"
                                             value={formData.centreCapacity}
                                             onChange={handleChange}
-                                            className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-blue-500 focus:border-blue-500"
+                                            className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-[#f2be5c] focus:border-[#f2be5c]"
                                         />
                                     </div>
 
@@ -321,7 +321,7 @@ const BusinessSetup = () => {
                                             min="0"
                                             value={formData.roomCount}
                                             onChange={handleChange}
-                                            className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-blue-500 focus:border-blue-500"
+                                            className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-[#f2be5c] focus:border-[#f2be5c]"
                                         />
                                     </div>
                                 </div>
@@ -337,7 +337,7 @@ const BusinessSetup = () => {
                                         value={formData.staffToChildRatio}
                                         onChange={handleChange}
                                         placeholder="e.g., 1:4 for infants, 1:5 for toddlers"
-                                        className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-blue-500 focus:border-blue-500"
+                                        className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-[#f2be5c] focus:border-[#f2be5c]"
                                     />
                                 </div>
 
@@ -352,7 +352,7 @@ const BusinessSetup = () => {
                                         value={formData.staffBenefits}
                                         onChange={handleChange}
                                         placeholder="e.g., Professional development, Staff discounts, Flexible hours"
-                                        className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-blue-500 focus:border-blue-500"
+                                        className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-[#f2be5c] focus:border-[#f2be5c]"
                                     />
                                     <p className="text-xs text-gray-500 mt-1">Separate multiple benefits with commas</p>
                                 </div>
@@ -368,7 +368,7 @@ const BusinessSetup = () => {
                                         value={formData.careerOpportunities}
                                         onChange={handleChange}
                                         placeholder="Describe career advancement opportunities at your centre"
-                                        className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-blue-500 focus:border-blue-500"
+                                        className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-[#f2be5c] focus:border-[#f2be5c]"
                                     ></textarea>
                                 </div>
 
@@ -384,7 +384,7 @@ const BusinessSetup = () => {
                                         value={formData.centreDescription}
                                         onChange={handleChange}
                                         placeholder="Tell us about your centre, its philosophy, culture, and what makes it special..."
-                                        className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-blue-500 focus:border-blue-500"
+                                        className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-[#f2be5c] focus:border-[#f2be5c]"
                                     ></textarea>
                                 </div>
                             </div>
@@ -394,7 +394,7 @@ const BusinessSetup = () => {
                             <button
                                 type="submit"
                                 disabled={loading}
-                                className={`w-full py-2 px-4 border border-transparent rounded-md shadow-sm text-white bg-[#254159] hover:bg-[#f2be5c] focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 ${loading ? "opacity-70 cursor-not-allowed" : ""
+                                className={`w-full py-2 px-4 border border-transparent rounded-md shadow-sm text-white bg-[#254159] hover:bg-[#f2be5c] focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-[#f2be5c] ${loading ? "opacity-70 cursor-not-allowed" : ""
                                     }`}
                             >
                                 {loading ? "Saving..." : "Save and Continue"}
