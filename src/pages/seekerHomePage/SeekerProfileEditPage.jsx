@@ -4,6 +4,14 @@ import { doc, setDoc } from "firebase/firestore";
 import { db } from "../../firebase/config";
 import { useAuth } from "../../context/AuthContext";
 import SeekerNavigation from "./components/SeekerNavigation";
+//Importing the different form sections components
+import PersonalInfoSection from "./components/profile/PersonalInfoSection"
+import QualificationSection from "./components/profile/QualificationSection"
+import PreferencesSection from "./components/profile/PreferencesSection"
+import AdditionalInfoSection from "./components/profile/AdditionalInfoSection"
+
+
+
 
 const SeekerProfileEditPage = () => {
     const { currentUser, userData, getUserData } = useAuth();
@@ -244,7 +252,85 @@ const SeekerProfileEditPage = () => {
     };
 
     return (
-        <div> </div>
+        <div className="min-h-screen bg-gray-50">
+            <SeekerNavigation />
+
+            <div className="max-w-6xl mx-auto p-6">
+                <div className="bg-white rounded-lg shadow-sm p-6">
+                    <div className="flex justify-between items-center mb-6">
+                        <h2 className="text-2xl font-bold text-gray-800">Edit Your Profile</h2>
+                        <button
+                            onClick={handleCancel}
+                            className="text-gray-600 hover:text-gray-800"
+                        >
+                            Cancel
+                        </button>
+                    </div>
+
+                    {error && (
+                        <div className="bg-red-50 text-red-600 p-4 rounded-md mb-6">
+                            {error}
+                        </div>
+                    )}
+
+                    {success && (
+                        <div className="bg-green-50 text-green-600 p-4 rounded-md mb-6">
+                            Profile successfully updated! Redirecting to profile page...
+                        </div>
+                    )}
+
+                    <form onSubmit={handleSubmit} className="space-y-8">
+                        Personal & Contact Information Section
+                        <PersonalInfoSection
+                            formData={formData}
+                            handleChange={handleChange}
+                            handleCheckboxChange={handleCheckboxChange}
+                        />
+
+                        {/* Qualification & Certification Section */}
+                        <QualificationSection
+                            formData={formData}
+                            handleChange={handleChange}
+                            handleCheckboxChange={handleCheckboxChange}
+                        />
+
+                        {/* Preferences & Work Conditions Section */}
+                        <PreferencesSection
+                            formData={formData}
+                            handleChange={handleChange}
+                            handleCheckboxChange={handleCheckboxChange}
+                        />
+
+                        {/* Additional Information Section */}
+                        <AdditionalInfoSection
+                            formData={formData}
+                            handleChange={handleChange}
+                        />
+
+                        {/* Form Actions */}
+                        <div className="pt-6 flex gap-4 justify-end">
+                            <button
+                                type="button"
+                                onClick={handleCancel}
+                                className="px-6 py-2 border border-gray-300 rounded-md shadow-sm text-sm font-medium text-gray-700 bg-white hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-500"
+                            >
+                                Cancel
+                            </button>
+
+                            <button
+                                type="submit"
+                                disabled={loading}
+                                className={`px-6 py-2 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-blue-600 hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 ${loading ? "opacity-70 cursor-not-allowed" : ""
+                                    }`}
+                            >
+                                {loading ? "Saving..." : "Save Changes"}
+                            </button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+
     );
 };
 
