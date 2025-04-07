@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 import { useAuth } from "../../../context/AuthContext";
 import { doc, setDoc } from "firebase/firestore";
 import { db } from "../../../firebase/config";
@@ -31,6 +32,17 @@ const JobCard = ({ job, alreadyApplied = false }) => {
       console.error("Failed to apply:", error);
       toast.error("❌ Something went wrong. Please try again.");
     }
+=======
+const JobCard = ({ job }) => {
+    return (
+      <div className="border p-4 rounded shadow mb-4 bg-[#EEEEEE]">
+        <h3 className="text-xl font-semibold text-[#254159]">{job.title}</h3>
+        <p className="text-gray-700">Location: {job.location}</p>
+        <p className="text-gray-600">{job.description}</p>
+        <p className="mt-2 text-sm text-gray-500">Posted by: {job.postedBy}</p>
+      </div>
+    );
+>>>>>>> 52b7e3de9b68ad37fdd1c29badceaddf64b5ca3c
   };
 
   return (
