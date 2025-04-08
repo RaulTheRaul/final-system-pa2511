@@ -1,68 +1,109 @@
 import { useEffect, useState } from "react";
-import { collection, getDocs } from "firebase/firestore";
+import { collection, getDocs, doc, setDoc, query, where } from "firebase/firestore";
 import { db } from "../../firebase/config";
+import { useAuth } from "../../context/AuthContext";
 import SeekerNavigation from "./components/SeekerNavigation";
 import JobCard from "./components/JobCard";
 
 const SeekerJobsPage = () => {
-    const [jobs, setJobs] = useState([]);
-    const [loading, setLoading] = useState(true);
-    const [error, setError] = useState("");
+  const [jobs, setJobs] = useState([]);
+  const [appliedJobs, setAppliedJobs] = useState([]);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState("");
+  const { currentUser } = useAuth();
 
-    useEffect(() => {
-        const fetchJobs = async () => {
-            setLoading(true);
-            try {
-                const querySnapshot = await getDocs(collection(db, "jobs"));
-                const jobsData = querySnapshot.docs.map(doc => ({
-                    id: doc.id,
-                    ...doc.data()
-                }));
-                setJobs(jobsData);
-                setError("");
-            } catch (error) {
-                console.error("Error fetching jobs:", error);
-                setError("Failed to load job listings. Please try again later.");
-            } finally {
-                setLoading(false);
-            }
-        };
+  // Fetch jobs and user's applied jobs
+  useEffect(() => {
+    const fetchData = async () => {
+      if (!currentUser) return;
 
-        fetchJobs();
-    }, []);
+      setLoading(true);
 
-    return (
-        <div className="min-h-screen bg-[#f2ece4]">
-            <SeekerNavigation />
+      try {
+        // 1. Fetch all jobs
+        const jobsSnapshot = await getDocs(collection(db, "jobs"));
+        const jobsData = jobsSnapshot.docs.map(doc => ({
+          id: doc.id,
+          ...doc.data()
+        }));
+        setJobs(jobsData);
 
-            <div className="max-w-6xl mx-auto p-6">
-                <div className="bg-[#EEEEEE] rounded-lg shadow-sm p-6 mb-6">
-                    <h2 className="text-2xl font-bold text-[#254159] mb-6">Available Job Postings</h2>
+        // 2. Fetch applications by current user
+        const appsQuery = query(
+          collection(db, "applications"),
+          where("userId", "==", currentUser.uid)
+        );
+        const appsSnapshot = await getDocs(appsQuery);
+        const appliedIds = appsSnapshot.docs.map(doc => doc.data().jobId);
+        setAppliedJobs(appliedIds);
 
-                    {loading ? (
-                        <div className="text-center py-8">
-                            <p className="text-gray-600">Loading job listings...</p>
-                        </div>
-                    ) : error ? (
-                        <div className="bg-red-50 text-red-600 p-4 rounded-md">
-                            {error}
-                        </div>
-                    ) : jobs.length === 0 ? (
-                        <div className="text-center py-8 bg-[#F1EEEB] rounded-lg">
-                            <p className="text-gray-600">No job listings available at this time.</p>
-                            <p className="text-gray-500 text-sm mt-2">Check back later for new opportunities.</p>
-                        </div>
-                    ) : (
-                        <div className="space-y-4">
-                            {jobs.map(job => (
-                                <JobCard key={job.id} job={job} />
-                            ))}
-                        </div>
-                    )}
-                </div>
+        setError("");
+      } catch (err) {
+        console.error("Error fetching data:", err);
+        setError("Failed to load job listings. Please try again later.");
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchData();
+  }, [currentUser]);
+
+  const handleApply = async (jobId, jobTitle, postedBy) => {
+    if (!currentUser) return;
+
+    try {
+      await setDoc(doc(db, "applications", `${currentUser.uid}_${jobId}`), {
+        userId: currentUser.uid,
+        jobId,
+        jobTitle,
+        appliedAt: new Date(),
+        postedBy: postedBy || "Unknown",
+      });
+
+      setAppliedJobs(prev => [...prev, jobId]);
+    } catch (error) {
+      console.error("Error applying to job:", error);
+    }
+  };
+
+  return (
+    <div className="min-h-screen bg-[#f2ece4]">
+      <SeekerNavigation />
+
+      <div className="max-w-6xl mx-auto p-6">
+        <div className="bg-[#EEEEEE] rounded-lg shadow-sm p-6 mb-6">
+          <h2 className="text-2xl font-bold text-[#254159] mb-6">Available Job Postings</h2>
+
+          {loading ? (
+            <div className="text-center py-8">
+              <p className="text-gray-600">Loading job listings...</p>
             </div>
+          ) : error ? (
+            <div className="bg-red-50 text-red-600 p-4 rounded-md">
+              {error}
+            </div>
+          ) : jobs.length === 0 ? (
+            <div className="text-center py-8 bg-[#F1EEEB] rounded-lg">
+              <p className="text-gray-600">No job listings available at this time.</p>
+              <p className="text-gray-500 text-sm mt-2">Check back later for new opportunities.</p>
+            </div>
+          ) : (
+            <div className="space-y-4">
+              {jobs.map(job => (
+                <JobCard
+                  key={job.id}
+                  job={job}
+                  applied={appliedJobs.includes(job.id)}
+                  handleApply={() => handleApply(job.id, job.title, job.postedBy)}
+                />
+              ))}
+            </div>
+          )}
         </div>
-    );
+      </div>
+    </div>
+  );
 };
 
 export default SeekerJobsPage;
