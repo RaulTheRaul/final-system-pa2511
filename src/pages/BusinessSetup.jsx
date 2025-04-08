@@ -120,9 +120,9 @@ const BusinessSetup = () => {
     };
 
     return (
-        <div className="min-h-screen bg-gray-50 p-4 md:p-8">
-            <div className="max-w-2xl mx-auto bg-white rounded-lg shadow-md p-6 md:p-8">
-                <h1 className="text-2xl font-bold text-blue-600 mb-6">Complete Your Centre Profile</h1>
+        <div className="min-h-screen bg-[#f2ece4] p-4 md:p-8">
+            <div className="max-w-2xl mx-auto bg-[#f2ece4] rounded-lg shadow-md p-6 md:p-8">
+                <h1 className="text-2xl font-bold text-[#254159] mb-6">Complete Your Centre Profile</h1>
                 <p className="text-gray-600 mb-6">
                     Before you can access the platform, please provide some important information about your centre.
                 </p>
@@ -148,7 +148,7 @@ const BusinessSetup = () => {
                             </h2>
                             <div className="space-y-4">
                                 <div>
-                                    <label htmlFor="centreName" className="block text-sm font-medium text-gray-700 mb-1">
+                                    <label htmlFor="centreName" className="block text-sm font-medium text-[#0d1826] mb-1">
                                         Centre Name *
                                     </label>
                                     <input
@@ -158,12 +158,12 @@ const BusinessSetup = () => {
                                         required
                                         value={formData.centreName}
                                         onChange={handleChange}
-                                        className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-blue-500 focus:border-blue-500"
+                                        className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-[#f2be5c] focus:border-[#f2be5c]"
                                     />
                                 </div>
 
                                 <div>
-                                    <label htmlFor="centreAddress" className="block text-sm font-medium text-gray-700 mb-1">
+                                    <label htmlFor="centreAddress" className="block text-sm font-medium text-[#0d1826] mb-1">
                                         Centre Address *
                                     </label>
                                     <input
@@ -174,12 +174,12 @@ const BusinessSetup = () => {
                                         value={formData.centreAddress}
                                         onChange={handleChange}
                                         placeholder="123 Main Street, Suburb, State, Postcode"
-                                        className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-blue-500 focus:border-blue-500"
+                                        className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-[#f2be5c] focus:border-[#f2be5c]"
                                     />
                                 </div>
 
                                 <div>
-                                    <label htmlFor="centrePhone" className="block text-sm font-medium text-gray-700 mb-1">
+                                    <label htmlFor="centrePhone" className="block text-sm font-medium text-[#0d1826] mb-1">
                                         Centre Phone *
                                     </label>
                                     <input
@@ -190,12 +190,12 @@ const BusinessSetup = () => {
                                         value={formData.centrePhone}
                                         onChange={handleChange}
                                         placeholder="+61 x xxxx xxxx"
-                                        className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-blue-500 focus:border-blue-500"
+                                        className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-[#f2be5c] focus:border-[#f2be5c]"
                                     />
                                 </div>
 
                                 <div>
-                                    <label htmlFor="centreType" className="block text-sm font-medium text-gray-700 mb-1">
+                                    <label htmlFor="centreType" className="block text-sm font-medium text-[#0d1826] mb-1">
                                         Centre Type *
                                     </label>
                                     <select
@@ -204,7 +204,7 @@ const BusinessSetup = () => {
                                         required
                                         value={formData.centreType}
                                         onChange={handleChange}
-                                        className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-blue-500 focus:border-blue-500"
+                                        className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-[#f2be5c] focus:border-[#f2be5c]"
                                     >
                                         <option value="childcare">Childcare Center</option>
                                         <option value="long-day-care">Long Day Care</option>
@@ -216,7 +216,7 @@ const BusinessSetup = () => {
                                 </div>
 
                                 <div>
-                                    <label htmlFor="licenseNumber" className="block text-sm font-medium text-gray-700 mb-1">
+                                    <label htmlFor="licenseNumber" className="block text-sm font-medium text-[#0d1826] mb-1">
                                         License Number / Service Approval Number
                                     </label>
                                     <input
@@ -225,12 +225,12 @@ const BusinessSetup = () => {
                                         type="text"
                                         value={formData.licenseNumber}
                                         onChange={handleChange}
-                                        className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-blue-500 focus:border-blue-500"
+                                        className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-[#f2be5c] focus:border-[#f2be5c]"
                                     />
                                 </div>
 
                                 <div>
-                                    <label htmlFor="operatingHours" className="block text-sm font-medium text-gray-700 mb-1">
+                                    <label htmlFor="operatingHours" className="block text-sm font-medium text-[#0d1826] mb-1">
                                         Operating Hours
                                     </label>
                                     <input
@@ -240,12 +240,12 @@ const BusinessSetup = () => {
                                         value={formData.operatingHours}
                                         onChange={handleChange}
                                         placeholder="e.g., Monday-Friday: 7am-6pm"
-                                        className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-blue-500 focus:border-blue-500"
+                                        className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-[#f2be5c] focus:border-[#f2be5c]"
                                     />
                                 </div>
 
                                 <div>
-                                    <label htmlFor="acecqaRating" className="block text-sm font-medium text-gray-700 mb-1">
+                                    <label htmlFor="acecqaRating" className="block text-sm font-medium text-[#0d1826] mb-1">
                                         ACECQA Rating
                                     </label>
                                     <select
@@ -253,7 +253,7 @@ const BusinessSetup = () => {
                                         name="acecqaRating"
                                         value={formData.acecqaRating}
                                         onChange={handleChange}
-                                        className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-blue-500 focus:border-blue-500"
+                                        className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-[#f2be5c] focus:border-[#f2be5c]"
                                     >
                                         <option value="">Select Rating</option>
                                         <option value="Excellent">Excellent</option>
@@ -274,7 +274,7 @@ const BusinessSetup = () => {
                             </h2>
                             <div className="space-y-4">
                                 <div>
-                                    <label htmlFor="teachingApproach" className="block text-sm font-medium text-gray-700 mb-1">
+                                    <label htmlFor="teachingApproach" className="block text-sm font-medium text-[#0d1826] mb-1">
                                         Teaching Approach
                                     </label>
                                     <select
@@ -282,7 +282,7 @@ const BusinessSetup = () => {
                                         name="teachingApproach"
                                         value={formData.teachingApproach}
                                         onChange={handleChange}
-                                        className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-blue-500 focus:border-blue-500"
+                                        className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-[#f2be5c] focus:border-[#f2be5c]"
                                     >
                                         <option value="play-based">Play-Based Learning</option>
                                         <option value="reggio-emilia">Reggio Emilia</option>
@@ -296,7 +296,7 @@ const BusinessSetup = () => {
 
                                 <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                                     <div>
-                                        <label htmlFor="centreCapacity" className="block text-sm font-medium text-gray-700 mb-1">
+                                        <label htmlFor="centreCapacity" className="block text-sm font-medium text-[#0d1826] mb-1">
                                             Centre Capacity (Children)
                                         </label>
                                         <input
@@ -306,12 +306,12 @@ const BusinessSetup = () => {
                                             min="0"
                                             value={formData.centreCapacity}
                                             onChange={handleChange}
-                                            className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-blue-500 focus:border-blue-500"
+                                            className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-[#f2be5c] focus:border-[#f2be5c]"
                                         />
                                     </div>
 
                                     <div>
-                                        <label htmlFor="roomCount" className="block text-sm font-medium text-gray-700 mb-1">
+                                        <label htmlFor="roomCount" className="block text-sm font-medium text-[#0d1826] mb-1">
                                             Number of Rooms
                                         </label>
                                         <input
@@ -321,13 +321,13 @@ const BusinessSetup = () => {
                                             min="0"
                                             value={formData.roomCount}
                                             onChange={handleChange}
-                                            className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-blue-500 focus:border-blue-500"
+                                            className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-[#f2be5c] focus:border-[#f2be5c]"
                                         />
                                     </div>
                                 </div>
 
                                 <div>
-                                    <label htmlFor="staffToChildRatio" className="block text-sm font-medium text-gray-700 mb-1">
+                                    <label htmlFor="staffToChildRatio" className="block text-sm font-medium text-[#0d1826] mb-1">
                                         Staff-to-Child Ratios
                                     </label>
                                     <input
@@ -337,12 +337,12 @@ const BusinessSetup = () => {
                                         value={formData.staffToChildRatio}
                                         onChange={handleChange}
                                         placeholder="e.g., 1:4 for infants, 1:5 for toddlers"
-                                        className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-blue-500 focus:border-blue-500"
+                                        className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-[#f2be5c] focus:border-[#f2be5c]"
                                     />
                                 </div>
 
                                 <div>
-                                    <label htmlFor="staffBenefits" className="block text-sm font-medium text-gray-700 mb-1">
+                                    <label htmlFor="staffBenefits" className="block text-sm font-medium text-[#0d1826] mb-1">
                                         Staff Benefits
                                     </label>
                                     <input
@@ -352,13 +352,13 @@ const BusinessSetup = () => {
                                         value={formData.staffBenefits}
                                         onChange={handleChange}
                                         placeholder="e.g., Professional development, Staff discounts, Flexible hours"
-                                        className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-blue-500 focus:border-blue-500"
+                                        className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-[#f2be5c] focus:border-[#f2be5c]"
                                     />
                                     <p className="text-xs text-gray-500 mt-1">Separate multiple benefits with commas</p>
                                 </div>
 
                                 <div>
-                                    <label htmlFor="careerOpportunities" className="block text-sm font-medium text-gray-700 mb-1">
+                                    <label htmlFor="careerOpportunities" className="block text-sm font-medium text-[#0d1826] mb-1">
                                         Career Progression Opportunities
                                     </label>
                                     <textarea
@@ -368,12 +368,12 @@ const BusinessSetup = () => {
                                         value={formData.careerOpportunities}
                                         onChange={handleChange}
                                         placeholder="Describe career advancement opportunities at your centre"
-                                        className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-blue-500 focus:border-blue-500"
+                                        className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-[#f2be5c] focus:border-[#f2be5c]"
                                     ></textarea>
                                 </div>
 
                                 <div>
-                                    <label htmlFor="centreDescription" className="block text-sm font-medium text-gray-700 mb-1">
+                                    <label htmlFor="centreDescription" className="block text-sm font-medium text-[#0d1826] mb-1">
                                         Centre Description *
                                     </label>
                                     <textarea
@@ -384,7 +384,7 @@ const BusinessSetup = () => {
                                         value={formData.centreDescription}
                                         onChange={handleChange}
                                         placeholder="Tell us about your centre, its philosophy, culture, and what makes it special..."
-                                        className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-blue-500 focus:border-blue-500"
+                                        className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-[#f2be5c] focus:border-[#f2be5c]"
                                     ></textarea>
                                 </div>
                             </div>
@@ -394,7 +394,7 @@ const BusinessSetup = () => {
                             <button
                                 type="submit"
                                 disabled={loading}
-                                className={`w-full py-2 px-4 border border-transparent rounded-md shadow-sm text-white bg-blue-600 hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 ${loading ? "opacity-70 cursor-not-allowed" : ""
+                                className={`w-full py-2 px-4 border border-transparent rounded-md shadow-sm text-white bg-[#254159] hover:bg-[#f2be5c] focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-[#f2be5c] ${loading ? "opacity-70 cursor-not-allowed" : ""
                                     }`}
                             >
                                 {loading ? "Saving..." : "Save and Continue"}

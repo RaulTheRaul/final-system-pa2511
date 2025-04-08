@@ -9,16 +9,16 @@ const SeekerProfilePage = () => {
     const jobseekerInfo = userData?.jobseekerInformation || {};
 
     return (
-        <div className="min-h-screen bg-gray-50">
+        <div className="min-h-screen bg-[#f2ece4]">
             <SeekerNavigation />
 
             <div className="max-w-6xl mx-auto p-6">
-                <div className="bg-white rounded-lg shadow-sm p-6">
+                <div className="bg-[#EEEEEE] rounded-lg shadow-sm p-6">
                     <div className="flex justify-between items-center mb-6">
-                        <h2 className="text-2xl font-bold text-gray-800">Your Profile</h2>
+                        <h2 className="text-2xl font-bold text-[#254159]">Your Profile</h2>
                         <Link
                             to="/seeker/profile/edit"
-                            className="bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-md flex items-center transition-colors"
+                            className="bg-[#26425A] hover:bg-[#f2be5c] text-white px-4 py-2 rounded-md flex items-center transition-colors"
                         >
                             Edit Profile
                         </Link>
@@ -81,10 +81,10 @@ const SeekerProfilePage = () => {
                         )}
 
                         <div className="pt-6 border-t">
-                            <h3 className="text-xl font-semibold text-gray-800 mb-4">Additional Information</h3>
+                            <h3 className="text-xl font-semibold text-[#254159] mb-4">Additional Information</h3>
 
-                            <div className="bg-blue-50 p-4 rounded-md">
-                                <p className="text-gray-700">
+                            <div className="bg-[#EEEEEE] p-4 rounded-md">
+                                <p className="text-[#0D1826]">
                                     Complete your profile with additional information to increase your chances of finding the perfect job:
                                 </p>
                                 <ul className="mt-2 space-y-1 text-gray-700 list-disc list-inside">
@@ -95,7 +95,7 @@ const SeekerProfilePage = () => {
                                 </ul>
                                 <Link
                                     to="/seeker/profile/edit"
-                                    className="text-blue-600 hover:text-blue-800 font-medium inline-block mt-4"
+                                    className="text-[#f2be5c] hover:text-[#26425A] font-medium inline-block mt-4"
                                 >
                                     Complete Profile
                                 </Link>
