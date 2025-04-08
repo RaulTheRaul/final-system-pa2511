@@ -258,7 +258,7 @@ const SeekerProfileEditPage = () => {
             <div className="max-w-6xl mx-auto p-6">
                 <div className="bg-[#EEEEEE] rounded-lg shadow-sm p-6">
                     <div className="flex justify-between items-center mb-6">
-                        <h2 className="text-2xl font-bold text-gray-800">Edit Your Profile</h2>
+                        <h2 className="text-2xl font-bold text-[#254159]">Edit Your Profile</h2>
                         <button
                             onClick={handleCancel}
                             className="text-gray-600 hover:text-gray-800"
@@ -312,7 +312,7 @@ const SeekerProfileEditPage = () => {
                             <button
                                 type="button"
                                 onClick={handleCancel}
-                                className="px-6 py-2 border border-gray-300 rounded-md shadow-sm text-sm font-medium text-gray-700 bg-white hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-500"
+                                className="px-6 py-2 border border-gray-300 rounded-md shadow-sm text-sm font-medium text-gray-700 bg-[#EEEEEE] hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-500"
                             >
                                 Cancel
                             </button>
@@ -320,7 +320,7 @@ const SeekerProfileEditPage = () => {
                             <button
                                 type="submit"
                                 disabled={loading}
-                                className={`px-6 py-2 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-blue-600 hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 ${loading ? "opacity-70 cursor-not-allowed" : ""
+                                className={`px-6 py-2 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-[#26425A] hover:bg-[#f2be5c] focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-[#f2be5c] ${loading ? "opacity-70 cursor-not-allowed" : ""
                                     }`}
                             >
                                 {loading ? "Saving..." : "Save Changes"}

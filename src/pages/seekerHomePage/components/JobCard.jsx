@@ -16,7 +16,7 @@ const JobCard = ({ job, alreadyApplied = false, handleApply, applied }) => {
         className={`px-4 py-2 rounded-md text-sm font-medium transition-colors duration-200 shadow-sm border ${
           applied
             ? "bg-gray-300 text-gray-600 cursor-not-allowed border-gray-300"
-            : "bg-[#284566] text-white hover:bg-[#1f364d] border-transparent"
+            : "bg-[#26425A] text-white hover:bg-[#f2be5c] border-transparent"
         }`}
       >
         {applied ? "✅ Applied" : "Apply"}

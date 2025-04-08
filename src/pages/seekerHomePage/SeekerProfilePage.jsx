@@ -73,7 +73,7 @@ const SeekerProfilePage = () => {
                                 <p className="text-gray-500 italic">Add a bio to tell potential employers about yourself and your experience</p>
                                 <Link
                                     to="/seeker/profile/edit"
-                                    className="text-blue-600 hover:text-blue-800 font-medium inline-block mt-2"
+                                    className="text-[#f2be5c] hover:text-[#26425A] font-medium inline-block mt-2"
                                 >
                                     Add Bio
                                 </Link>

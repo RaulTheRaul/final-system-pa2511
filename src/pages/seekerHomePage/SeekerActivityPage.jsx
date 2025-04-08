@@ -58,7 +58,7 @@ const SeekerActivityPage = () => {
               {applications.map(app => (
                 <div
                   key={app.id}
-                  className="bg-white p-4 rounded shadow flex flex-col md:flex-row md:items-center justify-between border border-gray-200"
+                  className="bg-[#F1EEEB] p-4 rounded shadow flex flex-col md:flex-row md:items-center justify-between border border-gray-200"
                 >
                   <div>
                     <p className="text-[#254159] font-bold text-lg">{app.jobTitle}</p>

@@ -89,7 +89,7 @@ function AuthPage() {
                     <div>
                         <img src="/images/Untitled-5.png" className="bg-no-repeat max-w-s max-h-auto" />
                     </div>
-                    <h2 className="mt-6 text-center text-3xl font-extrabold text-[#0d1826]">
+                    <h2 className="mt-6 text-center text-3xl font-extrabold text-[#254159]">
                         {isLogin ? "Sign in to your account" : "Create a new account"}
                     </h2>
                     <p className="mt-2 text-center text-sm text-gray-600">
