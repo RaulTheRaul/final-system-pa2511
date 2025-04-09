@@ -11,6 +11,10 @@ import SeekerActivityPage from "../pages/seekerHomePage/SeekerActivityPage";
 import SeekerProfilePage from "../pages/seekerHomePage/SeekerProfilePage";
 import SeekerProfileEditPage from "../pages/seekerHomePage/SeekerProfileEditPage";
 
+// Import the business list pages
+import BusinessListPage from "../pages/seekerHomePage/BusinessListPage";
+import BusinessDetailPage from "../pages/seekerHomePage/BusinessDetailPage";
+
 const Router = () => {
     const { currentUser, userData, loading } = useAuth();
     const isUserDataLoading = currentUser && !userData;
@@ -92,6 +96,25 @@ const Router = () => {
                     element={
                         currentUser && userData && isSeeker() ?
                             <SeekerProfileEditPage /> :
+                            <Navigate to="/" replace />
+                    }
+                />
+
+                {/* Business listing routes */}
+                <Route
+                    path="/businesses"
+                    element={
+                        currentUser && userData && isSeeker() ?
+                            <BusinessListPage /> :
+                            <Navigate to="/" replace />
+                    }
+                />
+
+                <Route
+                    path="/businesses/:businessId"
+                    element={
+                        currentUser && userData && isSeeker() ?
+                            <BusinessDetailPage /> :
                             <Navigate to="/" replace />
                     }
                 />
