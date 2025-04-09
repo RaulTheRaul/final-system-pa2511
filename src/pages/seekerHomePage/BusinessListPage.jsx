@@ -49,8 +49,17 @@ const BusinessListPage = () => {
 
             <div className="max-w-6xl mx-auto p-6">
                 <div className="bg-[#EEEEEE] rounded-lg shadow-sm p-6 mb-6">
-                    <h2 className="text-2xl font-bold text-[#254159] mb-6">Childcare Centers</h2>
-
+                    <div className="flex justify-between">
+                        <h2 className="text-2xl font-bold text-[#254159] mb-6">Childcare Centers</h2>
+                        <div className="relative">
+                            <input
+                                type="text"
+                                placeholder="Search and Filter"
+                                className="py-1 pl-5 pr-4 rounded-md border border-gray-300 focus:outline-none focus:ring-2 focus:ring-[#f2be5c] focus:border-transparent"
+                            />
+                        </div>
+                    </div>
+                    
                     {loading ? (
                         <div className="text-center py-8">
                             <p className="text-gray-600">Loading childcare centers...</p>
