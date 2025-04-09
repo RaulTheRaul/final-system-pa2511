@@ -27,7 +27,7 @@ const SeekerNavigation = () => {
                 {/* Top navigation */}
                 <div className="flex justify-between items-center p-1 border-b">
                     <div>
-                        <img src="/images/Untitled-5.png" className="flex items-left bg-no-repeat max-w-xs max-h-auto"/>
+                        <img src="/images/Untitled-5.png" className="flex items-left bg-no-repeat max-w-xs max-h-auto" />
                     </div>
 
                     <div className="flex items-center gap-4">
@@ -71,6 +71,15 @@ const SeekerNavigation = () => {
                             }`}
                     >
                         Profile
+                    </Link>
+                    <Link
+                        to="/businesses"
+                        className={`py-2 px-4 font-medium transition-colors ${isActive("/businesses")
+                            ? "text-[#F2BE5C] border-b-2 border-[#F2BE5C]"
+                            : "text-gray-600 hover:text-[#F2BE5C]"
+                            }`}
+                    >
+                        Businesses
                     </Link>
                 </div>
             </div>
