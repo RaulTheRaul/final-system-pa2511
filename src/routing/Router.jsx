@@ -37,6 +37,11 @@ const Router = () => {
         return userData?.userType === "seeker" || userData?.userType === "jobseeker";
     };
 
+    //Helper function to check if the user is a business
+    const isBussiness = () => {
+        return userData?.userType === "business";
+    };
+
     // Helper function to check if setup is completed
     const needsSetup = () => {
         return currentUser && userData && !userData.setupCompleted;
@@ -123,6 +128,28 @@ const Router = () => {
                     }
                 />
 
+
+                {/* Business routes - separate routes for each section */}
+                <Route 
+                    path="/business/home" //custom route name for easy access
+                    element={
+                        currentUser && userData && isBussiness() ?
+                        <BusinessHome /> :
+                        <Navigate to ="/" replace />
+                    }
+                />
+
+                <Route 
+                    path="/business/profile"
+                    element={
+                        currentUser && userData && isBussiness() ?
+                        <BusinessProfile /> :
+                        <Navigate to ="/" replace />
+                    }
+                />
+                
+
+
                 {/* Dashboard as home route - redirect to appropriate dashboard */}
                 <Route
                     path="/"
@@ -134,7 +161,7 @@ const Router = () => {
                                         <Navigate to="/setup" replace />
                                     ) : (
                                         <BusinessHome />
-                                    )
+                                    ) 
                                 ) : isSeeker() ? (
                                     <Navigate to="/seeker/jobs" replace />
                                 ) : (
