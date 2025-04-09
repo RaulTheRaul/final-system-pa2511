@@ -38,7 +38,7 @@ const BusinessProfile = () => {
         <div className="space-y-3">
         <div>
           <p className="text-gray-600 font-medium">Business Name:</p>
-          <p className="text-gray-900">{BusinessInfo?.centreName}</p>
+          <p className="text-gray-900">{BusinessInfo.centreName}</p>
         </div>
 
         <div>

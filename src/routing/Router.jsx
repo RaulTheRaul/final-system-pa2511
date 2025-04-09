@@ -2,21 +2,12 @@ import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
 import { useAuth } from "../context/AuthContext";
 import AuthPage from "../pages/AuthPage";
 import BusinessSetup from "../pages/BusinessSetup";
-<<<<<<< HEAD
-import SeekerHome from "../pages/seekerHomePage/SeekerHome";
-
-import BusinessHome from "../pages/businessHomePage/BusinessHome";
-
-
-
-import JobseekerSetup from "../pages/JobseekerSetup";
-//Change this below to whatever page you want to test.
-//import Dashboard from "../pages/Dashboard";
-import BusinessProfile from "../pages/businessHomePage/tabs/BusinessProfile";
-=======
 import Dashboard from "../pages/Dashboard";
 import JobseekerSetup from "../pages/JobseekerSetup";
->>>>>>> origin/main
+
+// Import the business pages
+import BusinessProfile from "../pages/businessHomePage/tabs/BusinessProfile";
+import BusinessHome from "../pages/businessHomePage/BusinessHome";
 
 // Import the seeker pages
 import SeekerJobsPage from "../pages/seekerHomePage/SeekerJobsPage";
@@ -119,7 +110,7 @@ const Router = () => {
                                     !userData.setupCompleted ? (
                                         <Navigate to="/setup" replace />
                                     ) : (
-                                        <BusinessProfile />
+                                        <BusinessHome />
                                     )
                                 ) : isSeeker() ? (
                                     <Navigate to="/seeker/jobs" replace />
