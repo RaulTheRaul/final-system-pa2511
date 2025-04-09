@@ -2,7 +2,7 @@ import React from "react";
 const QualificationSection = ({ formData, handleChange, handleCheckboxChange }) => {
     return (
         <div>
-            <h3 className="text-lg font-semibold text-gray-800 mb-4 pb-2 border-b">Qualifications & Certifications</h3>
+            <h3 className="text-lg font-semibold text-[#254159] mb-4 pb-2 border-b">Qualifications & Certifications</h3>
             <div className="space-y-4 max-w-2xl">
                 <div>
                     <lable htmlFor="educationLevel" className="block text-sm font-medium text-gray-700 mb-1">
@@ -13,7 +13,7 @@ const QualificationSection = ({ formData, handleChange, handleCheckboxChange }) 
                         name="educationLevel"
                         value={formData.educationLevel}
                         onChange={handleChange}
-                        className="max-w-1/2 px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-blue-500 focus:border-blue-500"
+                        className="max-w-1/2 px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-[#f2be5c] focus:border-[#f2be5c]"
                     >
                         <option value="">Select Education Level</option>
                         <option value="Cert III">Certificate  III in Early Childhood Education</option>
@@ -36,7 +36,7 @@ const QualificationSection = ({ formData, handleChange, handleCheckboxChange }) 
                             type="text"
                             value={formData.educationInstitution}
                             onChange={handleChange}
-                            className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-blue-500 focus:border-blue-500"
+                            className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-[#f2be5c] focus:border-[#f2be5c]"
                         />
                     </div>
 
@@ -52,7 +52,7 @@ const QualificationSection = ({ formData, handleChange, handleCheckboxChange }) 
                             max="2030"
                             value={formData.graduationYear}
                             onChange={handleChange}
-                            className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-blue-500 focus:border-blue-500"
+                            className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-[#f2be5c] focus:border-[#f2be5c]"
                         />
                     </div>
                 </div>
@@ -68,7 +68,7 @@ const QualificationSection = ({ formData, handleChange, handleCheckboxChange }) 
                         value={formData.additionalCourses}
                         onChange={handleChange}
                         placeholder="E.g., Leadership course, Child behavior management"
-                        className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-blue-500 focus:border-blue-500"
+                        className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-[#f2be5c] focus:border-[#f2be5c]"
                     />
                     <p className="text-xs text-gray-500 mt-1">Separate multiple courses with commas</p>
                 </div>
@@ -84,7 +84,7 @@ const QualificationSection = ({ formData, handleChange, handleCheckboxChange }) 
                                 type="checkbox"
                                 checked={formData.firstAid}
                                 onChange={handleCheckboxChange}
-                                className="h-4 w-4 text-blue-600 focus:ring-blue-500 border-gray-300 rounded"
+                                className="h-4 w-4 text-blue-600 focus:ring-[#f2be5c] border-gray-300 rounded"
                             />
                             <label htmlFor="firstAid" className="ml-2 block text-sm font-medium text-gray-700">
                                 First Aid Certificate
@@ -102,7 +102,7 @@ const QualificationSection = ({ formData, handleChange, handleCheckboxChange }) 
                                     type="date"
                                     value={formData.firstAidExpiry}
                                     onChange={handleChange}
-                                    className="w-full px-2 py-1 text-sm border border-gray-300 rounded-md focus:outline-none focus:ring-blue-500 focus:border-blue-500"
+                                    className="w-full px-2 py-1 text-sm border border-gray-300 rounded-md focus:outline-none focus:ring-[#f2be5c] focus:border-[#f2be5c]"
                                 />
                             </div>
                         )}
@@ -116,7 +116,7 @@ const QualificationSection = ({ formData, handleChange, handleCheckboxChange }) 
                                 type="checkbox"
                                 checked={formData.childProtection}
                                 onChange={handleCheckboxChange}
-                                className="h-4 w-4 text-blue-600 focus:ring-blue-500 border-gray-300 rounded"
+                                className="h-4 w-4 text-blue-600 focus:ring-[#f2be5c] border-gray-300 rounded"
                             />
                             <label htmlFor="childProtection" className="ml-2 block text-sm font-medium text-gray-700">
                                 Child Protection Certificate
@@ -134,7 +134,7 @@ const QualificationSection = ({ formData, handleChange, handleCheckboxChange }) 
                                     type="date"
                                     value={formData.childProtectionExpiry}
                                     onChange={handleChange}
-                                    className="w-full px-2 py-1 text-sm border border-gray-300 rounded-md focus:outline-none focus:ring-blue-500 focus:border-blue-500"
+                                    className="w-full px-2 py-1 text-sm border border-gray-300 rounded-md focus:outline-none focus:ring-[#f2be5c] focus:border-[#f2be5c]"
                                 />
                             </div>
                         )}
@@ -148,7 +148,7 @@ const QualificationSection = ({ formData, handleChange, handleCheckboxChange }) 
                                 type="checkbox"
                                 checked={formData.anaphylaxis}
                                 onChange={handleCheckboxChange}
-                                className="h-4 w-4 text-blue-600 focus:ring-blue-500 border-gray-300 rounded"
+                                className="h-4 w-4 text-blue-600 focus:ring-[#f2be5c] border-gray-300 rounded"
                             />
                             <label htmlFor="anaphylaxis" className="ml-2 block text-sm font-medium text-gray-700">
                                 Anaphylaxis Management
@@ -166,7 +166,7 @@ const QualificationSection = ({ formData, handleChange, handleCheckboxChange }) 
                                     type="date"
                                     value={formData.anaphylaxisExpiry}
                                     onChange={handleChange}
-                                    className="w-full px-2 py-1 text-sm border border-gray-300 rounded-md focus:outline-none focus:ring-blue-500 focus:border-blue-500"
+                                    className="w-full px-2 py-1 text-sm border border-gray-300 rounded-md focus:outline-none focus:ring-[#f2be5c] focus:border-[#f2be5c]"
                                 />
                             </div>
                         )}
@@ -180,7 +180,7 @@ const QualificationSection = ({ formData, handleChange, handleCheckboxChange }) 
                                 type="checkbox"
                                 checked={formData.asthma}
                                 onChange={handleCheckboxChange}
-                                className="h-4 w-4 text-blue-600 focus:ring-blue-500 border-gray-300 rounded"
+                                className="h-4 w-4 text-blue-600 focus:ring-[#f2be5c] border-gray-300 rounded"
                             />
                             <label htmlFor="asthma" className="ml-2 block text-sm font-medium text-gray-700">
                                 Asthma Management
@@ -198,7 +198,7 @@ const QualificationSection = ({ formData, handleChange, handleCheckboxChange }) 
                                     type="date"
                                     value={formData.asthmaExpiry}
                                     onChange={handleChange}
-                                    className="w-full px-2 py-1 text-sm border border-gray-300 rounded-md focus:outline-none focus:ring-blue-500 focus:border-blue-500"
+                                    className="w-full px-2 py-1 text-sm border border-gray-300 rounded-md focus:outline-none focus:ring-[#f2be5c] focus:border-[#f2be5c]"
                                 />
                             </div>
                         )}

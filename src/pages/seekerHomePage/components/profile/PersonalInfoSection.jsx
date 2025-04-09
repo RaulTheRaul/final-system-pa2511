@@ -3,7 +3,7 @@ import React from "react";
 const PersonalInfoSection = ({ formData, handleChange, handleCheckboxChange }) => {
     return (
         <div>
-            <h3 className="text-lg font-semibold text-gray-800 mb-4 pb-2 border-b">Personal Information</h3>
+            <h3 className="text-lg font-semibold text-[#254159] mb-4 pb-2 border-b">Personal Information</h3>
             <div className="space-y-4 max-w-2xl">
                 <div>{/*Input to change Full name*/}
                     <label htmlFor="fullName" className="block text-sm font-medium text-gray-700 mb-1">
@@ -15,7 +15,7 @@ const PersonalInfoSection = ({ formData, handleChange, handleCheckboxChange }) =
                         value={formData.fullName}
                         onChange={handleChange}
                         placeholder="Please provide full name."
-                        className="max-w-1/2 px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-blue-500 focus:border-blue-500"
+                        className="max-w-1/2 px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-[#f2be5c] focus:border-[#f2be5c]"
                     />
                 </div>
 
@@ -29,7 +29,7 @@ const PersonalInfoSection = ({ formData, handleChange, handleCheckboxChange }) =
                         value={formData.preferredName}
                         onChange={handleChange}
                         placeholder="optional preferred name"
-                        className="max-w-1/2 px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-blue-500 focus:border-blue-500"
+                        className="max-w-1/2 px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-[#f2be5c] focus:border-[#f2be5c]"
                     />
                 </div>
 
@@ -43,7 +43,7 @@ const PersonalInfoSection = ({ formData, handleChange, handleCheckboxChange }) =
                         value={formData.location}
                         onChange={handleChange}
                         placeholder="city, State"
-                        className="max-w-1/2 px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-blue-500 focus:border-blue-500"
+                        className="max-w-1/2 px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-[#f2be5c] focus:border-[#f2be5c]"
                     />
                 </div>
 
@@ -57,7 +57,7 @@ const PersonalInfoSection = ({ formData, handleChange, handleCheckboxChange }) =
                         type="checkbox"
                         checked={formData.willingToRelocate}
                         onChange={handleCheckboxChange}
-                        className="h-4 w-4 text-blue-600 focus:ring-blue-500 border-gray-300 rounded"
+                        className="h-4 w-4 text-blue-600 focus:ring-[#f2be5c] border-gray-300 rounded"
                     />
                     
                 </div>
@@ -71,7 +71,7 @@ const PersonalInfoSection = ({ formData, handleChange, handleCheckboxChange }) =
                         name="availability"
                         value={formData.availability}
                         onChange={handleChange}
-                        className="max-w-1/2 px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-blue-500 focus:border-blue-500"
+                        className="max-w-1/2 px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-[#f2be5c] focus:border-[#f2be5c]"
                     >
                         <option value="full-time">Full-time</option>
                         <option value="part-time">Part-time</option>

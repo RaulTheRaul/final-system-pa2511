@@ -3,7 +3,7 @@ import React from "react"
 const AdditionalInfoSection = ({ formData, handleChange }) => {
     return (
         <div>
-            <h3 className="text-lg font-semibold text-gray-800 mb-4 pb-2 border-b">Addtional Information</h3>
+            <h3 className="text-lg font-semibold text-[#254159] mb-4 pb-2 border-b">Addtional Information</h3>
 
             <div className="space-y-4 max-w-2xl">
                 <div>
@@ -17,7 +17,7 @@ const AdditionalInfoSection = ({ formData, handleChange }) => {
                         value={formData.bio}
                         onChange={handleChange}
                         placeholder="Tell us about yourself..."
-                        className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-blue-500 focus:border-blue-500"
+                        className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-[#f2be5c] focus:border-[#f2be5c]"
                     ></textarea>
                 </div>
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
@@ -33,7 +33,7 @@ const AdditionalInfoSection = ({ formData, handleChange }) => {
                             step="0.5"
                             value={formData.yearsOfExperience}
                             onChange={handleChange}
-                            className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-blue-500 focus:border-blue-500"
+                            className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-[#f2be5c] focus:border-[#f2be5c]"
                         />
                     </div>
 
@@ -48,7 +48,7 @@ const AdditionalInfoSection = ({ formData, handleChange }) => {
                             value={formData.specialSkills}
                             onChange={handleChange}
                             placeholder="Music, Arts, Foreign Languages"
-                            className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-blue-500 focus:border-blue-500"
+                            className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-[#f2be5c] focus:border-[#f2be5c]"
 
                         />
 
