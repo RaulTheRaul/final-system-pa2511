@@ -5,6 +5,10 @@ import BusinessSetup from "../pages/BusinessSetup";
 import Dashboard from "../pages/Dashboard";
 import JobseekerSetup from "../pages/JobseekerSetup";
 
+// Import the business pages
+import BusinessProfile from "../pages/businessHomePage/tabs/BusinessProfile";
+import BusinessHome from "../pages/businessHomePage/BusinessHome";
+
 // Import the seeker pages
 import SeekerJobsPage from "../pages/seekerHomePage/SeekerJobsPage";
 import SeekerActivityPage from "../pages/seekerHomePage/SeekerActivityPage";
@@ -129,7 +133,7 @@ const Router = () => {
                                     !userData.setupCompleted ? (
                                         <Navigate to="/setup" replace />
                                     ) : (
-                                        <Dashboard />
+                                        <BusinessHome />
                                     )
                                 ) : isSeeker() ? (
                                     <Navigate to="/seeker/jobs" replace />
