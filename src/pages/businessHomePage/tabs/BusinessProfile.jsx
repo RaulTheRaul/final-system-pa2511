@@ -1,99 +1,94 @@
 import { Link } from "react-router-dom";
 import { useAuth } from "../../../context/AuthContext";
-
-/* //to access tabs
-import ActivityMessages from "./tabs/ActivityMessages";
-import CandidateFeed from "./pages/businessHomePage/tabs/CandidateFeed";
-import TokenDashboard from "./pages/tabs/TokenDashboard";
-*/
+import BusinessNavigation from "../components/BusinessNavigation";
 
 const BusinessProfile = () => {
-    //const [activeTab, setActiveTab] = useState("");
-    const { userData } = useAuth();
+    const { userData, currentUser } = useAuth();
 
     // Check if we have business information
     const BusinessInfo = userData?.businessInformation || {};
 
     return (
+      <div className="min-h-screen bg-[#f2ece4]"> 
+        <BusinessNavigation />
+      
+      
+      <div className="max-w-6xl mx-auto p-6">
+                <div className="bg-[#EEEEEE] rounded-lg shadow-sm p-6">
+                    <div className="flex justify-between items-center mb-6">
+                        <h2 className="text-2xl font-bold text-[#254159]">Your Profile</h2>
+                        
+                        {/*This is for the edit profile function. 
+                          Note: Will be added soon
+                        <Link
+                            to="[businsess edit profile path]"
+                            className="bg-[#26425A] hover:bg-[#f2be5c] text-white px-4 py-2 rounded-md flex items-center transition-colors"
+                        >
+                            Edit Profile
+                        </Link> */}
+                    </div>
+                
+      <div className="space-y-6">
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
 
-    <div className="bg-white p-6 rounded-lg shadow-sm">
-        <h2 className="text-xl font-semibold mb-2">Business Overview</h2>
-        
-          {/* Tab Content or Nav bar 
-          <div className="mt-4">
-            {activeTab === "Activity" && <ActivityMessages />}
-            {activeTab === "Candidate Feed" && <CandidateFeed />}
-            {activeTab === "Token Dashboard" && <TokenDashboard />}
-        </div>
-*/}
-        {/*This will display the business logo*/}
-        <a href ="">
-          <img alt="Business logo"
-               src=""
-               className="object-non" rounded-full/>
-        </a>
-
-
-        {/*This will display all the business details*/}
-        <div className="space-y-3">
-        <div>
-          <p className="text-gray-600 font-medium">Business Name:</p>
-          <p className="text-gray-900">{BusinessInfo.centreName}</p>
-        </div>
-
-        <div>
-          <p className="text-gray-600 font-medium">Rating:</p>
-          <p className="text-gray-900">{BusinessInfo.acecqaRating}</p>
-        </div>
-
-        {userData?.userType === "business" && userData?.businessInformation && (
-          <>
-            <div>
-              <p className="text-gray-600 font-medium">Centre Address:</p>
-              <p className="text-gray-900">{userData.businessInformation.centreAddress || "Not provided"}</p>
-            </div>
-
-             <div>
-                <p className="text-gray-600 font-medium">Centre Type:</p>
-                <p className="text-gray-900 capitalize">{userData.businessInformation.centreType || "Not specified"}</p>
+            <div className="space-y-4">
+              <div> {/* Name */}
+                <p className="text-gray-600 font-medium">Business Name:</p>
+                <p className="text-gray-900">{BusinessInfo?.centreName}</p>
               </div>
-          </>
-        )}
 
-        <div>
-            <p className="text-gray-600 font-medium">Teaching Approach:</p>
-            <p className="text-gray-900">{BusinessInfo.teachingApproach  || "Not provided"}</p>
-        </div>
+              <div> {/* Email */}
+                <p className="text-gray-600 font-medium">Email:</p>
+                <p className="text-gray-900">{currentUser?.email}</p>
+              </div>
 
-        <div>
-          <p className="text-gray-600 font-medium">Desription:</p>
-          <p className="text-gray-900">{BusinessInfo.centreDescription || "Not provided"}</p>
-        </div>
+              <div> {/* Contact */}
+                <p className="text-gray-600 font-medium">Phone Number:</p>
+                <p className="text-gray-900">{BusinessInfo.centrePhone}</p>
+              </div>
 
-        <div>
-          <p className="text-gray-600 font-medium">Career Opportunities:</p>
-          <p className="text-gray-900">{BusinessInfo.careerOpportunities || "Not provided"}</p>
-        </div>
+              <div> {/* Location */}
+                <p className="text-gray-600 font-medium">Location:</p>
+                <p className="text-gray-900">{BusinessInfo.centreAddress}</p>
+              </div>
+            </div>
+          
+            <div className="space-y-4">
+              <div> {/* Rating */}
+                <p className="text-gray-600 font-medium"> ACECQA Rating: </p>
+                <p className="text-gray-900">{BusinessInfo.acecqaRating}</p>
+              </div>
+
+              <div> {/* License */}
+                <p className="text-gray-600 font-medium">License Number: </p>
+                <p className="text-gray-900">{BusinessInfo.licenseNumber}</p>
+              </div>
+          
+              <div> {/* Teaching Approach */}
+                <p className="text-gray-600 font-medium">Teaching Approach: </p>
+                <p className="text-gray-900">{BusinessInfo.teachingApproach}</p>
+              </div>
+
+              <div> {/* Type */}
+                <p className="text-gray-600 font-medium">Centre Type: </p>
+                <p className="text-gray-900">{BusinessInfo.centreType}</p>
+              </div>
+            </div>
+      </div>
         
-        <div>
-          <p className="text-gray-600 font-medium">Contact Details:</p>
-          <p className="text-gray-900">Email:{userData.email || "Not provided"}</p>
-          <p className="text-gray-900">Phone:{BusinessInfo?.centrePhone || "Not provided"}</p>
+              <div className="space-y-4">
+                  {BusinessInfo.centreDescription && (
+                        <div className="pt-4 border-t">
+                            <p className="text-gray-600 font-medium">Description:</p>
+                            <p className="text-gray-900 mt-2 whitespace-pre-line">{BusinessInfo.centreDescription}</p>
+              </div>
+                  )}
+
+              </div>
+            </div>
+          </div>
         </div>
-
-        <div className="mt-6">
-        <Link to="/business/profile" className="text-blue-600 hover:text-blue-800 font-medium">
-          View/Edit Full Profile
-        </Link>
-        </div>
-        </div> {/* end of business info*/}
-    </div>
-
-    //This section will display the business vacencies
-
-    //This section will display the customers review ratings
-
-
+      </div>
     );
 };
 
