@@ -5,7 +5,7 @@ import { db } from "../../firebase/config";
 import { useAuth } from "../../context/AuthContext";
 import { Link } from "react-router-dom";
 
-//
+//aa
 const BusinessHome = () => {
     //const { userData } = useAuth();
     const [jobSeekers, setJobSeekers] = useState([]);
