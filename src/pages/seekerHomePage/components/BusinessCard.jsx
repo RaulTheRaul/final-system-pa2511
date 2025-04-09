@@ -40,7 +40,7 @@ const BusinessCard = ({ business }) => {
 
                     <Link
                         to={`/businesses/${business.id}`}
-                        className="px-4 py-2 bg-[#284566] text-white rounded-md hover:bg-[#1f364d] transition-colors text-center mt-4"
+                        className="px-4 py-2 bg-[#254159] text-white rounded-md hover:bg-[#f2be5c] transition-colors text-center mt-4"
                     >
                         View Details
                     </Link>
