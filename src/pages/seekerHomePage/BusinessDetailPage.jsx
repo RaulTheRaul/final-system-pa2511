@@ -101,7 +101,7 @@ const BusinessDetailPage = () => {
             <div className="max-w-6xl mx-auto p-6">
                 <button
                     onClick={handleGoBack}
-                    className="mb-4 flex items-center text-[#254159] hover:text-[#1f364d]"
+                    className="mb-4 flex items-center text-[#254159] hover:text-[#f2be5c]"
                 >
                     ← Back to Businesses
                 </button>
