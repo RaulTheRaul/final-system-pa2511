@@ -204,7 +204,7 @@ const BusinessDetailPage = () => {
                         ) : (
                             <div className="space-y-4">
                                 {jobs.map(job => (
-                                    <div key={job.id} className="bg-white p-4 rounded-md shadow-sm border border-gray-200">
+                                    <div key={job.id} className="bg-[#F1EEEB] p-4 rounded-md shadow-sm border border-gray-200">
                                         <h4 className="text-lg font-semibold text-[#254159]">{job.title}</h4>
                                         <p className="text-sm text-gray-600 mb-2">{job.description}</p>
                                         <Link
