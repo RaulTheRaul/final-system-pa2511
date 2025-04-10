@@ -8,6 +8,7 @@ import JobseekerSetup from "../pages/JobseekerSetup";
 // Import the business pages
 import BusinessProfile from "../pages/businessHomePage/tabs/BusinessProfile";
 import BusinessHome from "../pages/businessHomePage/BusinessHome";
+import BusinessProfileEdit from "../pages/businessHomePage/BusinessProfileEdit";
 
 // Import the seeker pages
 import SeekerJobsPage from "../pages/seekerHomePage/SeekerJobsPage";
@@ -148,6 +149,14 @@ const Router = () => {
                     }
                 />
                 
+                <Route
+                    path="/business/profile/edit"
+                    element={
+                        currentUser && userData && isBussiness() ?
+                        <BusinessProfileEdit /> :
+                        <Navigate to ="/" replace />
+                    }
+                />
 
 
                 {/* Dashboard as home route - redirect to appropriate dashboard */}

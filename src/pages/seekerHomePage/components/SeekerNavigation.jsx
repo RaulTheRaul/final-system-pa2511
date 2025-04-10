@@ -27,7 +27,9 @@ const SeekerNavigation = () => {
                 {/* Top navigation */}
                 <div className="flex justify-between items-center p-1 border-b">
                     <div>
+                        <a href="/seeker/jobs">
                         <img src="/images/Untitled-5.png" className="flex items-left bg-no-repeat max-w-xs max-h-auto" />
+                        </a>
                     </div>
 
                     <div className="flex items-center gap-4">

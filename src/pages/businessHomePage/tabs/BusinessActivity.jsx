@@ -1,13 +1,13 @@
 import { Link } from "react-router-dom";
 import { useAuth } from "../../../context/AuthContext";
 
-const CandidateFeed = () => {
+const BusinessActivity = () => {
 
     return(
         <div>
-            <p>This is the Candidate Feed</p>
+            <p>This is the activity board</p>
         </div>
     );
 };
 
-export default CandidateFeed;
+export default BusinessActivity;
