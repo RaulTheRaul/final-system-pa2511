@@ -1,4 +1,4 @@
-const SeekerCard = () => {
+const SeekerCard = ({recruited}) => {
     
     //Get job seeker information
     const seekerInfo = userData?.seekerInformation || {};
@@ -12,6 +12,18 @@ return (
         <p className="text-gray-600">Start: {seekerInfo?.immediateStart}</p>
         <p className="text-gray-600">Transport: {seekerInfo?.transportMethod}</p>
         <p className="text-gray-600">Bio: {seekerInfo?.bio}</p>
+    
+        <button
+        onClick={handleRecruit}
+        disabled={recruited}
+        className={`px-4 py-2 rounded-md text-sm font-medium transition-colors duration-200 shadow-sm border ${
+          recruited
+            ? "bg-gray-300 text-gray-600 cursor-not-allowed border-gray-300"
+            : "bg-[#26425A] text-white hover:bg-[#f2be5c] border-transparent"
+        }`}
+      >
+        {recruited ? "✅ Recruited" : "Not Recruited"}
+      </button>
     </div>
 );
 

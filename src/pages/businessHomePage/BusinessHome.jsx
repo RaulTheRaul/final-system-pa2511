@@ -3,7 +3,7 @@ import { useEffect, useState } from "react";
 import { collection, getDocs, query, where } from "firebase/firestore";
 import { db } from "../../firebase/config";
 import BusinessNavigation from "./components/BusinessNavigation";
-
+import SeekerCard from "./components/SeekerCard";
 import { useAuth } from "../../context/AuthContext";
 import { Link } from "react-router-dom";
 
@@ -99,28 +99,27 @@ const BusinessHome = () => {
                         </div>
                     ) : (
 
-                        <div className="space-y-4">
+                        <div className="space-y-4 ">
                             {jobSeekers.map((jobseeker) => (
-
                                 //create a box for each seeker using their id
                                 <div
                                     key={jobseeker.id}
-                                    className="bg-[#F1EEEB] p-6 rounded-lg shadow-sm"
+                                    className="bg-[#F1EEEB] p-6 rounded-lg shadow-sm flex items-center justify-between"
                                 >
-                                    {/*display relevent information*/}
-                                    <h3 className="text-xl font-semibold text-[#254159]">{jobseeker?.fullName}</h3>
-                                    <p className="text-gray-700">Availability: {jobseeker?.jobseekerInformation?.availability}</p>
-                                    <p className="text-gray-700">Shift Preference: {jobseeker?.jobseekerInformation?.shiftPreference}</p>
-                                    <p className="text-gray-700">Preferred Role: {jobseeker?.jobseekerInformation?.preferredRole} </p>
-                                    <p className="text-gray-600">Bio: {jobseeker?.jobseekerInformation?.bio}</p>
-
-                                    {/* Link to the user profile 
-                    <Link
-                        to="../pages/seekerHomePage/SeekerProfilePage"
-                    >
-                        View Profile
-                    </Link>*/}
+                                    <div> {/*display relevent information*/}
+                                        <h3 className="text-xl font-ssemibold text-[#254159]">{jobseeker?.fullName}</h3>
+                                        <p className="text-gray-700">Availability: {jobseeker?.jobseekerInformation?.availability}</p>
+                                        <p className="text-gray-700">Shift Preference: {jobseeker?.jobseekerInformation?.shiftPreference}</p>
+                                        <p className="text-gray-700">Preferred Role: {jobseeker?.jobseekerInformation?.preferredRole} </p>
+                                        <p className="text-gray-600">Bio: {jobseeker?.jobseekerInformation?.bio}</p>
+                                    </div>
+                                    <button className="px-4 py-2 rounded-md text-sm font-medium transition-colors duration-200 shadow-sm border
+                                                       bg-[#26425A] text-white hover:bg-[#f2be5c] border-transparent ">
+                                        5 tokens to reveal contact information 
+                                    </button>
+                                
                                 </div>
+                               
                             ))}
                         </div>
                     )}
