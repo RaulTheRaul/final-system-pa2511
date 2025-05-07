@@ -2,13 +2,13 @@
 import { useEffect, useState } from "react";
 import { collection, getDocs, query, where } from "firebase/firestore";
 import { db } from "../../firebase/config";
+import { useAuth } from "../../context/AuthContext";
+
 import BusinessNavigation from "./components/BusinessNavigation";
 import SeekerCard from "./components/SeekerCard";
-import { useAuth } from "../../context/AuthContext";
-import { Link } from "react-router-dom";
 
-//aa
-const BusinessHome = () => {
+
+const BusinessRecruitSeeker = () => {
     //const { userData } = useAuth();
     const [jobSeekers, setJobSeekers] = useState([]);
     const [loading, setLoading] = useState(true);
@@ -54,15 +54,11 @@ const BusinessHome = () => {
         fetchSeekers();
     }, []);
 
+    
     if (error) {
         return <div className="bg-red-50 text-red-600 p-4 rounded-md">
             {error}
         </div>
-    }
-
-    //This function allows a business to recruit a seeker
-    const handleRecruit = async () => {
-
     }
 
     return (
@@ -98,30 +94,17 @@ const BusinessHome = () => {
                             <p className="text-gray-500 text-sm mt-2">Check back later for new applicants.</p>
                         </div>
                     ) : (
+                        <div className="space-y-4">
+                            
+                            {jobSeekers.map((seekerInfo) =>(
+                                <SeekerCard 
+                                key={seekerInfo.id} 
+                                seekerInfo = {seekerInfo} 
+                                />
 
-                        <div className="space-y-4 ">
-                            {jobSeekers.map((jobseeker) => (
-                                //create a box for each seeker using their id
-                                <div
-                                    key={jobseeker.id}
-                                    className="bg-[#F1EEEB] p-6 rounded-lg shadow-sm flex items-center justify-between"
-                                >
-                                    <div> {/*display relevent information*/}
-                                        <h3 className="text-xl font-ssemibold text-[#254159]">{jobseeker?.fullName}</h3>
-                                        <p className="text-gray-700">Availability: {jobseeker?.jobseekerInformation?.availability}</p>
-                                        <p className="text-gray-700">Shift Preference: {jobseeker?.jobseekerInformation?.shiftPreference}</p>
-                                        <p className="text-gray-700">Preferred Role: {jobseeker?.jobseekerInformation?.preferredRole} </p>
-                                        <p className="text-gray-600">Bio: {jobseeker?.jobseekerInformation?.bio}</p>
-                                    </div>
-                                    <button className="px-4 py-2 rounded-md text-sm font-medium transition-colors duration-200 shadow-sm border
-                                                       bg-[#26425A] text-white hover:bg-[#f2be5c] border-transparent ">
-                                        5 tokens to reveal contact information 
-                                    </button>
-                                
-                                </div>
-                               
                             ))}
                         </div>
+                         
                     )}
                 </div>
             </div>
@@ -129,4 +112,4 @@ const BusinessHome = () => {
     );
 };
 
-export default BusinessHome;
+export default BusinessRecruitSeeker;

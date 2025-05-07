@@ -27,7 +27,7 @@ const BusinessNavigation = () => {
                 {/* Top navigation */}
                 <div className="flex justify-between items-center p-1 border-b">
                     <div>
-                        <a href="/business/home"> {/* Redirect to home when clicked */}
+                        <a href="/business/recruit"> {/* Redirect to home when clicked  Note: Needs to be changed to activity*/}
                         <img src="/images/Untitled-5.png" className="flex items-left bg-no-repeat max-w-xs max-h-auto" />
                         </a>
                     </div>
@@ -47,8 +47,8 @@ const BusinessNavigation = () => {
         {/* Main navigation - EDIT*/}
         <div className="flex space-x-6 p-4">
                     <Link
-                        to="/business/home"
-                        className={`py-2 px-4 font-medium transition-colors ${isActive("/business/home")
+                        to="/business/recruit"
+                        className={`py-2 px-4 font-medium transition-colors ${isActive("/business/recruit")
                             ? "text-[#F2BE5C] border-b-2 border-[#F2BE5C]"
                             : "text-gray-600 hover:text-[#F2BE5C]"
                             }`}
