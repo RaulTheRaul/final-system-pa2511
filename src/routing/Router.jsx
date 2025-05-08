@@ -7,7 +7,7 @@ import JobseekerSetup from "../pages/JobseekerSetup";
 
 // Import the business pages
 import BusinessProfile from "../pages/businessHomePage/tabs/BusinessProfile";
-import BusinessHome from "../pages/businessHomePage/BusinessHome";
+import BusinessRecruitSeeker from "../pages/businessHomePage/BusinessRecruitSeeker";
 import BusinessProfileEdit from "../pages/businessHomePage/BusinessProfileEdit";
 
 // Import the seeker pages
@@ -132,10 +132,10 @@ const Router = () => {
 
                 {/* Business routes - separate routes for each section */}
                 <Route 
-                    path="/business/home" //custom route name for easy access
+                    path="/business/recruit" //custom route name for easy access
                     element={
                         currentUser && userData && isBussiness() ?
-                        <BusinessHome /> :
+                        <BusinessRecruitSeeker /> :
                         <Navigate to ="/" replace />
                     }
                 />
@@ -169,7 +169,7 @@ const Router = () => {
                                     !userData.setupCompleted ? (
                                         <Navigate to="/setup" replace />
                                     ) : (
-                                        <BusinessHome />
+                                        <BusinessRecruitSeeker />
                                     ) 
                                 ) : isSeeker() ? (
                                     <Navigate to="/seeker/jobs" replace />
