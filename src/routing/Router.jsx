@@ -9,6 +9,7 @@ import JobseekerSetup from "../pages/JobseekerSetup";
 import BusinessProfile from "../pages/businessHomePage/tabs/BusinessProfile";
 import BusinessHome from "../pages/businessHomePage/BusinessHome";
 import BusinessProfileEdit from "../pages/businessHomePage/BusinessProfileEdit";
+import TokenManagement from "../pages/businessHomePage/tabs/TokenManagement"; // Import the TokenManagement component
 
 // Import the seeker pages
 import SeekerJobsPage from "../pages/seekerHomePage/SeekerJobsPage";
@@ -131,33 +132,42 @@ const Router = () => {
 
 
                 {/* Business routes - separate routes for each section */}
-                <Route 
+                <Route
                     path="/business/home" //custom route name for easy access
                     element={
                         currentUser && userData && isBussiness() ?
-                        <BusinessHome /> :
-                        <Navigate to ="/" replace />
+                            <BusinessHome /> :
+                            <Navigate to="/" replace />
                     }
                 />
 
-                <Route 
+                <Route
                     path="/business/profile"
                     element={
                         currentUser && userData && isBussiness() ?
-                        <BusinessProfile /> :
-                        <Navigate to ="/" replace />
+                            <BusinessProfile /> :
+                            <Navigate to="/" replace />
                     }
                 />
-                
+
                 <Route
                     path="/business/profile/edit"
                     element={
                         currentUser && userData && isBussiness() ?
-                        <BusinessProfileEdit /> :
-                        <Navigate to ="/" replace />
+                            <BusinessProfileEdit /> :
+                            <Navigate to="/" replace />
                     }
                 />
 
+                {/* Token Management Route */}
+                <Route
+                    path="/business/tokens"
+                    element={
+                        currentUser && userData && isBussiness() ?
+                            <TokenManagement /> :
+                            <Navigate to="/" replace />
+                    }
+                />
 
                 {/* Dashboard as home route - redirect to appropriate dashboard */}
                 <Route
@@ -170,7 +180,7 @@ const Router = () => {
                                         <Navigate to="/setup" replace />
                                     ) : (
                                         <BusinessHome />
-                                    ) 
+                                    )
                                 ) : isSeeker() ? (
                                     <Navigate to="/seeker/jobs" replace />
                                 ) : (

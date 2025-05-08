@@ -73,7 +73,7 @@ const BusinessHome = () => {
             <div className="max-w-6xl mx-auto p-6">
                 <div className=" bg-[#EEEEEE] rounded-lg shadow-sm p-6 mb-6">
                     <div className="flex justify-between">
-                    <h2 className="text-2xl font-bold text-[#254159] mb-6">Available Applicants</h2>
+                        <h2 className="text-2xl font-bold text-[#254159] mb-6">Available Applicants</h2>
                         <div className="relative">
                             <input
                                 type="text"
@@ -115,11 +115,11 @@ const BusinessHome = () => {
                                     </div>
                                     <button className="px-4 py-2 rounded-md text-sm font-medium transition-colors duration-200 shadow-sm border
                                                        bg-[#26425A] text-white hover:bg-[#f2be5c] border-transparent ">
-                                        5 tokens to reveal contact information 
+                                        5 tokens to reveal contact information
                                     </button>
-                                
+
                                 </div>
-                               
+
                             ))}
                         </div>
                     )}

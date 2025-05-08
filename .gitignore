@@ -6,20 +6,46 @@ yarn-debug.log*
 yarn-error.log*
 pnpm-debug.log*
 lerna-debug.log*
+firebase-debug.log*
+ui-debug.log*
+firestore-debug.log
+pubsub-debug.log
 
+# Node dependencies and build outputs
 node_modules
 dist
 dist-ssr
 *.local
 
+# Firebase emulator files
+.firebase/
+.emulator-data/
+**/.emulators/
+**/emulator-data/
+.runtimeconfig.json
+*-debug.log
+.emulator_data/
+
+# Environment files
+.env
+.env.local
+.env.development
+.env.production
+
 # Editor directories and files
 .vscode/*
 !.vscode/extensions.json
 .idea
-.env
 .DS_Store
 *.suo
 *.ntvs*
 *.njsproj
 *.sln
 *.sw?
+
+# Firebase cache
+.firebase/
+**/firebase-export-*
+
+# Firestore backups from emulator
+**/firestore-data/
