@@ -54,7 +54,7 @@ const BusinessRecruitSeeker = () => {
         fetchSeekers();
     }, []);
 
-    
+
     if (error) {
         return <div className="bg-red-50 text-red-600 p-4 rounded-md">
             {error}
@@ -69,7 +69,7 @@ const BusinessRecruitSeeker = () => {
             <div className="max-w-6xl mx-auto p-6">
                 <div className=" bg-[#EEEEEE] rounded-lg shadow-sm p-6 mb-6">
                     <div className="flex justify-between">
-                    <h2 className="text-2xl font-bold text-[#254159] mb-6">Available Applicants</h2>
+                        <h2 className="text-2xl font-bold text-[#254159] mb-6">Available Applicants</h2>
                         <div className="relative">
                             <input
                                 type="text"
@@ -95,16 +95,16 @@ const BusinessRecruitSeeker = () => {
                         </div>
                     ) : (
                         <div className="space-y-4">
-                            
-                            {jobSeekers.map((seekerInfo) =>(
-                                <SeekerCard 
-                                key={seekerInfo.id} 
-                                seekerInfo = {seekerInfo} 
+
+                            {jobSeekers.map((seekerInfo) => (
+                                <SeekerCard
+                                    key={seekerInfo.id}
+                                    seekerInfo={seekerInfo}
                                 />
 
                             ))}
                         </div>
-                         
+
                     )}
                 </div>
             </div>
