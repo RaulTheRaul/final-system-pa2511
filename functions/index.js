@@ -146,12 +146,20 @@ exports.stripeWebhook = onRequest(STRIPE_SECRETS, async (request, response) => {
     //###### Verify Signature ######
     const sig = request.headers["stripe-signature"];
     let event;
-    if (!sig || !request.rawBody) { logger.error("[stripeWebhook Func] Missing signature header or raw body."); response.status(400).send("Webhook Error: Missing signature or body."); return; }
+    if (!sig || !request.rawBody) {
+        logger.error("[stripeWebhook Func] Missing signature header or raw body.");
+        response.status(400).send("Webhook Error: Missing signature or body.");
+        return;
+    }
     try {
         // Verify using the secret read from process.env
         event = stripeInstance.webhooks.constructEvent(request.rawBody, sig, liveWebhookSecret);
         logger.log(`[stripeWebhook Func] Webhook event verified: ${event.id}, Type: ${event.type}`);
-    } catch (err) { logger.error("⚠️ [stripeWebhook Func] Webhook signature verification failed.", err.message); response.status(400).send(`Webhook Error: ${err.message}`); return; }
+    } catch (err) {
+        logger.error("⚠️ [stripeWebhook Func] Webhook signature verification failed.", err.message);
+        response.status(400).send(`Webhook Error: ${err.message}`);
+        return;
+    }
     //###### End Verify Signature ######
 
     //###### Process Event ######
@@ -168,7 +176,9 @@ exports.stripeWebhook = onRequest(STRIPE_SECRETS, async (request, response) => {
             logger.log(`[stripeWebhook Func] Listing line items for session: ${session.id}`);
             // Use the local stripeInstance initialized with the secret
             const lineItems = await stripeInstance.checkout.sessions.listLineItems(session.id, { limit: 1 });
-            if (!lineItems.data?.length || !lineItems.data[0].price) { throw new Error("Cannot get price details from Stripe."); }
+            if (!lineItems.data?.length || !lineItems.data[0].price) {
+                throw new Error("Cannot get price details from Stripe.");
+            }
             const priceId = lineItems.data[0].price.id;
             const price = await stripeInstance.prices.retrieve(priceId, { expand: ['product'] });
             //###### End Get Line Items & Price ######
@@ -176,9 +186,13 @@ exports.stripeWebhook = onRequest(STRIPE_SECRETS, async (request, response) => {
             //###### Get Token Amount ######
             const tokenAmountStr = price.metadata?.tokenAmount || price.product?.metadata?.tokenAmount;
             logger.log(`[stripeWebhook Func] Found tokenAmount metadata string: ${tokenAmountStr}`);
-            if (!tokenAmountStr) { throw new Error(`Missing tokenAmount metadata for Price ID: ${priceId}`); }
+            if (!tokenAmountStr) {
+                throw new Error(`Missing tokenAmount metadata for Price ID: ${priceId}`);
+            }
             const tokensToAdd = parseInt(tokenAmountStr, 10);
-            if (isNaN(tokensToAdd) || tokensToAdd <= 0) { throw new Error(`Invalid tokenAmount metadata value: '${tokenAmountStr}'`); }
+            if (isNaN(tokensToAdd) || tokensToAdd <= 0) {
+                throw new Error(`Invalid tokenAmount metadata value: '${tokenAmountStr}'`);
+            }
             logger.log(`[stripeWebhook Func] Parsed tokensToAdd: ${tokensToAdd}`);
             //###### End Get Token Amount ######
 
@@ -202,17 +216,22 @@ exports.stripeWebhook = onRequest(STRIPE_SECRETS, async (request, response) => {
                     purchaseDate: admin.firestore.FieldValue.serverTimestamp()
                 }, { merge: true });
                 logger.log(`[stripeWebhook Func] Transaction log created/updated for session ${session.id}`);
-            } catch (transactionError) { logger.error(`[stripeWebhook Func] Error creating transaction log:`, transactionError); }
+            }
+            catch (transactionError) {
+                logger.error(`[stripeWebhook Func] Error creating transaction log:`, transactionError);
+            }
             //###### End Optional Transaction Logging ######
 
-        } catch (error) {
+        }
+        catch (error) {
             // Catch errors from Stripe API calls or Firestore updates
             logger.error(`[stripeWebhook Func] Handler error processing session ${session.id}, user ${userId}:`, error);
             // Respond with 500 so Stripe retries (if appropriate for the error)
             response.status(500).send(`Webhook handler processing error: ${error.message}`);
             return; // Exit after sending error response
         }
-    } else {
+    }
+    else {
         logger.log(`[stripeWebhook Func] Unhandled event type received: ${event.type}`);
     }
     //###### End Process Event ######

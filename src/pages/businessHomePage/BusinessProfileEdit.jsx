@@ -48,7 +48,7 @@ const BusinessProfileEdit = () => {
 
     //Update form data when userData changes or on component mount
     useEffect(() => {
-        if (userData && businessInfo){
+        if (userData && businessInfo) {
             setFormData({
                 //Business Information
                 businessName: userData.businessName || "",
@@ -75,7 +75,7 @@ const BusinessProfileEdit = () => {
             });
         }
 
-    },[userData, businessInfo]);
+    }, [userData, businessInfo]);
 
     //captures user input and changes inputted data when user submits the form
     const handleChange = (e) => {
@@ -107,7 +107,7 @@ const BusinessProfileEdit = () => {
         setSuccess(false);
 
         //Basic Validation
-        if (!formData.businessName || !formData.centreName || !formData.centreAddress){
+        if (!formData.businessName || !formData.centreName || !formData.centreAddress) {
             setError("Please fill out all required fields");
         }
 
@@ -133,7 +133,7 @@ const BusinessProfileEdit = () => {
                 roomCount: formData.roomCount ? Number(formData.roomCount) : null,
                 centreCapacity: formData.centreCapacity ? Number(formData.centreCapacity) : null,
                 staffToChildRatio: formData.staffToChildRatio,
-                centreDescription: formData.centreDescription,
+
 
 
                 //Staff Benefits
@@ -145,7 +145,7 @@ const BusinessProfileEdit = () => {
             };
 
             //if this is a new busiess profile, add createdAt
-            if (!currentUser.createdAt){
+            if (!currentUser.createdAt) {
                 updatedInfo.createdAt = new Date();
             } else {
                 updatedInfo.createdAt = businessInfo.createdAt;
@@ -159,7 +159,7 @@ const BusinessProfileEdit = () => {
                     businessInformation: updatedInfo,
                     setupCompleted: true
                 },
-                    {merge: true}
+                { merge: true }
             );
 
             //Refresh user data
@@ -167,7 +167,7 @@ const BusinessProfileEdit = () => {
             setSuccess(true);
 
             //After delay, redirect back to profile page
-            setTimeout(() =>{
+            setTimeout(() => {
                 navigate("/business/profile");
             }, 1500);
 
@@ -181,77 +181,71 @@ const BusinessProfileEdit = () => {
 
     return (
         <div className="min-h-screen bg-[#f2ece4]">
-        <BusinessNavigation />
+            <BusinessNavigation />
 
-        <div className="max-w-6xl mx-auto p-6">
-            <div className="bg-[#EEEEEE] rounded-lg shadow-sm p-6">
-                <div className="flex justify-between items-center mb-6">
-                    <h2 className="text-2xl font-bold text-[#254159]">Edit Your Profile</h2>
-                    <button
-                        onClick={handleCancel}
-                        className="text-gray-600 hover:text-gray-800"
-                    >
-                        Cancel
-                    </button>
+            <div className="max-w-6xl mx-auto p-6">
+                <div className="bg-[#EEEEEE] rounded-lg shadow-sm p-6">
+                    <div className="flex justify-between items-center mb-6">
+                        <h2 className="text-2xl font-bold text-[#254159]">Edit Your Profile</h2>
+                    </div>
+
+                    {error && (
+                        <div className="bg-red-50 text-red-600 p-4 rounded-md mb-6">
+                            {error}
+                        </div>
+                    )}
+
+                    {success && (
+                        <div className="bg-green-50 text-green-600 p-4 rounded-md mb-6">
+                            Profile successfully updated! Redirecting to profile page...
+                        </div>
+                    )}
+
+                    <form onSubmit={handleSubmit} className="space-y-8">
+                        {/* Business Information Section */}
+                        <BusinessInfoSection
+                            formData={formData}
+                            handleChange={handleChange}
+                            handleCheckboxChange={handleCheckboxChange}
+                        />
+
+                        {/*Centre Information Section*/}
+                        <CentreSection
+                            formData={formData}
+                            handleChange={handleChange}
+                            handleCheckboxChange={handleCheckboxChange}
+                        />
+
+                        {/* Business Additional Info Section */}
+                        <BusinessAdditionalInfoSection
+                            formData={formData}
+                            handleChange={handleChange}
+                            handleCheckboxChange={handleCheckboxChange}
+                        />
+
+                        {/* Form Actions */}
+                        <div className="pt-6 flex gap-4 justify-end">
+                            <button
+                                type="button"
+                                onClick={handleCancel}
+                                className="px-6 py-2 border border-gray-300 rounded-md shadow-sm text-sm font-medium text-gray-700 bg-[#EEEEEE] hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-500"
+                            >
+                                Cancel
+                            </button>
+
+                            <button
+                                type="submit"
+                                disabled={loading}
+                                className={`px-6 py-2 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-[#26425A] hover:bg-[#f2be5c] focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-[#f2be5c] ${loading ? "opacity-70 cursor-not-allowed" : ""
+                                    }`}
+                            >
+                                {loading ? "Saving..." : "Save Changes"}
+                            </button>
+                        </div>
+                    </form>
                 </div>
-
-                {error && (
-                    <div className="bg-red-50 text-red-600 p-4 rounded-md mb-6">
-                        {error}
-                    </div>
-                )}
-
-                {success && (
-                    <div className="bg-green-50 text-green-600 p-4 rounded-md mb-6">
-                        Profile successfully updated! Redirecting to profile page...
-                    </div>
-                )}
-
-                <form onSubmit={handleSubmit} className="space-y-8">
-                    {/* Business Information Section */}
-                    <BusinessInfoSection
-                        formData={formData}
-                        handleChange={handleChange}
-                        handleCheckboxChange={handleCheckboxChange}
-                    />
-
-                    {/*Centre Information Section*/}
-                    <CentreSection
-                        formData={formData}
-                        handleChange={handleChange}
-                        handleCheckboxChange={handleCheckboxChange}
-                    />
-
-                    {/* Business Additional Info Section */}
-                    <BusinessAdditionalInfoSection
-                        formData={formData}
-                        handleChange={handleChange}
-                        handleCheckboxChange={handleCheckboxChange}
-                    />
-
-                    {/* Form Actions */}
-                    <div className="pt-6 flex gap-4 justify-end">
-                        <button
-                            type="button"
-                            onClick={handleCancel}
-                            className="px-6 py-2 border border-gray-300 rounded-md shadow-sm text-sm font-medium text-gray-700 bg-[#EEEEEE] hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-500"
-                        >
-                            Cancel
-                        </button>
-
-                        <button
-                            type="submit"
-                            disabled={loading}
-                            className={`px-6 py-2 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-[#26425A] hover:bg-[#f2be5c] focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-[#f2be5c] ${loading ? "opacity-70 cursor-not-allowed" : ""
-                                }`}
-                        >
-                            {loading ? "Saving..." : "Save Changes"}
-                        </button>
-                    </div>
-                </form>
             </div>
         </div>
-    </div>
     )
 }
 
