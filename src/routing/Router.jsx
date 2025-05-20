@@ -9,7 +9,8 @@ import JobseekerSetup from "../pages/JobseekerSetup";
 import BusinessProfile from "../pages/businessHomePage/tabs/BusinessProfile";
 import BusinessRecruitSeeker from "../pages/businessHomePage/BusinessRecruitSeeker";
 import BusinessProfileEdit from "../pages/businessHomePage/BusinessProfileEdit";
-import TokenManagement from "../pages/businessHomePage/tabs/TokenManagement"; // Import the TokenManagement component
+import TokenManagement from "../pages/businessHomePage/tabs/TokenManagement";
+import BusinessJobPage from "../pages/businessHomePage/BusinessJobPage"; // ✅ New: Jobs page for business
 
 // Import the seeker pages
 import SeekerJobsPage from "../pages/seekerHomePage/SeekerJobsPage";
@@ -25,7 +26,6 @@ const Router = () => {
     const { currentUser, userData, loading } = useAuth();
     const isUserDataLoading = currentUser && !userData;
 
-    // Show loading state while authentication is being determined
     if (loading || isUserDataLoading) {
         return (
             <div className="min-h-screen flex items-center justify-center bg-gray-50">
@@ -34,17 +34,14 @@ const Router = () => {
         );
     }
 
-    // Helper function to check if user is a seeker
     const isSeeker = () => {
         return userData?.userType === "seeker" || userData?.userType === "jobseeker";
     };
 
-    //Helper function to check if the user is a business
     const isBussiness = () => {
         return userData?.userType === "business";
     };
 
-    // Helper function to check if setup is completed
     const needsSetup = () => {
         return currentUser && userData && !userData.setupCompleted;
     };
@@ -60,54 +57,63 @@ const Router = () => {
                     }
                 />
 
-                {/* Protected routes */}
+                {/* Setup route */}
                 <Route
                     path="/setup"
                     element={
-                        needsSetup() ?
-                            (userData.userType === "business" ?
-                                <BusinessSetup /> :
-                                (userData.userType === "jobseeker" ?
-                                    <JobseekerSetup />
-                                    : <Navigate to="/" replace />)) :
+                        needsSetup() ? (
+                            userData.userType === "business" ? (
+                                <BusinessSetup />
+                            ) : userData.userType === "jobseeker" ? (
+                                <JobseekerSetup />
+                            ) : (
+                                <Navigate to="/" replace />
+                            )
+                        ) : (
                             <Navigate to="/" replace />
+                        )
                     }
                 />
 
-                {/* Seeker routes - separate routes for each section */}
+                {/* Seeker routes */}
                 <Route
                     path="/seeker/jobs"
                     element={
-                        currentUser && userData && isSeeker() ?
-                            <SeekerJobsPage /> :
+                        currentUser && userData && isSeeker() ? (
+                            <SeekerJobsPage />
+                        ) : (
                             <Navigate to="/" replace />
+                        )
                     }
                 />
-
                 <Route
                     path="/seeker/activity"
                     element={
-                        currentUser && userData && isSeeker() ?
-                            <SeekerActivityPage /> :
+                        currentUser && userData && isSeeker() ? (
+                            <SeekerActivityPage />
+                        ) : (
                             <Navigate to="/" replace />
+                        )
                     }
                 />
-
                 <Route
                     path="/seeker/profile"
                     element={
-                        currentUser && userData && isSeeker() ?
-                            <SeekerProfilePage /> :
+                        currentUser && userData && isSeeker() ? (
+                            <SeekerProfilePage />
+                        ) : (
                             <Navigate to="/" replace />
+                        )
                     }
                 />
-
                 <Route
                     path="/seeker/profile/edit"
                     element={
-                        currentUser && userData && isSeeker() ?
-                            <SeekerProfileEditPage /> :
+                        currentUser && userData && isSeeker() ? (
+                            <SeekerProfileEditPage />
+                        ) : (
                             <Navigate to="/" replace />
+                        )
                     }
                 />
 
@@ -115,61 +121,79 @@ const Router = () => {
                 <Route
                     path="/businesses"
                     element={
-                        currentUser && userData && isSeeker() ?
-                            <BusinessListPage /> :
+                        currentUser && userData && isSeeker() ? (
+                            <BusinessListPage />
+                        ) : (
                             <Navigate to="/" replace />
+                        )
                     }
                 />
-
                 <Route
                     path="/businesses/:businessId"
                     element={
-                        currentUser && userData && isSeeker() ?
-                            <BusinessDetailPage /> :
+                        currentUser && userData && isSeeker() ? (
+                            <BusinessDetailPage />
+                        ) : (
                             <Navigate to="/" replace />
+                        )
                     }
                 />
 
-
-                {/* Business routes - separate routes for each section */}
+                {/* Business routes */}
                 <Route
-                    path="/business/recruit" //custom route name for easy access
+                    path="/business/recruit"
                     element={
-                        currentUser && userData && isBussiness() ?
-                            <BusinessRecruitSeeker /> :
+                        currentUser && userData && isBussiness() ? (
+                            <BusinessRecruitSeeker />
+                        ) : (
                             <Navigate to="/" replace />
+                        )
                     }
                 />
-
                 <Route
                     path="/business/profile"
                     element={
-                        currentUser && userData && isBussiness() ?
-                            <BusinessProfile /> :
+                        currentUser && userData && isBussiness() ? (
+                            <BusinessProfile />
+                        ) : (
                             <Navigate to="/" replace />
+                        )
                     }
                 />
-
                 <Route
                     path="/business/profile/edit"
                     element={
-                        currentUser && userData && isBussiness() ?
-                            <BusinessProfileEdit /> :
+                        currentUser && userData && isBussiness() ? (
+                            <BusinessProfileEdit />
+                        ) : (
                             <Navigate to="/" replace />
+                        )
                     }
                 />
-
-                {/* Token Management Route */}
                 <Route
                     path="/business/tokens"
                     element={
-                        currentUser && userData && isBussiness() ?
-                            <TokenManagement /> :
+                        currentUser && userData && isBussiness() ? (
+                            <TokenManagement />
+                        ) : (
                             <Navigate to="/" replace />
+                        )
                     }
                 />
 
-                {/* Dashboard as home route - redirect to appropriate dashboard */}
+                {/* ✅ New: Business Jobs route */}
+                <Route
+                    path="/business/jobs"
+                    element={
+                        currentUser && userData && isBussiness() ? (
+                            <BusinessJobPage />
+                        ) : (
+                            <Navigate to="/" replace />
+                        )
+                    }
+                />
+
+                {/* Home route */}
                 <Route
                     path="/"
                     element={
@@ -195,7 +219,7 @@ const Router = () => {
                     }
                 />
 
-                {/* Catch all other routes */}
+                {/* Catch-all fallback */}
                 <Route path="*" element={<Navigate to="/" replace />} />
             </Routes>
         </BrowserRouter>
