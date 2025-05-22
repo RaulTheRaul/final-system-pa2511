@@ -195,15 +195,6 @@ const Router = () => {
                 />
 
                 <Route
-                    path="/business/tokens"
-                    element={
-                        currentUser && userData && isBussiness() ?
-                            <TokenManagement /> :
-                            <Navigate to="/" replace />
-                    }
-                />
-
-                <Route
                     path="/business/activity"
                     element={
                         currentUser && userData && isBussiness() ?
