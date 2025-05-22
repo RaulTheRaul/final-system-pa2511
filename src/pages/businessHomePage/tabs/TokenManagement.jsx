@@ -5,6 +5,7 @@ import { httpsCallable } from 'firebase/functions';
 import { loadStripe } from "@stripe/stripe-js";
 import BusinessNavigation from "../components/BusinessNavigation";
 import { doc, getDoc, collection, query, getDocs, orderBy, limit } from 'firebase/firestore';
+import AccountSettingsModal from "./AccountSettingsModal";
 
 // Load Stripe with publishable key
 const stripePromise = loadStripe(import.meta.env.VITE_STRIPE_PUBLISHABLE_KEY);
@@ -44,6 +45,7 @@ const TokenManagement = () => {
     const [localLoading, setLocalLoading] = useState(true);
     const [transactions, setTransactions] = useState([]);
     const [loadingTransactions, setLoadingTransactions] = useState(false);
+    const [isSettingsModalOpen, setIsSettingsModalOpen] = useState(false); // New state for modal
 
     // Load token balance once on component mount
     useEffect(() => {
@@ -78,34 +80,29 @@ const TokenManagement = () => {
     const fetchTransactionsData = useCallback(async () => {
         if (!currentUser) {
             setTransactions([]); // Clear transactions if no user
-            limit(50); // Limited to 50 Documents at a time 
+            // No limit here, it's inside the query, but we are enforcing it
             return;
         }
 
         setLoadingTransactions(true);
-        // Clear only transaction-specific errors, or be more granular if setError is used for multiple things
-        // setError(''); 
         try {
             const transactionReference = collection(db, 'users', currentUser.uid, 'transactions');
             const transactionQuery = query(
                 transactionReference,
-                orderBy('purchaseDate', 'desc'), // Corrected: Use 'purchaseDate' for ordering
-
-                // If you have many transactions, consider adding pagination later.
+                orderBy('purchaseDate', 'desc'),
+                limit(50) // Limited to 50 Documents at a time
             );
 
             const querySnapshot = await getDocs(transactionQuery);
             const transactionsList = [];
-            querySnapshot.forEach((docSnap) => { // Renamed doc to docSnap to avoid conflict with firestore's doc function
+            querySnapshot.forEach((docSnap) => {
                 const data = docSnap.data();
                 transactionsList.push({
                     id: docSnap.id,
                     type: data.type || 'unknown',
                     amount: data.amount || 0,
-                    // Corrected: Use 'purchaseDate' from Firestore and convert to JS Date
                     timestamp: data.purchaseDate?.toDate() || new Date(),
                     status: data.status || 'completed',
-                    // Corrected: Use 'description' from Firestore for details
                     details: data.description || ''
                 });
             });
@@ -196,7 +193,7 @@ const TokenManagement = () => {
     }
 
     // Loading user data type
-    if (currentUser && !userData && !localLoading) { // Added !localLoading to avoid showing this during initial token balance fetch
+    if (currentUser && !userData && !localLoading) {
         return (
             <div className="min-h-screen bg-[#f2ece4]">
                 <BusinessNavigation />
@@ -213,7 +210,21 @@ const TokenManagement = () => {
             <BusinessNavigation />
             <div className="max-w-7xl mx-auto p-4 sm:p-6 lg:p-8">
                 <div className="bg-[#F8F8F8] rounded-xl shadow-xl p-6 md:p-8 border border-gray-200">
-                    <h2 className="text-3xl font-bold text-[#254159] mb-8 text-center md:text-left">Token Management</h2>
+                    <div className="flex justify-between items-center mb-8"> {/* Added container for title and button */}
+                        <h2 className="text-3xl font-bold text-[#254159] text-center md:text-left">Credit Management</h2>
+                        {isBusiness && ( // Only show settings button for business users
+                            <button
+                                onClick={() => setIsSettingsModalOpen(true)}
+                                className="ml-4 px-4 py-2 bg-[#254159] text-white rounded-md shadow-sm hover:bg-[#f2be5c] hover:text-[#254159] transition-colors duration-200 flex items-center"
+                            >
+                                <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5 mr-2" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
+                                    <path strokeLinecap="round" strokeLinejoin="round" d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z" />
+                                    <path strokeLinecap="round" strokeLinejoin="round" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
+                                </svg>
+                                Account Settings
+                            </button>
+                        )}
+                    </div>
 
                     {error && (
                         <div className="bg-red-100 border-l-4 border-red-500 text-red-800 p-4 mb-6 rounded-md shadow-sm" role="alert">
@@ -226,16 +237,16 @@ const TokenManagement = () => {
                         <div className="flex flex-col md:flex-row justify-between items-center gap-4">
                             <h3 className="text-xl font-semibold text-[#254159]">Current Balance</h3>
                             <div className="text-4xl font-bold text-[#f2be5c]">
-                                {tokenBalance} <span className="text-xl text-gray-600 font-medium">Tokens</span>
+                                {tokenBalance} <span className="text-xl text-gray-600 font-medium">Credits</span>
                             </div>
                         </div>
                         <p className="text-gray-500 mt-3 text-sm text-center md:text-left">
-                            Use tokens to unlock premium features like revealing jobseeker contact details.
+                            Use Credits to unlock premium features like revealing jobseeker contact details.
                         </p>
                     </div>
 
                     <div className="bg-white rounded-lg shadow-md p-6 mb-8 border border-gray-200">
-                        <h3 className="text-2xl font-semibold text-[#254159] mb-4 border-b border-gray-300 pb-3">Purchase Tokens</h3>
+                        <h3 className="text-2xl font-semibold text-[#254159] mb-4 border-b border-gray-300 pb-3">Purchase Credits</h3>
                         <p className="text-gray-600 mb-6">
                             Select a package below. Payments are securely processed via Stripe Checkout.
                         </p>
@@ -245,7 +256,7 @@ const TokenManagement = () => {
                                     <div className="text-center flex-grow mb-4">
                                         <div className="text-lg font-semibold text-[#254159] mb-1 group-hover:text-[#f2be5c] transition-colors">{pkg.name}</div>
                                         <div className="text-5xl font-extrabold text-[#f2be5c] my-3">{pkg.tokens}</div>
-                                        <div className="text-gray-500 text-sm mb-3 uppercase tracking-wide">Tokens</div>
+                                        <div className="text-gray-500 text-sm mb-3 uppercase tracking-wide">Credits</div>
                                         <div className="text-xl font-semibold text-gray-800">{pkg.cost}</div>
                                     </div>
                                     <button
@@ -329,7 +340,6 @@ const TokenManagement = () => {
                                         ) : (
                                             <tr>
                                                 <td colSpan="4" className="px-6 py-4 text-center text-sm text-gray-500 italic">
-                                                    {/* Changed error message logic slightly */}
                                                     {error && error.includes("transaction history") ? 'Error loading transactions.' : 'No transaction history available yet.'}
                                                 </td>
                                             </tr>
@@ -338,7 +348,7 @@ const TokenManagement = () => {
                                 </table>
                                 <div className="flex justify-center mt-4 pb-2">
                                     <button
-                                        onClick={fetchTransactionsData} // Use the memoized fetch function
+                                        onClick={fetchTransactionsData}
                                         disabled={loadingTransactions}
                                         className={`flex items-center px-4 py-2 text-sm font-medium rounded-md shadow-sm ${loadingTransactions
                                             ? "bg-gray-300 text-gray-500 cursor-not-allowed"
@@ -368,6 +378,11 @@ const TokenManagement = () => {
                     </div>
                 </div>
             </div>
+            {/* Account Settings Modal */}
+            <AccountSettingsModal
+                isOpen={isSettingsModalOpen}
+                onClose={() => setIsSettingsModalOpen(false)}
+            />
         </div>
     );
 };

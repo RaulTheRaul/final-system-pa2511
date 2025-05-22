@@ -1,7 +1,7 @@
 import React from "react";
 
-const BusinessCentreSection=({formData, handleChange, handleCheckboxChange}) => {
-    return(
+const BusinessCentreSection = ({ formData, handleChange, handleCheckboxChange }) => {
+    return (
         <div>
             <h3 className="text-lg font-semibold text-[#254159] mb-4 pb-2 border-b">Centre Information</h3>
             <div className="space-y-4 max-w-2xl">
@@ -32,7 +32,7 @@ const BusinessCentreSection=({formData, handleChange, handleCheckboxChange}) => 
                         className="max-w-1/2 px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-[#f2be5c] focus:border-[#f2be5c]"
                     />
                 </div>
-                
+
                 <div>{/*Input to get Phone*/}
                     <label htmlFor="centrePhone" className="block text-sm font-medium text-gray-700 mb-1">
                         Phone Number
@@ -79,7 +79,7 @@ const BusinessCentreSection=({formData, handleChange, handleCheckboxChange}) => 
                         <option value="preschool">Preschool/Kindergarten</option>
                         <option value="other">Other</option>
                     </select>
-                        
+
                 </div>
 
                 <div>{/*Input to get Teching Approach*/}

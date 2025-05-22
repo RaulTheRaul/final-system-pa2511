@@ -1,17 +1,15 @@
 import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { doc, setDoc } from "firebase/firestore";
-import { db } from "../../firebase/config";
+import { db, storage } from "../../firebase/config";
+import { ref, uploadBytesResumable, getDownloadURL } from "firebase/storage";
 import { useAuth } from "../../context/AuthContext";
 import SeekerNavigation from "./components/SeekerNavigation";
 //Importing the different form sections components
-import PersonalInfoSection from "./components/profile/PersonalInfoSection"
-import QualificationSection from "./components/profile/QualificationSection"
-import PreferencesSection from "./components/profile/PreferencesSection"
-import AdditionalInfoSection from "./components/profile/AdditionalInfoSection"
-
-
-
+import PersonalInfoSection from "./components/profile/PersonalInfoSection";
+import QualificationSection from "./components/profile/QualificationSection";
+import PreferencesSection from "./components/profile/PreferencesSection";
+import AdditionalInfoSection from "./components/profile/AdditionalInfoSection";
 
 const SeekerProfileEditPage = () => {
     const { currentUser, userData, getUserData } = useAuth();
@@ -19,6 +17,12 @@ const SeekerProfileEditPage = () => {
     const [error, setError] = useState("");
     const [success, setSuccess] = useState(false);
     const navigate = useNavigate();
+    // max file size for resumes (2 MB)
+    const MAX_FILE_SIZE_BYTES = 2 * 1024 * 1024;
+
+    // New state for resume file and upload progress
+    const [resumeFile, setResumeFile] = useState(null);
+    const [uploadProgress, setUploadProgress] = useState(0);
 
     //Get jobseeker information from userData
     const jobseekerInfo = userData?.jobseekerInformation || {};
@@ -53,7 +57,7 @@ const SeekerProfileEditPage = () => {
         //Resume - would typically handle with file upload
         resumeUrl: "",
 
-        //Preferences & Work Conditions
+        // Preferences & Work Conditions
         preferredRole: "educator",
         desiredPayRate: "",
         shiftPreference: "any",
@@ -103,19 +107,19 @@ const SeekerProfileEditPage = () => {
                 //Resume
                 resumeUrl: jobseekerInfo.resumeUrl || "",
 
-                //Preferences & Work Conditions
+                // Preferences & Work Conditions
                 preferredRole: jobseekerInfo.preferredRole || "educator",
                 desiredPayRate: jobseekerInfo.desiredPayRate || "",
                 shiftPreference: jobseekerInfo.shiftPreference || "any",
                 workplaceValues: jobseekerInfo.workplaceValues || "",
-                maxTravelDistance: jobseekerInfo.maxTravelDistance || "",
+                maxTravelDistance: jobseekerInfo.maxTravelDistance ? Number(jobseekerInfo.maxTravelDistance) : null,
                 transportMethod: jobseekerInfo.transportMethod || "",
                 immediateStart: jobseekerInfo.immediateStart || false,
                 workTrialAvailability: jobseekerInfo.workTrialAvailability || false,
 
                 //Additional Information
                 bio: jobseekerInfo.bio || "",
-                yearsOfExperience: jobseekerInfo.yearsOfExperience || "",
+                yearsOfExperience: jobseekerInfo.yearsOfExperience ? Number(jobseekerInfo.yearsOfExperience) : null,
                 specialSkills: Array.isArray(jobseekerInfo.specialSkills)
                     ? jobseekerInfo.specialSkills.join(", ")
                     : jobseekerInfo.specialSkills || ""
@@ -139,6 +143,40 @@ const SeekerProfileEditPage = () => {
         });
     };
 
+    const handleResumeChange = (e) => {
+        const file = e.target.files[0];
+
+        if (file) {
+            // Client-side file size validation
+            if (file.size > MAX_FILE_SIZE_BYTES) {
+                setError(`File size exceeds the limit of ${MAX_FILE_SIZE_BYTES / (1024 * 1024)} MB.`);
+                setResumeFile(null); // Clear the selected file
+                e.target.value = ''; // Clear the input field to allow re-selection
+                return;
+            }
+
+            // Client-side file type validation
+            const allowedTypes = [
+                'application/pdf',
+                'application/msword', // .doc
+                'application/vnd.openxmlformats-officedocument.wordprocessingml.document' // .docx
+            ];
+            if (!allowedTypes.includes(file.type)) {
+                setError('Only PDF and Word documents (.doc, .docx) are allowed.');
+                setResumeFile(null);
+                e.target.value = '';
+                return;
+            }
+
+            // Clear any previous errors if file is valid
+            setError('');
+            setResumeFile(file);
+        } else {
+            setResumeFile(null); // No file selected
+            setError(''); // Clear error if user deselects file
+        }
+    };
+
     const handleCancel = () => {
         navigate("/seeker/profile");
     };
@@ -146,16 +184,59 @@ const SeekerProfileEditPage = () => {
     const handleSubmit = async (e) => {
         e.preventDefault();
         setLoading(true);
-        setError("");
+        setError(""); // Clear previous errors initially
         setSuccess(false);
 
-        //Basic validation
+        // Basic validation for form fields
         if (!formData.fullName || !formData.location) {
             setError("Please fill out all required fields");
             setLoading(false);
             return;
         }
 
+        // IMPORTANT: Check for client-side errors from file selection before proceeding
+        if (error) { // If 'error' state is currently set (e.g., due to invalid file selection)
+            setLoading(false);
+            return;
+        }
+
+        let uploadedResumeUrl = formData.resumeUrl; // Default to existing URL
+
+        // **NEW: Resume Upload Logic**
+        if (resumeFile) {
+            const storageRef = ref(storage, `resumes/${currentUser.uid}/${resumeFile.name}`);
+            const uploadTask = uploadBytesResumable(storageRef, resumeFile);
+
+            uploadTask.on('state_changed',
+                (snapshot) => {
+                    const progress = (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
+                    setUploadProgress(progress);
+                },
+                (error) => {
+                    console.error("Error uploading resume:", error);
+                    setError("Failed to upload resume. Please try again.");
+                    setLoading(false);
+                    return; // Stop further processing
+                },
+                () => {
+                    getDownloadURL(uploadTask.snapshot.ref).then((downloadURL) => {
+                        uploadedResumeUrl = downloadURL;  // Update URL after successful upload
+                        //   Proceed with updating Firestore *after* successful upload
+                        updateFirestore(uploadedResumeUrl);
+                    }).catch((err) => {
+                        console.error("Error getting download URL:", err);
+                        setError("Failed to get resume download URL. Please try again.");
+                        setLoading(false);
+                    });
+                }
+            );
+        } else {
+            // If no new resume, proceed directly to update Firestore
+            updateFirestore(uploadedResumeUrl);
+        }
+    };
+
+    const updateFirestore = async (resumeUrl) => {
         try {
             //Format data for Firestore
             const specialSkillsArray = formData.specialSkills
@@ -196,7 +277,7 @@ const SeekerProfileEditPage = () => {
                 additionalCourses: additionalCoursesArray,
 
                 // Resume
-                resumeUrl: formData.resumeUrl,
+                resumeUrl: resumeUrl,
 
                 // Preferences & Work Conditions
                 preferredRole: formData.preferredRole,
@@ -251,6 +332,7 @@ const SeekerProfileEditPage = () => {
         }
     };
 
+
     return (
         <div className="min-h-screen bg-[#f2ece4]">
             <SeekerNavigation />
@@ -280,7 +362,7 @@ const SeekerProfileEditPage = () => {
                     )}
 
                     <form onSubmit={handleSubmit} className="space-y-8">
-                        Personal & Contact Information Section
+                        {/* Personal & Contact Information Section */}
                         <PersonalInfoSection
                             formData={formData}
                             handleChange={handleChange}
@@ -307,6 +389,37 @@ const SeekerProfileEditPage = () => {
                             handleChange={handleChange}
                         />
 
+                        {/* Resume Upload UI */}
+                        <div>
+                            <label htmlFor="resume" className="block text-sm font-medium text-gray-700">
+                                Upload Resume
+                            </label>
+                            <input
+                                type="file"
+                                id="resume"
+                                name="resume"
+                                accept=".pdf,.doc,.docx"
+                                onChange={handleResumeChange}
+                                className="mt-1 block w-full text-sm text-slate-500
+                                    file:mr-4 file:py-2 file:px-4
+                                    file:rounded-full file:border-0
+                                    file:text-sm file:font-semibold
+                                    file:bg-violet-50 file:text-violet-700
+                                    hover:file:bg-violet-100"
+                            />
+                            {uploadProgress > 0 && uploadProgress < 100 && (
+                                <progress value={uploadProgress} max="100" className="w-full mt-2" />
+                            )}
+                            {uploadProgress === 100 && !error && (
+                                <p className="mt-2 text-sm text-green-600">Upload complete!</p>
+                            )}
+                            {formData.resumeUrl && !resumeFile && (
+                                <p className="mt-2 text-sm text-gray-500">
+                                    Current Resume: <a href={formData.resumeUrl} target="_blank" rel="noopener noreferrer" className="text-blue-500 hover:underline">View</a>
+                                </p>
+                            )}
+                        </div>
+
                         {/* Form Actions */}
                         <div className="pt-6 flex gap-4 justify-end">
                             <button
@@ -319,8 +432,8 @@ const SeekerProfileEditPage = () => {
 
                             <button
                                 type="submit"
-                                disabled={loading}
-                                className={`px-6 py-2 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-[#26425A] hover:bg-[#f2be5c] focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-[#f2be5c] ${loading ? "opacity-70 cursor-not-allowed" : ""
+                                disabled={loading || !!error}
+                                className={`px-6 py-2 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-[#26425A] hover:bg-[#f2be5c] focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-[#f2be5c] ${loading || !!error ? "opacity-70 cursor-not-allowed" : ""
                                     }`}
                             >
                                 {loading ? "Saving..." : "Save Changes"}
