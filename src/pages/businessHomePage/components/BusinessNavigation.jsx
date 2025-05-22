@@ -51,29 +51,39 @@ const BusinessNavigation = () => {
                             to="/business/recruit"
                             className={`py-2 px-4 font-medium transition-colors ${isActive("/business/recruit")
                                 ? "text-[#F2BE5C] border-b-2 border-[#F2BE5C]"
-                                : "text-gray-600 hover:text-[#F2BE5C]"
-                                }`}
+                                : "text-gray-600 hover:text-[#F2BE5C]"}`
+                            }
                         >
                             Recruit Workforce
                         </Link>
 
-                    
-                     <Link
-                        to="/business/activity"
-                        className={`py-2 px-4 font-medium transition-colors ${isActive("/business/activity")
-                            ? "text-[#F2BE5C] border-b-2 border-[#F2BE5C]"
-                            : "text-gray-600 hover:text-[#F2BE5C]"
-                            }`}
-                    >
-                        Activity
-                    </Link> 
-                    
+                        {/* ✅ Jobs tab */}
+                        <Link
+                            to="/business/jobs"
+                            className={`py-2 px-4 font-medium transition-colors ${isActive("/business/jobs")
+                                ? "text-[#F2BE5C] border-b-2 border-[#F2BE5C]"
+                                : "text-gray-600 hover:text-[#F2BE5C]"}`
+                            }
+                        >
+                            Jobs
+                        </Link>
+
+                        <Link
+                            to="/business/activity"
+                            className={`py-2 px-4 font-medium transition-colors ${isActive("/business/activity")
+                                ? "text-[#F2BE5C] border-b-2 border-[#F2BE5C]"
+                                : "text-gray-600 hover:text-[#F2BE5C]"}`
+                            }
+                        >
+                            Activity
+                        </Link>
+
                         <Link
                             to="/business/profile"
                             className={`py-2 px-4 font-medium transition-colors ${isActive("/business/profile")
                                 ? "text-[#F2BE5C] border-b-2 border-[#F2BE5C]"
-                                : "text-gray-600 hover:text-[#F2BE5C]"
-                                }`}
+                                : "text-gray-600 hover:text-[#F2BE5C]"}`
+                            }
                         >
                             Business Profile
                         </Link>
@@ -82,8 +92,8 @@ const BusinessNavigation = () => {
                             to="/business/tokens"
                             className={`py-2 px-4 font-medium transition-colors ${isActive("/business/tokens")
                                 ? "text-[#F2BE5C] border-b-2 border-[#F2BE5C]"
-                                : "text-gray-600 hover:text-[#F2BE5C]"
-                                }`}
+                                : "text-gray-600 hover:text-[#F2BE5C]"}`
+                            }
                         >
                             Account
                         </Link>
