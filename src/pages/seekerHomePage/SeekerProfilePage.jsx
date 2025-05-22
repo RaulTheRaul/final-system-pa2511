@@ -41,7 +41,25 @@ const SeekerProfilePage = () => {
                                     <p className="text-gray-600 font-medium">Location:</p>
                                     <p className="text-gray-900 text-lg">{jobseekerInfo.location || "Not provided"}</p>
                                 </div>
+
+                                {/* Display Resume Link */}
+                                {jobseekerInfo.resumeUrl && (
+                                    <div>
+                                        <p className="text-gray-600 font-medium">Resume:</p>
+                                        <a
+                                            href={jobseekerInfo.resumeUrl}
+                                            target="_blank"
+                                            rel="noopener noreferrer"
+                                            className="text-blue-500 hover:underline"
+                                        >
+                                            View Resume
+                                        </a>
+                                    </div>
+                                )}
                             </div>
+
+
+
 
                             <div className="space-y-4">
                                 <div>

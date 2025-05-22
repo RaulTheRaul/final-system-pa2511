@@ -5,7 +5,6 @@ const BusinessNavigation = () => {
     const location = useLocation();
     const { userData, logout } = useAuth();
 
-    //this function will handle any logout errors
     const handleLogout = async () => {
         try {
             await logout();
@@ -14,12 +13,10 @@ const BusinessNavigation = () => {
         }
     };
 
-    //Check if current path matches the link path
     const isActive = (path) => {
         return location.pathname === path;
     };
 
-    //Styling of nav bar
     return (
         <div>
             <div className="w-full bg-[#f2ece4] shadow-sm">
@@ -27,8 +24,12 @@ const BusinessNavigation = () => {
                     {/* Top navigation */}
                     <div className="flex justify-between items-center p-1 border-b">
                         <div>
-                            <a href="/business/activity"> {/* Redirect to home when clicked  Note: Needs to be changed to activity*/}
-                                <img src="/images/Untitled-5.png" className="flex items-left bg-no-repeat max-w-xs max-h-auto" />
+                            <a href="/business/activity">
+                                <img
+                                    src="/images/Untitled-5.png"
+                                    alt="Centre Connect Logo"
+                                    className="flex items-left bg-no-repeat max-w-xs max-h-auto"
+                                />
                             </a>
                         </div>
                         <div className="flex items-center gap-4">
@@ -44,7 +45,7 @@ const BusinessNavigation = () => {
                         </div>
                     </div>
 
-                    {/* Main navigation - EDIT*/}
+                    {/* Main navigation */}
                     <div className="flex space-x-6 p-4">
                         <Link
                             to="/business/recruit"
@@ -53,7 +54,7 @@ const BusinessNavigation = () => {
                                 : "text-gray-600 hover:text-[#F2BE5C]"
                                 }`}
                         >
-                            Recruit Seekers
+                            Recruit Workforce
                         </Link>
 
                     
@@ -74,10 +75,9 @@ const BusinessNavigation = () => {
                                 : "text-gray-600 hover:text-[#F2BE5C]"
                                 }`}
                         >
-                            Profile
+                            Business Profile
                         </Link>
 
-                        {/* Token Management Link */}
                         <Link
                             to="/business/tokens"
                             className={`py-2 px-4 font-medium transition-colors ${isActive("/business/tokens")
@@ -85,13 +85,13 @@ const BusinessNavigation = () => {
                                 : "text-gray-600 hover:text-[#F2BE5C]"
                                 }`}
                         >
-                            Tokens
+                            Account
                         </Link>
                     </div>
                 </div>
             </div>
         </div>
     );
-}
+};
 
 export default BusinessNavigation;

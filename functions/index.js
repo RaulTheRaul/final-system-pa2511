@@ -6,6 +6,53 @@
 //          THIS IS A CLOUD FUNCTION, WORKS ONLY WHEN DEPLOYED TO CLOUD!              #
 //#####################################################################################
 
+
+// Checklist when going live
+// Change stripe secret keys 
+/*
+1. Stripe Keys & Secrets
+
+ Update STRIPE_SECRET in Firebase Secret Manager with live secret key
+ Update STRIPE_WEBHOOK_SECRET in Firebase Secret Manager with live webhook signing secret
+ Update VITE_STRIPE_PUBLISHABLE_KEY in environment variables with live publishable key
+
+2. Stripe Dashboard Configuration
+
+ Verify Stripe account is fully activated for live payments
+ Configure payment methods (credit cards, etc.) in Stripe Dashboard
+ Set up branding details and email receipt templates
+ Set up proper tax settings if applicable
+ Update Stripe customer service details, branding, and support email
+
+3. Products & Prices
+
+ Create identical products and prices in Stripe live environment
+ Update all price IDs in code:
+
+ Update tokenPackages array in TokenManagement.jsx with live price IDs
+ Ensure all price IDs have the proper tokenAmount metadata set
+ Verify products have correct descriptions and images for checkout
+
+
+
+4. Webhook Configuration
+
+ Create a new webhook endpoint in Stripe Dashboard for live mode
+ Set webhook URL to: https://your-region-your-project-id.cloudfunctions.net/stripeWebhook
+ Select proper events (at minimum checkout.session.completed)
+ Get the new webhook signing secret and update it in Firebase Secret Manager
+ Test webhook with Stripe Dashboard (send test event)
+
+5. Deployment & URLs
+
+ Set the APP_URL environment variable in Firebase Functions config
+
+
+
+
+
+*/
+
 const functions = require("firebase-functions/v2"); // Use v2 imports
 
 const { getFirestore } = require("firebase-admin/firestore");
@@ -68,8 +115,8 @@ exports.createCheckoutSession = onCall(STRIPE_SECRETS, async (request) => {
 
     //NOTE: Got to setup app base URL once deployed live, Must also create page to thank user for purchase
 
-    // Read App URL from regular env var (set via `config:set app.url=...` or hardcoded fallback)
-    const appBaseUrl = process.env.APP_URL || 'http://localhost:5173'; // Use configured or default
+    // Read App URL from regular env var (set via `config:set app.url=...` or hardcoded fallback)  
+    const appBaseUrl = process.env.APP_URL || 'http://localhost:5173'; // Use configured or default   #######!!!!! CHANGE ONCE DEPLOYED !!!! ########
     const successUrl = `${appBaseUrl}/purchase-success?session_id={CHECKOUT_SESSION_ID}`;
     const cancelUrl = `${appBaseUrl}/token-management`;
     logger.log(`[createCheckoutSession Func] Using Success URL: ${successUrl}, Cancel URL: ${cancelUrl}`);
@@ -146,12 +193,20 @@ exports.stripeWebhook = onRequest(STRIPE_SECRETS, async (request, response) => {
     //###### Verify Signature ######
     const sig = request.headers["stripe-signature"];
     let event;
-    if (!sig || !request.rawBody) { logger.error("[stripeWebhook Func] Missing signature header or raw body."); response.status(400).send("Webhook Error: Missing signature or body."); return; }
+    if (!sig || !request.rawBody) {
+        logger.error("[stripeWebhook Func] Missing signature header or raw body.");
+        response.status(400).send("Webhook Error: Missing signature or body.");
+        return;
+    }
     try {
         // Verify using the secret read from process.env
         event = stripeInstance.webhooks.constructEvent(request.rawBody, sig, liveWebhookSecret);
         logger.log(`[stripeWebhook Func] Webhook event verified: ${event.id}, Type: ${event.type}`);
-    } catch (err) { logger.error("⚠️ [stripeWebhook Func] Webhook signature verification failed.", err.message); response.status(400).send(`Webhook Error: ${err.message}`); return; }
+    } catch (err) {
+        logger.error("⚠️ [stripeWebhook Func] Webhook signature verification failed.", err.message);
+        response.status(400).send(`Webhook Error: ${err.message}`);
+        return;
+    }
     //###### End Verify Signature ######
 
     //###### Process Event ######
@@ -168,7 +223,9 @@ exports.stripeWebhook = onRequest(STRIPE_SECRETS, async (request, response) => {
             logger.log(`[stripeWebhook Func] Listing line items for session: ${session.id}`);
             // Use the local stripeInstance initialized with the secret
             const lineItems = await stripeInstance.checkout.sessions.listLineItems(session.id, { limit: 1 });
-            if (!lineItems.data?.length || !lineItems.data[0].price) { throw new Error("Cannot get price details from Stripe."); }
+            if (!lineItems.data?.length || !lineItems.data[0].price) {
+                throw new Error("Cannot get price details from Stripe.");
+            }
             const priceId = lineItems.data[0].price.id;
             const price = await stripeInstance.prices.retrieve(priceId, { expand: ['product'] });
             //###### End Get Line Items & Price ######
@@ -176,9 +233,13 @@ exports.stripeWebhook = onRequest(STRIPE_SECRETS, async (request, response) => {
             //###### Get Token Amount ######
             const tokenAmountStr = price.metadata?.tokenAmount || price.product?.metadata?.tokenAmount;
             logger.log(`[stripeWebhook Func] Found tokenAmount metadata string: ${tokenAmountStr}`);
-            if (!tokenAmountStr) { throw new Error(`Missing tokenAmount metadata for Price ID: ${priceId}`); }
+            if (!tokenAmountStr) {
+                throw new Error(`Missing tokenAmount metadata for Price ID: ${priceId}`);
+            }
             const tokensToAdd = parseInt(tokenAmountStr, 10);
-            if (isNaN(tokensToAdd) || tokensToAdd <= 0) { throw new Error(`Invalid tokenAmount metadata value: '${tokenAmountStr}'`); }
+            if (isNaN(tokensToAdd) || tokensToAdd <= 0) {
+                throw new Error(`Invalid tokenAmount metadata value: '${tokenAmountStr}'`);
+            }
             logger.log(`[stripeWebhook Func] Parsed tokensToAdd: ${tokensToAdd}`);
             //###### End Get Token Amount ######
 
@@ -202,17 +263,22 @@ exports.stripeWebhook = onRequest(STRIPE_SECRETS, async (request, response) => {
                     purchaseDate: admin.firestore.FieldValue.serverTimestamp()
                 }, { merge: true });
                 logger.log(`[stripeWebhook Func] Transaction log created/updated for session ${session.id}`);
-            } catch (transactionError) { logger.error(`[stripeWebhook Func] Error creating transaction log:`, transactionError); }
+            }
+            catch (transactionError) {
+                logger.error(`[stripeWebhook Func] Error creating transaction log:`, transactionError);
+            }
             //###### End Optional Transaction Logging ######
 
-        } catch (error) {
+        }
+        catch (error) {
             // Catch errors from Stripe API calls or Firestore updates
             logger.error(`[stripeWebhook Func] Handler error processing session ${session.id}, user ${userId}:`, error);
             // Respond with 500 so Stripe retries (if appropriate for the error)
             response.status(500).send(`Webhook handler processing error: ${error.message}`);
             return; // Exit after sending error response
         }
-    } else {
+    }
+    else {
         logger.log(`[stripeWebhook Func] Unhandled event type received: ${event.type}`);
     }
     //###### End Process Event ######

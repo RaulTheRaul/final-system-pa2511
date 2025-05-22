@@ -3,138 +3,123 @@ import { useAuth } from "../../../context/AuthContext";
 import BusinessNavigation from "../components/BusinessNavigation";
 
 const BusinessProfile = () => {
-    const { userData, currentUser } = useAuth();
+  const { userData, currentUser } = useAuth();
+  const BusinessInfo = userData?.businessInformation || {};
+  return (
+    <div className="min-h-screen bg-[#f2ece4]">
+      <BusinessNavigation />
 
-    // Check if we have business information
-    const BusinessInfo = userData?.businessInformation || {};
-
-    return (
-      <div className="min-h-screen bg-[#f2ece4]"> 
-        <BusinessNavigation />
-      
-      
-      <div className="max-w-6xl mx-auto p-6">
-        <div className="bg-[#EEEEEE] rounded-lg shadow-sm p-6">
-          <div className="flex justify-between items-center mb-6">
-            <h2 className="text-2xl font-bold text-[#254159]">Your Profile</h2>
-                        
-            {/*This is for the edit profile function.   */}
-              <Link
-                  to="/business/profile/edit"
-                  className="bg-[#26425A] hover:bg-[#f2be5c] text-white px-4 py-2 rounded-md flex items-center transition-colors"
-              >
-                Edit Business Profile
-              </Link>
+      <div className="max-w-7xl mx-auto p-4 sm:p-6 lg:p-8">
+        <div className="bg-[#F8F8F8] rounded-xl shadow-xl p-6 md:p-8 border border-gray-200">
+          <div className="flex justify-between items-center mb-8">
+            <h2 className="text-3xl font-bold text-[#254159]">Your Business Profile</h2>
+            <Link
+              to="/business/profile/edit"
+              className="bg-[#254159] hover:bg-[#f2be5c] text-white px-4 py-2 rounded-md flex items-center transition-colors"
+            >
+              Edit Business Profile
+            </Link>
           </div>
-                
-      <div className="space-y-6">
-        <p className= "text-lg font-semibold text-[#254159] mb-4 pb-2 border-b">Business Information</p> {/*Section*/ }
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-            
-              <div> {/* Name */}
-                <p className="text-gray-600 font-medium">Business Name:</p>
-                <p className="text-gray-900">{BusinessInfo?.centreName}</p>
-              </div>
 
-              <div> {/* Email */}
-                <p className="text-gray-600 font-medium">Email:</p>
-                <p className="text-gray-900">{currentUser?.email}</p>
-              </div>
-
-            </div>
-          
-            <div className="space-y-4">
-              <div> {/* Rating */}
-                <p className="text-gray-600 font-medium"> ACECQA Rating: </p>
-                <p className="text-gray-900">{BusinessInfo.acecqaRating}</p>
-              </div>
-
-              <div> {/* License */}
-                <p className="text-gray-600 font-medium">License Number: </p>
-                <p className="text-gray-900">{BusinessInfo.licenseNumber}</p>
-              </div>
-
-      </div>
-    
-      
-      <div className="space-y-6">
-            <p className= "text-lg font-semibold text-[#254159] mb-4 pb-2 border-b">Centre Information</p> {/*Section*/ }
+          <div className="bg-white rounded-lg shadow-md p-6 mb-8 border border-gray-200">
+            <h3 className="text-2xl font-semibold text-[#254159] mb-4 border-b border-gray-300 pb-3">Business Information</h3>
             <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-
-            <div className="space-y-4">
-            <div> {/* Centre Name */}
-                <p className="text-gray-600 font-medium">Centre Name: </p>
-                <p className="text-gray-900">{BusinessInfo.centreName}</p>
+              <div>
+                <p className="text-gray-600 font-medium">Business Name:</p>
+                <p className="text-gray-900">{BusinessInfo?.centreName || "—"}</p>
+              </div>
+              <div>
+                <p className="text-gray-600 font-medium">Email:</p>
+                <p className="text-gray-900">{currentUser?.email || "—"}</p>
+              </div>
             </div>
-
-            <div> {/* Centre Address */}
-                <p className="text-gray-600 font-medium">Centre Address: </p>
-                <p className="text-gray-900">{BusinessInfo.centreAddress}</p>
-            </div>
-
-            <div> {/* Centre Phone */}
-                <p className="text-gray-600 font-medium"> Phone: </p>
-                <p className="text-gray-900">{BusinessInfo.centrePhone}</p>
-            </div>
-
-            <div> {/* Centre Operating Hours */}
-                <p className="text-gray-600 font-medium">Operating Hours: </p>
-                <p className="text-gray-900">{BusinessInfo.operatingHours}</p>
-            </div>
-
-            <div> {/* Centre Type */}
-                <p className="text-gray-600 font-medium">Centre Type: </p>
-                <p className="text-gray-900">{BusinessInfo.centreType}</p>
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mt-6">
+              <div>
+                <p className="text-gray-600 font-medium">ACECQA Rating:</p>
+                <p className="text-gray-900">{BusinessInfo.acecqaRating || "—"}</p>
+              </div>
+              <div>
+                <p className="text-gray-600 font-medium">License Number:</p>
+                <p className="text-gray-900">{BusinessInfo.licenseNumber || "—"}</p>
+              </div>
             </div>
           </div>
 
-          <div className="space-y-4">
-            <div> {/* Teaching Approach */}
-                <p className="text-gray-600 font-medium">Teaching Approach: </p>
-                <p className="text-gray-900">{BusinessInfo.teachingApproach}</p>
-            </div>
-
-            <div> {/* Centre Room Count */}
-                <p className="text-gray-600 font-medium">Room Count: </p>
-                <p className="text-gray-900">{BusinessInfo.roomCount}</p>
-            </div>
-            <div> {/* Centre Capacity */}
-                <p className="text-gray-600 font-medium">Centre Capacity: </p>
-                <p className="text-gray-900">{BusinessInfo.centreCapacity}</p>
-            </div>
-            <div> {/* Centre Ratio */}
-                <p className="text-gray-600 font-medium">Staff to Child Ratio: </p>
-                <p className="text-gray-900">{BusinessInfo.staffToChildRatio}</p>
+          <div className="bg-white rounded-lg shadow-md p-6 mb-8 border border-gray-200">
+            <h3 className="text-2xl font-semibold text-[#254159] mb-4 border-b border-gray-300 pb-3">Centre Information</h3>
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+              <div>
+                <p className="text-gray-600 font-medium">Centre Name:</p>
+                <p className="text-gray-900">{BusinessInfo.centreName || "—"}</p>
+              </div>
+              <div>
+                <p className="text-gray-600 font-medium">Phone:</p>
+                <p className="text-gray-900">{BusinessInfo.centrePhone || "—"}</p>
+              </div>
+              <div>
+                <p className="text-gray-600 font-medium">Centre Type:</p>
+                <p className="text-gray-900">{BusinessInfo.centreType || "—"}</p>
+              </div>
+              <div>
+                <p className="text-gray-600 font-medium">Operating Hours:</p>
+                <p className="text-gray-900">{BusinessInfo.operatingHours || "—"}</p>
+              </div>
+              <div>
+                <p className="text-gray-600 font-medium">Room Count:</p>
+                <p className="text-gray-900">{BusinessInfo.roomCount || "—"}</p>
+              </div>
+              <div>
+                <p className="text-gray-600 font-medium">Centre Capacity:</p>
+                <p className="text-gray-900">{BusinessInfo.centreCapacity || "—"}</p>
+              </div>
+              <div>
+                <p className="text-gray-600 font-medium">Staff to Child Ratio:</p>
+                <p className="text-gray-900">{BusinessInfo.staffToChildRatio || "—"}</p>
+              </div>
+              <div>
+                <p className="text-gray-600 font-medium">Teaching Approach:</p>
+                <p className="text-gray-900">{BusinessInfo.teachingApproach || "—"}</p>
+              </div>
+              <div className="md:col-span-2">
+                <p className="text-gray-600 font-medium">Centre Address:</p>
+                <p className="text-gray-900">{BusinessInfo.centreAddress || "—"}</p>
+              </div>
             </div>
           </div>
 
-          </div>
-      </div>
-
-      <div className="space-y-6">
-      <p className= "text-lg font-semibold text-[#254159] mb-4 pb-2 border-b">Additonal Information</p> {/*Section*/ }  
-        
-        <div className="space-y-4">
-
-              <div> {/* Centre Description */}
+          <div className="bg-white rounded-lg shadow-md p-6 border border-gray-200">
+            <h3 className="text-2xl font-semibold text-[#254159] mb-4 border-b border-gray-300 pb-3">Additional Information</h3>
+            <div className="space-y-6">
+              <div>
                 <p className="text-gray-600 font-medium">Description:</p>
-                <p className="text-gray-900 mt-2 whitespace-pre-line">{BusinessInfo.centreDescription}</p>
+                <div className="bg-gray-50 rounded-lg p-4 mt-2 text-gray-800 whitespace-pre-line">
+                  {BusinessInfo.centreDescription || "No description provided."}
+                </div>
               </div>
 
-              <div> {/* Staff Benefits */}
+              <div>
                 <p className="text-gray-600 font-medium">Staff Benefits:</p>
-                <p className="text-gray-900 mt-2 whitespace-pre-line">{BusinessInfo.staffBenefits}</p>
+                <div className="flex flex-wrap gap-2 mt-2">
+                  {Array.isArray(BusinessInfo.staffBenefits) && BusinessInfo.staffBenefits.length > 0 ? (
+                    BusinessInfo.staffBenefits.map((benefit, index) => (
+                      <span
+                        key={index}
+                        className="bg-[#F8F8F8] border border-gray-200 text-[#254159] px-3 py-1 rounded-full text-sm font-medium"
+                      >
+                        {benefit}
+                      </span>
+                    ))
+                  ) : (
+                    <p className="text-gray-500 italic">No staff benefits provided.</p>
+                  )}
+                </div>
               </div>
-              
-         </div>  
-      </div> 
-        
-        </div>
-        </div>
             </div>
           </div>
-    );
+        </div>
+      </div>
+    </div>
+  );
 };
-
 
 export default BusinessProfile;
