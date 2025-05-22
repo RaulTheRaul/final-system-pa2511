@@ -195,7 +195,7 @@ const Router = () => {
                 />
 
                 <Route
-                    path="/business/activity"
+                    path="/business/tokens"
                     element={
                         currentUser && userData && isBussiness() ?
                             <TokenManagement /> :
