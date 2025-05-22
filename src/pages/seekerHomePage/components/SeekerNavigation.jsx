@@ -54,7 +54,7 @@ const SeekerNavigation = () => {
                             : "text-gray-600 hover:text-[#F2BE5C]"
                             }`}
                     >
-                        Job Postings
+                        Available FIFO Jobs
                     </Link>
                     <Link
                         to="/seeker/activity"
