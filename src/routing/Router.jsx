@@ -11,6 +11,7 @@ import BusinessRecruitSeeker from "../pages/businessHomePage/BusinessRecruitSeek
 import BusinessProfileEdit from "../pages/businessHomePage/BusinessProfileEdit";
 import TokenManagement from "../pages/businessHomePage/tabs/TokenManagement";
 import BusinessJobPage from "../pages/businessHomePage/BusinessJobPage";
+import BusinessActivity from "../pages/businessHomePage/tabs/BusinessActivity";
 
 // Updated: Import the new split-pane job board
 import SeekerJobBoard from "../pages/seekerHomePage/SeekerJobBoard";
@@ -47,20 +48,132 @@ const Router = () => {
                     userData.userType === "business" ? <BusinessSetup /> : <JobseekerSetup />
                 ) : <Navigate to="/" replace />} />
 
-                {/* Updated: Use the new job board */}
-                <Route path="/seeker/jobs" element={currentUser && userData && isSeeker() ? <SeekerJobBoard /> : <Navigate to="/" replace />} />
-                <Route path="/seeker/activity" element={currentUser && userData && isSeeker() ? <SeekerActivityPage /> : <Navigate to="/" replace />} />
-                <Route path="/seeker/profile" element={currentUser && userData && isSeeker() ? <SeekerProfilePage /> : <Navigate to="/" replace />} />
-                <Route path="/seeker/profile/edit" element={currentUser && userData && isSeeker() ? <SeekerProfileEditPage /> : <Navigate to="/" replace />} />
+                {/* Seeker routes */}
+                <Route
+                    path="/seeker/jobs"
+                    element={
+                        currentUser && userData && isSeeker() ? (
+                            <SeekerJobsPage />
+                        ) : (
+                            <Navigate to="/" replace />
+                        )
+                    }
+                />
+                <Route
+                    path="/seeker/activity"
+                    element={
+                        currentUser && userData && isSeeker() ? (
+                            <SeekerActivityPage />
+                        ) : (
+                            <Navigate to="/" replace />
+                        )
+                    }
+                />
+                <Route
+                    path="/seeker/profile"
+                    element={
+                        currentUser && userData && isSeeker() ? (
+                            <SeekerProfilePage />
+                        ) : (
+                            <Navigate to="/" replace />
+                        )
+                    }
+                />
+                <Route
+                    path="/seeker/profile/edit"
+                    element={
+                        currentUser && userData && isSeeker() ? (
+                            <SeekerProfileEditPage />
+                        ) : (
+                            <Navigate to="/" replace />
+                        )
+                    }
+                />
 
-                <Route path="/businesses" element={currentUser && userData && isSeeker() ? <BusinessListPage /> : <Navigate to="/" replace />} />
-                <Route path="/businesses/:businessId" element={currentUser && userData && isSeeker() ? <BusinessDetailPage /> : <Navigate to="/" replace />} />
+                {/* Business listing routes */}
+                <Route
+                    path="/businesses"
+                    element={
+                        currentUser && userData && isSeeker() ? (
+                            <BusinessListPage />
+                        ) : (
+                            <Navigate to="/" replace />
+                        )
+                    }
+                />
+                <Route
+                    path="/businesses/:businessId"
+                    element={
+                        currentUser && userData && isSeeker() ? (
+                            <BusinessDetailPage />
+                        ) : (
+                            <Navigate to="/" replace />
+                        )
+                    }
+                />
 
-                <Route path="/business/recruit" element={currentUser && userData && isBussiness() ? <BusinessRecruitSeeker /> : <Navigate to="/" replace />} />
-                <Route path="/business/profile" element={currentUser && userData && isBussiness() ? <BusinessProfile /> : <Navigate to="/" replace />} />
-                <Route path="/business/profile/edit" element={currentUser && userData && isBussiness() ? <BusinessProfileEdit /> : <Navigate to="/" replace />} />
-                <Route path="/business/tokens" element={currentUser && userData && isBussiness() ? <TokenManagement /> : <Navigate to="/" replace />} />
-                <Route path="/business/jobs" element={currentUser && userData && isBussiness() ? <BusinessJobPage /> : <Navigate to="/" replace />} />
+                {/* Business routes */}
+                <Route
+                    path="/business/recruit"
+                    element={
+                        currentUser && userData && isBussiness() ? (
+                            <BusinessRecruitSeeker />
+                        ) : (
+                            <Navigate to="/" replace />
+                        )
+                    }
+                />
+                <Route
+                    path="/business/profile"
+                    element={
+                        currentUser && userData && isBussiness() ? (
+                            <BusinessProfile />
+                        ) : (
+                            <Navigate to="/" replace />
+                        )
+                    }
+                />
+                <Route
+                    path="/business/profile/edit"
+                    element={
+                        currentUser && userData && isBussiness() ? (
+                            <BusinessProfileEdit />
+                        ) : (
+                            <Navigate to="/" replace />
+                        )
+                    }
+                />
+                <Route
+                    path="/business/tokens"
+                    element={
+                        currentUser && userData && isBussiness() ? (
+                            <TokenManagement />
+                        ) : (
+                            <Navigate to="/" replace />
+                        )
+                    }
+                />
+
+                {/* ✅ New: Business Jobs route */}
+                <Route
+                    path="/business/jobs"
+                    element={
+                        currentUser && userData && isBussiness() ? (
+                            <BusinessJobPage />
+                        ) : (
+                            <Navigate to="/" replace />
+                        )
+                    }
+                />
+
+                <Route
+                    path="/business/activity"
+                    element={
+                        currentUser && userData && isBussiness() ?
+                            <BusinessActivity /> :
+                            <Navigate to="/" replace />
+                    }
+                />
 
                 <Route path="/" element={currentUser ? (
                     userData ? (

@@ -24,7 +24,7 @@ const BusinessNavigation = () => {
                     {/* Top navigation */}
                     <div className="flex justify-between items-center p-1 border-b">
                         <div>
-                            <a href="/business/recruit">
+                            <a href="/business/activity">
                                 <img
                                     src="/images/Untitled-5.png"
                                     alt="Centre Connect Logo"
@@ -57,16 +57,17 @@ const BusinessNavigation = () => {
                             Recruit Workforce
                         </Link>
 
-                        <Link
-                            to="/business/jobs"
-                            className={`py-2 px-4 font-medium transition-colors ${isActive("/business/jobs")
-                                ? "text-[#F2BE5C] border-b-2 border-[#F2BE5C]"
-                                : "text-gray-600 hover:text-[#F2BE5C]"
-                                }`}
-                        >
-                            Jobs
-                        </Link>
-
+                    
+                     <Link
+                        to="/business/activity"
+                        className={`py-2 px-4 font-medium transition-colors ${isActive("/business/activity")
+                            ? "text-[#F2BE5C] border-b-2 border-[#F2BE5C]"
+                            : "text-gray-600 hover:text-[#F2BE5C]"
+                            }`}
+                    >
+                        Activity
+                    </Link> 
+                    
                         <Link
                             to="/business/profile"
                             className={`py-2 px-4 font-medium transition-colors ${isActive("/business/profile")
