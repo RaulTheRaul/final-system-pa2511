@@ -27,7 +27,7 @@ const BusinessNavigation = () => {
                     {/* Top navigation */}
                     <div className="flex justify-between items-center p-1 border-b">
                         <div>
-                            <a href="/business/recruit"> {/* Redirect to home when clicked  Note: Needs to be changed to activity*/}
+                            <a href="/business/activity"> {/* Redirect to home when clicked  Note: Needs to be changed to activity*/}
                                 <img src="/images/Untitled-5.png" className="flex items-left bg-no-repeat max-w-xs max-h-auto" />
                             </a>
                         </div>
@@ -56,18 +56,17 @@ const BusinessNavigation = () => {
                             Recruit Seekers
                         </Link>
 
-                        {/*
-                     Note: Will change this when added more pages for business
+                    
                      <Link
-                        to="/seeker/activity"
-                        className={`py-2 px-4 font-medium transition-colors ${isActive("/seeker/activity")
+                        to="/business/activity"
+                        className={`py-2 px-4 font-medium transition-colors ${isActive("/business/activity")
                             ? "text-[#F2BE5C] border-b-2 border-[#F2BE5C]"
                             : "text-gray-600 hover:text-[#F2BE5C]"
                             }`}
                     >
                         Activity
                     </Link> 
-                    */}
+                    
                         <Link
                             to="/business/profile"
                             className={`py-2 px-4 font-medium transition-colors ${isActive("/business/profile")

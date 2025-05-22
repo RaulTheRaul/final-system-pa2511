@@ -10,6 +10,7 @@ import BusinessProfile from "../pages/businessHomePage/tabs/BusinessProfile";
 import BusinessRecruitSeeker from "../pages/businessHomePage/BusinessRecruitSeeker";
 import BusinessProfileEdit from "../pages/businessHomePage/BusinessProfileEdit";
 import TokenManagement from "../pages/businessHomePage/tabs/TokenManagement"; // Import the TokenManagement component
+import BusinessActivity from "../pages/businessHomePage/tabs/BusinessActivity";
 
 // Import the seeker pages
 import SeekerJobsPage from "../pages/seekerHomePage/SeekerJobsPage";
@@ -165,6 +166,15 @@ const Router = () => {
                     element={
                         currentUser && userData && isBussiness() ?
                             <TokenManagement /> :
+                            <Navigate to="/" replace />
+                    }
+                />
+
+                <Route
+                    path="/business/activity"
+                    element={
+                        currentUser && userData && isBussiness() ?
+                            <BusinessActivity /> :
                             <Navigate to="/" replace />
                     }
                 />
