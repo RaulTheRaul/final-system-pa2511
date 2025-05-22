@@ -5,9 +5,9 @@ const QualificationSection = ({ formData, handleChange, handleCheckboxChange }) 
             <h3 className="text-lg font-semibold text-[#254159] mb-4 pb-2 border-b">Qualifications & Certifications</h3>
             <div className="space-y-4 max-w-2xl">
                 <div>
-                    <lable htmlFor="educationLevel" className="block text-sm font-medium text-gray-700 mb-1">
+                    <label htmlFor="educationLevel" className="block text-sm font-medium text-gray-700 mb-1">
                         Education Level
-                    </lable>
+                    </label>
                     <select
                         id="educationLevel"
                         name="educationLevel"

@@ -54,7 +54,7 @@ const BusinessNavigation = () => {
                                 : "text-gray-600 hover:text-[#F2BE5C]"
                                 }`}
                         >
-                            Recruit Seekers
+                            Recruit Workforce
                         </Link>
 
                         <Link
@@ -74,7 +74,7 @@ const BusinessNavigation = () => {
                                 : "text-gray-600 hover:text-[#F2BE5C]"
                                 }`}
                         >
-                            Profile
+                            Business Profile
                         </Link>
 
                         <Link
@@ -84,7 +84,7 @@ const BusinessNavigation = () => {
                                 : "text-gray-600 hover:text-[#F2BE5C]"
                                 }`}
                         >
-                            Tokens
+                            Account
                         </Link>
                     </div>
                 </div>
