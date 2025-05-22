@@ -10,16 +10,16 @@ import BusinessProfile from "../pages/businessHomePage/tabs/BusinessProfile";
 import BusinessRecruitSeeker from "../pages/businessHomePage/BusinessRecruitSeeker";
 import BusinessProfileEdit from "../pages/businessHomePage/BusinessProfileEdit";
 import TokenManagement from "../pages/businessHomePage/tabs/TokenManagement";
-import BusinessJobPage from "../pages/businessHomePage/BusinessJobPage"; // ✅ New: Jobs page for business
+import BusinessJobPage from "../pages/businessHomePage/BusinessJobPage";
 import BusinessActivity from "../pages/businessHomePage/tabs/BusinessActivity";
 
-// Import the seeker pages
-import SeekerJobsPage from "../pages/seekerHomePage/SeekerJobsPage";
+// Updated: Import the new split-pane job board
+import SeekerJobBoard from "../pages/seekerHomePage/SeekerJobBoard";
 import SeekerActivityPage from "../pages/seekerHomePage/SeekerActivityPage";
 import SeekerProfilePage from "../pages/seekerHomePage/SeekerProfilePage";
 import SeekerProfileEditPage from "../pages/seekerHomePage/SeekerProfileEditPage";
 
-// Import the business list pages
+// Business list pages
 import BusinessListPage from "../pages/seekerHomePage/BusinessListPage";
 import BusinessDetailPage from "../pages/seekerHomePage/BusinessDetailPage";
 
@@ -35,46 +35,18 @@ const Router = () => {
         );
     }
 
-    const isSeeker = () => {
-        return userData?.userType === "seeker" || userData?.userType === "jobseeker";
-    };
-
-    const isBussiness = () => {
-        return userData?.userType === "business";
-    };
-
-    const needsSetup = () => {
-        return currentUser && userData && !userData.setupCompleted;
-    };
+    const isSeeker = () => userData?.userType === "seeker" || userData?.userType === "jobseeker";
+    const isBussiness = () => userData?.userType === "business";
+    const needsSetup = () => currentUser && userData && !userData.setupCompleted;
 
     return (
         <BrowserRouter>
             <Routes>
-                {/* Public route */}
-                <Route
-                    path="/login"
-                    element={
-                        !currentUser ? <AuthPage /> : <Navigate to="/" replace />
-                    }
-                />
+                <Route path="/login" element={!currentUser ? <AuthPage /> : <Navigate to="/" replace />} />
 
-                {/* Setup route */}
-                <Route
-                    path="/setup"
-                    element={
-                        needsSetup() ? (
-                            userData.userType === "business" ? (
-                                <BusinessSetup />
-                            ) : userData.userType === "jobseeker" ? (
-                                <JobseekerSetup />
-                            ) : (
-                                <Navigate to="/" replace />
-                            )
-                        ) : (
-                            <Navigate to="/" replace />
-                        )
-                    }
-                />
+                <Route path="/setup" element={needsSetup() ? (
+                    userData.userType === "business" ? <BusinessSetup /> : <JobseekerSetup />
+                ) : <Navigate to="/" replace />} />
 
                 {/* Seeker routes */}
                 <Route
@@ -203,33 +175,14 @@ const Router = () => {
                     }
                 />
 
-                {/* Home route */}
-                <Route
-                    path="/"
-                    element={
-                        currentUser ? (
-                            userData ? (
-                                userData.userType === "business" ? (
-                                    !userData.setupCompleted ? (
-                                        <Navigate to="/setup" replace />
-                                    ) : (
-                                        <BusinessRecruitSeeker />
-                                    )
-                                ) : isSeeker() ? (
-                                    <Navigate to="/seeker/jobs" replace />
-                                ) : (
-                                    <div>User type not recognized</div>
-                                )
-                            ) : (
-                                <div>Loading user data...</div>
-                            )
-                        ) : (
-                            <Navigate to="/login" replace />
-                        )
-                    }
-                />
+                <Route path="/" element={currentUser ? (
+                    userData ? (
+                        userData.userType === "business" ? (
+                            !userData.setupCompleted ? <Navigate to="/setup" replace /> : <BusinessRecruitSeeker />
+                        ) : isSeeker() ? <Navigate to="/seeker/jobs" replace /> : <div>User type not recognized</div>
+                    ) : <div>Loading user data...</div>
+                ) : <Navigate to="/login" replace />} />
 
-                {/* Catch-all fallback */}
                 <Route path="*" element={<Navigate to="/" replace />} />
             </Routes>
         </BrowserRouter>
