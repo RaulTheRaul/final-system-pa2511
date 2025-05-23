@@ -12,14 +12,26 @@ const BusinessJobPage = () => {
   const [error, setError] = useState("");
   const [newJob, setNewJob] = useState({
     title: "",
-    location: "",
-    jobType: "",
+    positionOverview: "",
+    responsibilities: "",
+    qualifications: "",
+    employmentType: "",
     startDate: "",
-    schedule: "",
-    description: "",
-    requirements: "",
-    payRate: "",
-    contactInstructions: ""
+    contractDuration: "",
+    applicationClosingDate: "",
+
+    rosterCycle: "",
+    flyInLocations: "",
+    destinationLocation: "",
+    transportInclusions: "",
+    accommodationType: "",
+    accommodationCosts: "",
+    mealsProvided: "",
+
+    hourlyRate: "",
+    allowances: "",
+    bonus: "",
+    developmentOpportunities: ""
   });
 
   const fetchJobs = async () => {
@@ -65,14 +77,26 @@ const BusinessJobPage = () => {
 
       setNewJob({
         title: "",
-        location: "",
-        jobType: "",
+        positionOverview: "",
+        responsibilities: "",
+        qualifications: "",
+        employmentType: "",
         startDate: "",
-        schedule: "",
-        description: "",
-        requirements: "",
-        payRate: "",
-        contactInstructions: ""
+        contractDuration: "",
+        applicationClosingDate: "",
+
+        rosterCycle: "",
+        flyInLocations: "",
+        destinationLocation: "",
+        transportInclusions: "",
+        accommodationType: "",
+        accommodationCosts: "",
+        mealsProvided: "",
+
+        hourlyRate: "",
+        allowances: "",
+        bonus: "",
+        developmentOpportunities: ""
       });
 
       await fetchJobs();
@@ -91,62 +115,71 @@ const BusinessJobPage = () => {
           className="space-y-6 bg-white p-6 rounded-lg shadow-lg border border-gray-200"
         >
           <h2 className="text-2xl font-bold text-[#254159] mb-2">📝 Post a New Job</h2>
-          <p className="text-sm text-gray-500 mb-4">
-            Provide detailed information to help jobseekers understand the role.
-          </p>
 
           <div className="grid md:grid-cols-2 gap-4">
             <div>
               <label className="text-sm font-medium text-gray-700 mb-1 block">Job Title</label>
-              <input type="text" name="title" placeholder="e.g., Babysitter, Nanny" value={newJob.title} onChange={handleChange} className="w-full border border-gray-300 px-3 py-2 rounded-md shadow-sm focus:ring-[#f2be5c] focus:border-[#f2be5c]" required />
+              <input type="text" name="title" placeholder="e.g., FIFO Educator" value={newJob.title} onChange={handleChange} className="w-full border border-gray-300 px-3 py-2 rounded-md shadow-sm" required />
             </div>
             <div>
-              <label className="text-sm font-medium text-gray-700 mb-1 block">Location</label>
-              <input type="text" name="location" placeholder="e.g., Epping, NSW" value={newJob.location} onChange={handleChange} className="w-full border border-gray-300 px-3 py-2 rounded-md shadow-sm focus:ring-[#f2be5c] focus:border-[#f2be5c]" required />
+              <label className="text-sm font-medium text-gray-700 mb-1 block">Position Overview</label>
+              <input type="text" name="positionOverview" placeholder="Short summary of the role" value={newJob.positionOverview} onChange={handleChange} className="w-full border border-gray-300 px-3 py-2 rounded-md shadow-sm" required />
             </div>
+          </div>
+
+          <div>
+            <label className="text-sm font-medium text-gray-700 mb-1 block">Key Responsibilities</label>
+            <textarea name="responsibilities" placeholder="e.g., Supervise children, plan activities..." value={newJob.responsibilities} onChange={handleChange} className="w-full border border-gray-300 px-3 py-2 rounded-md shadow-sm" rows="3" required />
           </div>
 
           <div className="grid md:grid-cols-2 gap-4">
             <div>
-              <label className="text-sm font-medium text-gray-700 mb-1 block">Job Type</label>
-              <select name="jobType" value={newJob.jobType} onChange={handleChange} className="w-full border border-gray-300 px-3 py-2 rounded-md shadow-sm bg-white focus:ring-[#f2be5c] focus:border-[#f2be5c]" required>
-                <option value="">Select type</option>
-                <option value="Casual">Casual</option>
-                <option value="Part-time">Part-time</option>
-                <option value="Full-time">Full-time</option>
-                <option value="Live-in">Live-in</option>
-              </select>
+              <label className="text-sm font-medium text-gray-700 mb-1 block">Qualifications</label>
+              <input type="text" name="qualifications" placeholder="e.g., Cert III, Diploma" value={newJob.qualifications} onChange={handleChange} className="w-full border border-gray-300 px-3 py-2 rounded-md shadow-sm" required />
             </div>
+            <div>
+              <label className="text-sm font-medium text-gray-700 mb-1 block">Employment Type</label>
+              <input type="text" name="employmentType" placeholder="Full-time / Part-time" value={newJob.employmentType} onChange={handleChange} className="w-full border border-gray-300 px-3 py-2 rounded-md shadow-sm" required />
+            </div>
+          </div>
+
+          <div className="grid md:grid-cols-2 gap-4">
             <div>
               <label className="text-sm font-medium text-gray-700 mb-1 block">Start Date</label>
-              <input type="date" name="startDate" value={newJob.startDate} onChange={handleChange} className="w-full border border-gray-300 px-3 py-2 rounded-md shadow-sm focus:ring-[#f2be5c] focus:border-[#f2be5c]" required />
+              <input type="date" name="startDate" value={newJob.startDate} onChange={handleChange} className="w-full border border-gray-300 px-3 py-2 rounded-md shadow-sm" required />
+            </div>
+            <div>
+              <label className="text-sm font-medium text-gray-700 mb-1 block">Contract Duration</label>
+              <input type="text" name="contractDuration" placeholder="e.g., 3 months, ongoing" value={newJob.contractDuration} onChange={handleChange} className="w-full border border-gray-300 px-3 py-2 rounded-md shadow-sm" required />
             </div>
           </div>
 
           <div>
-            <label className="text-sm font-medium text-gray-700 mb-1 block">Weekly Schedule</label>
-            <textarea name="schedule" placeholder="e.g., Mon–Fri, 3:00 PM – 6:00 PM" value={newJob.schedule} onChange={handleChange} rows="2" className="w-full border border-gray-300 px-3 py-2 rounded-md shadow-sm focus:ring-[#f2be5c] focus:border-[#f2be5c]" required />
+            <label className="text-sm font-medium text-gray-700 mb-1 block">Application Closing Date</label>
+            <input type="date" name="applicationClosingDate" value={newJob.applicationClosingDate} onChange={handleChange} className="w-full border border-gray-300 px-3 py-2 rounded-md shadow-sm" required />
           </div>
 
-          <div>
-            <label className="text-sm font-medium text-gray-700 mb-1 block">Job Description</label>
-            <textarea name="description" placeholder="Describe your family, the children, and what you're looking for in a carer." value={newJob.description} onChange={handleChange} rows="4" className="w-full border border-gray-300 px-3 py-2 rounded-md shadow-sm focus:ring-[#f2be5c] focus:border-[#f2be5c]" required />
-          </div>
-
-          <div>
-            <label className="text-sm font-medium text-gray-700 mb-1 block">Requirements</label>
-            <textarea name="requirements" placeholder="e.g., Working With Children Check, First Aid, non-smoker, driver's license" value={newJob.requirements} onChange={handleChange} rows="3" className="w-full border border-gray-300 px-3 py-2 rounded-md shadow-sm focus:ring-[#f2be5c] focus:border-[#f2be5c]" required />
-          </div>
+          <hr className="my-4" />
+          <h3 className="text-lg font-semibold text-[#254159]">FIFO Details</h3>
 
           <div className="grid md:grid-cols-2 gap-4">
-            <div>
-              <label className="text-sm font-medium text-gray-700 mb-1 block">Pay Rate</label>
-              <input type="text" name="payRate" placeholder="e.g., $30/hour" value={newJob.payRate} onChange={handleChange} className="w-full border border-gray-300 px-3 py-2 rounded-md shadow-sm focus:ring-[#f2be5c] focus:border-[#f2be5c]" />
-            </div>
-            <div>
-              <label className="text-sm font-medium text-gray-700 mb-1 block">Contact Instructions</label>
-              <textarea name="contactInstructions" placeholder="e.g., We’ll reach out via email or app chat." value={newJob.contactInstructions} onChange={handleChange} rows="2" className="w-full border border-gray-300 px-3 py-2 rounded-md shadow-sm focus:ring-[#f2be5c] focus:border-[#f2be5c]" />
-            </div>
+            <input type="text" name="rosterCycle" placeholder="Roster Cycle" value={newJob.rosterCycle} onChange={handleChange} className="w-full border border-gray-300 px-3 py-2 rounded-md shadow-sm" />
+            <input type="text" name="flyInLocations" placeholder="Fly-In Locations" value={newJob.flyInLocations} onChange={handleChange} className="w-full border border-gray-300 px-3 py-2 rounded-md shadow-sm" />
+            <input type="text" name="destinationLocation" placeholder="Destination Location" value={newJob.destinationLocation} onChange={handleChange} className="w-full border border-gray-300 px-3 py-2 rounded-md shadow-sm" />
+            <input type="text" name="transportInclusions" placeholder="Transport Inclusions" value={newJob.transportInclusions} onChange={handleChange} className="w-full border border-gray-300 px-3 py-2 rounded-md shadow-sm" />
+            <input type="text" name="accommodationType" placeholder="Accommodation Type" value={newJob.accommodationType} onChange={handleChange} className="w-full border border-gray-300 px-3 py-2 rounded-md shadow-sm" />
+            <input type="text" name="accommodationCosts" placeholder="Accommodation Costs" value={newJob.accommodationCosts} onChange={handleChange} className="w-full border border-gray-300 px-3 py-2 rounded-md shadow-sm" />
+            <input type="text" name="mealsProvided" placeholder="Meals Provided" value={newJob.mealsProvided} onChange={handleChange} className="w-full border border-gray-300 px-3 py-2 rounded-md shadow-sm" />
+          </div>
+
+          <hr className="my-4" />
+          <h3 className="text-lg font-semibold text-[#254159]">Pay & Benefits</h3>
+
+          <div className="grid md:grid-cols-2 gap-4">
+            <input type="text" name="hourlyRate" placeholder="Hourly Rate" value={newJob.hourlyRate} onChange={handleChange} className="w-full border border-gray-300 px-3 py-2 rounded-md shadow-sm" />
+            <input type="text" name="allowances" placeholder="Allowances" value={newJob.allowances} onChange={handleChange} className="w-full border border-gray-300 px-3 py-2 rounded-md shadow-sm" />
+            <input type="text" name="bonus" placeholder="Retention/Completion Bonus" value={newJob.bonus} onChange={handleChange} className="w-full border border-gray-300 px-3 py-2 rounded-md shadow-sm" />
+            <input type="text" name="developmentOpportunities" placeholder="Professional Development Opportunities" value={newJob.developmentOpportunities} onChange={handleChange} className="w-full border border-gray-300 px-3 py-2 rounded-md shadow-sm" />
           </div>
 
           <div className="pt-4">
