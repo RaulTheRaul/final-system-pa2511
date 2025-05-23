@@ -57,17 +57,6 @@ const BusinessNavigation = () => {
                             Recruit Workforce
                         </Link>
 
-                        {/* ✅ Jobs tab */}
-                        <Link
-                            to="/business/jobs"
-                            className={`py-2 px-4 font-medium transition-colors ${isActive("/business/jobs")
-                                ? "text-[#F2BE5C] border-b-2 border-[#F2BE5C]"
-                                : "text-gray-600 hover:text-[#F2BE5C]"}`
-                            }
-                        >
-                            Jobs
-                        </Link>
-
                         <Link
                             to="/business/activity"
                             className={`py-2 px-4 font-medium transition-colors ${isActive("/business/activity")

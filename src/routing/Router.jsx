@@ -12,6 +12,9 @@ import BusinessProfileEdit from "../pages/businessHomePage/BusinessProfileEdit";
 import TokenManagement from "../pages/businessHomePage/tabs/TokenManagement";
 import BusinessJobPage from "../pages/businessHomePage/BusinessJobPage";
 import BusinessActivity from "../pages/businessHomePage/tabs/BusinessActivity";
+import CreateJobPage from "../pages/businessHomePage/CreateJobPage";
+import ViewJobPage from "../pages/businessHomePage/ViewJobPage";
+import EditJobPage from "../pages/businessHomePage/EditJobPage";
 
 // Updated: Import the new split-pane job board
 import SeekerJobBoard from "../pages/seekerHomePage/SeekerJobBoard";
@@ -124,6 +127,28 @@ const Router = () => {
                     }
                 />
                 <Route
+                    path="/business/jobs/view/:jobId"
+                    element={
+                        currentUser && userData && isBussiness() ? (
+                        <ViewJobPage />
+                        ) : (
+                        <Navigate to="/" replace />
+                        )
+                    }
+                />
+
+                <Route
+                    path="/business/jobs/edit/:jobId"
+                    element={
+                        currentUser && userData && isBussiness() ? (
+                        <EditJobPage />
+                        ) : (
+                        <Navigate to="/" replace />
+                        )
+                    }
+                />
+
+                <Route
                     path="/business/profile"
                     element={
                         currentUser && userData && isBussiness() ? (
@@ -162,6 +187,16 @@ const Router = () => {
                             <BusinessJobPage />
                         ) : (
                             <Navigate to="/" replace />
+                        )
+                    }
+                />
+                <Route
+                    path="/business/jobs/create"
+                    element={
+                        currentUser && userData && isBussiness() ? (
+                        <CreateJobPage />
+                        ) : (
+                        <Navigate to="/" replace />
                         )
                     }
                 />
