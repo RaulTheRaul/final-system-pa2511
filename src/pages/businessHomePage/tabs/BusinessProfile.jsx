@@ -50,7 +50,7 @@ const BusinessProfile = () => {
                 <p className="text-gray-900">{BusinessInfo.acecqaRating || "—"}</p>
               </div>
               <div>
-                <p className="text-gray-600 font-medium">License Number:</p>
+                <p className="text-gray-600 font-medium">Approved Provider License:</p>
                 <p className="text-gray-900">{BusinessInfo.licenseNumber || "—"}</p>
               </div>
             </div>
