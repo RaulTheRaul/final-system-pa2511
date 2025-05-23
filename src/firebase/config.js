@@ -24,4 +24,3 @@ const db = getFirestore(app, "centre-connect");
 const functions = getFunctions(app);
 
 export { auth, db, analytics, functions, storage };
-export { auth, db, analytics, functions };
