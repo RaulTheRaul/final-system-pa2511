@@ -8,6 +8,8 @@ import { db } from "../../../firebase/config";
 const BusinessProfile = () => {
   const { userData, currentUser } = useAuth();
   const BusinessInfo = userData?.businessInformation || {};
+  const logoUrl = BusinessInfo.logoUrl || '';
+  const centreImageUrls = BusinessInfo.centreImageUrls || [];
   
   const [averageRatings, setAverageRatings] = useState({
     workplaceCulture: 0,
@@ -129,6 +131,13 @@ const BusinessProfile = () => {
             </div>
           </div>
 
+          {/* Business Logo Display */}
+          {logoUrl && (
+            <div className="bg-white rounded-lg shadow-md p-6 mb-8 border border-gray-200 flex items-center justify-center">
+              <img src={logoUrl} alt="Business Logo" className="max-h-32 object-contain" />
+            </div>
+          )}
+
           <div className="bg-white rounded-lg shadow-md p-6 mb-8 border border-gray-200">
             <h3 className="text-2xl font-semibold text-[#254159] mb-4 border-b border-gray-300 pb-3">Business Information</h3>
             <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
@@ -147,7 +156,7 @@ const BusinessProfile = () => {
                 <p className="text-gray-900">{BusinessInfo.acecqaRating || "—"}</p>
               </div>
               <div>
-                <p className="text-gray-600 font-medium">License Number:</p>
+                <p className="text-gray-600 font-medium">Approved Provider License:</p>
                 <p className="text-gray-900">{BusinessInfo.licenseNumber || "—"}</p>
               </div>
             </div>
@@ -194,6 +203,20 @@ const BusinessProfile = () => {
               </div>
             </div>
           </div>
+
+          {/* Centre Images Display */}
+          {centreImageUrls.length > 0 && (
+            <div className="bg-white rounded-lg shadow-md p-6 mb-8 border border-gray-200">
+              <h3 className="text-2xl font-semibold text-[#254159] mb-4 border-b border-gray-300 pb-3">Centre Photos</h3>
+              <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
+                {centreImageUrls.map((url, index) => (
+                  <div key={index} className="w-full aspect-video rounded-md overflow-hidden shadow-sm border border-gray-200">
+                    <img src={url} alt={`Centre photo ${index + 1}`} className="w-full h-full object-cover" />
+                  </div>
+                ))}
+              </div>
+            </div>
+          )}
 
           <div className="bg-white rounded-lg shadow-md p-6 border border-gray-200">
             <h3 className="text-2xl font-semibold text-[#254159] mb-4 border-b border-gray-300 pb-3">Additional Information</h3>
