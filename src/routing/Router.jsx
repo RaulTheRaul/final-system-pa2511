@@ -53,7 +53,7 @@ const Router = () => {
                     path="/seeker/jobs"
                     element={
                         currentUser && userData && isSeeker() ? (
-                            <SeekerJobsPage />
+                            <SeekerJobBoard />
                         ) : (
                             <Navigate to="/" replace />
                         )
