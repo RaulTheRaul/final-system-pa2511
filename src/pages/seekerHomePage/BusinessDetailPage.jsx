@@ -11,12 +11,49 @@ const BusinessDetailPage = () => {
     const [jobs, setJobs] = useState([]);
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState("");
-    const [userRating, setUserRating] = useState(0);
-    const [hoverRating, setHoverRating] = useState(0);
-    const [averageRating, setAverageRating] = useState(0);
-    const [totalRatings, setTotalRatings] = useState(0);
     const { currentUser } = useAuth();
     const navigate = useNavigate();
+
+    // Ratings state for each category
+    const [userRatings, setUserRatings] = useState({
+        workplaceCulture: 0,
+        wagesBenefits: 0,
+        professionalDevelopment: 0,
+        leadership: 0,
+        inclusionSupport: 0
+    });
+
+    const [hoverRatings, setHoverRatings] = useState({
+        workplaceCulture: 0,
+        wagesBenefits: 0,
+        professionalDevelopment: 0,
+        leadership: 0,
+        inclusionSupport: 0
+    });
+
+    const [averageRatings, setAverageRatings] = useState({
+        workplaceCulture: 0,
+        wagesBenefits: 0,
+        professionalDevelopment: 0,
+        leadership: 0,
+        inclusionSupport: 0
+    });
+
+    const [totalRatings, setTotalRatings] = useState({
+        workplaceCulture: 0,
+        wagesBenefits: 0,
+        professionalDevelopment: 0,
+        leadership: 0,
+        inclusionSupport: 0
+    });
+
+    const [hasRated, setHasRated] = useState({
+        workplaceCulture: false,
+        wagesBenefits: false,
+        professionalDevelopment: false,
+        leadership: false,
+        inclusionSupport: false
+    });
 
     useEffect(() => {
         const fetchBusinessAndJobs = async () => {
@@ -34,30 +71,52 @@ const BusinessDetailPage = () => {
                     };
                     setBusiness(businessData);
 
-                    // Handles both arrays and object format, in case we need to stich back
-                    let ratingsArray = [];
-                    if (businessData.ratings) {
-                        if (Array.isArray(businessData.ratings)) {
-                            ratingsArray = businessData.ratings;
-                        } else {
-                            ratingsArray = Object.values(businessData.ratings);
+                    // Initialize all rating categories
+                    const ratingCategories = [
+                        'workplaceCulture',
+                        'wagesBenefits',
+                        'professionalDevelopment',
+                        'leadership',
+                        'inclusionSupport'
+                    ];
+
+                    const newAverageRatings = {};
+                    const newTotalRatings = {};
+                    const newHasRated = {};
+
+                    ratingCategories.forEach(category => {
+                        // Handles both arrays and object format
+                        let ratingsArray = [];
+                        if (businessData.ratings && businessData.ratings[category]) {
+                            if (Array.isArray(businessData.ratings[category])) {
+                                ratingsArray = businessData.ratings[category];
+                            } else {
+                                ratingsArray = Object.values(businessData.ratings[category]);
+                            }
                         }
-                    }
 
-                    // Calculate average rating if ratings exist
-                    if (ratingsArray.length > 0) {
-                        const sum = ratingsArray.reduce((a, b) => a + b, 0);
-                        const avg = sum / ratingsArray.length;
-                        setAverageRating(avg);
-                        setTotalRatings(ratingsArray.length);
-                    } else {
-                        setAverageRating(0);
-                        setTotalRatings(0);
-                    }
+                        // Calculate average rating if ratings exist
+                        if (ratingsArray.length > 0) {
+                            const sum = ratingsArray.reduce((a, b) => a + b, 0);
+                            const avg = sum / ratingsArray.length;
+                            newAverageRatings[category] = avg;
+                            newTotalRatings[category] = ratingsArray.length;
+                        } else {
+                            newAverageRatings[category] = 0;
+                            newTotalRatings[category] = 0;
+                        }
 
-                    if (currentUser?.uid && businessData.ratings && typeof businessData.ratings === 'object') {
-                        setHasRated(businessData.ratings[currentUser.uid] !== undefined);
-                    }
+                        // Check if user has rated this category
+                        if (currentUser?.uid && businessData.ratings && businessData.ratings[category]) {
+                            newHasRated[category] = businessData.ratings[category][currentUser.uid] !== undefined;
+                        } else {
+                            newHasRated[category] = false;
+                        }
+                    });
+
+                    setAverageRatings(prev => ({ ...prev, ...newAverageRatings }));
+                    setTotalRatings(prev => ({ ...prev, ...newTotalRatings }));
+                    setHasRated(prev => ({ ...prev, ...newHasRated }));
 
                     // Fetch jobs posted by this business using the user ID as businessId
                     const jobsQuery = query(
@@ -84,39 +143,35 @@ const BusinessDetailPage = () => {
         fetchBusinessAndJobs();
     }, [businessId, currentUser]);
 
-    const [hasRated, setHasRated] = useState(false);
-
-    useEffect(() => {
-        if (business?.ratings && currentUser?.uid) {
-            setHasRated(business.ratings[currentUser.uid] !== undefined);
-        }
-    }, [business, currentUser]);
-
-    const handleRatingSubmit = async () => {
-        if (!userRating || !businessId || !currentUser || hasRated) return;
+    const handleRatingSubmit = async (category) => {
+        const ratingValue = userRatings[category];
+        if (!ratingValue || !businessId || !currentUser || hasRated[category]) return;
 
         try {
             const businessRef = doc(db, "users", businessId);
 
-            // Timestamps rating, security purposes
+            // Update the specific rating category
             await updateDoc(businessRef, {
-                [`ratings.${currentUser.uid}`]: userRating,
-                lastRatedAt: serverTimestamp() 
+                [`ratings.${category}.${currentUser.uid}`]: ratingValue,
+                lastRatedAt: serverTimestamp()
             });
 
             // Update local state
             const newRatings = {
                 ...business?.ratings,
-                [currentUser.uid]: userRating
+                [category]: {
+                    ...(business?.ratings?.[category] || {}),
+                    [currentUser.uid]: ratingValue
+                }
             };
 
-            const ratingsArray = Object.values(newRatings);
+            const ratingsArray = Object.values(newRatings[category] || {});
             const newAverage = ratingsArray.reduce((a, b) => a + b, 0) / ratingsArray.length;
 
-            setAverageRating(newAverage);
-            setTotalRatings(ratingsArray.length);
-            setHasRated(true);
-            setUserRating(0);
+            setAverageRatings(prev => ({ ...prev, [category]: newAverage }));
+            setTotalRatings(prev => ({ ...prev, [category]: ratingsArray.length }));
+            setHasRated(prev => ({ ...prev, [category]: true }));
+            setUserRatings(prev => ({ ...prev, [category]: 0 }));
 
         } catch (err) {
             console.error("Rating submission failed:", err);
@@ -124,11 +179,73 @@ const BusinessDetailPage = () => {
         }
     };
 
+    const handleRatingChange = (category, value) => {
+        setUserRatings(prev => ({ ...prev, [category]: value }));
+    };
+
+    const handleHoverRating = (category, value) => {
+        setHoverRatings(prev => ({ ...prev, [category]: value }));
+    };
+
     const handleGoBack = () => {
         navigate("/businesses");
     };
 
     const businessInfo = business?.businessInformation || {};
+
+    // Helper function to render rating input for a category
+    const renderRatingInput = (category, label) => {
+        return (
+            <div className="grid items-center sm:grid-cols-3 mb-6 p-4 bg-[#F4EDE8] rounded-lg shadow-sm">
+                <h3 className="text-lg font-semibold text-[#254159] mb-2">Rate {label}</h3>
+                <div className="flex items-center mb-2">
+                    {[1, 2, 3, 4, 5].map((star) => (
+                        <button
+                            key={`${category}-${star}`}
+                            className={`text-4xl mx-1 focus:outline-none ${star <= (hoverRatings[category] || userRatings[category]) ? 'text-yellow-400' : 'text-gray-300'}`}
+                            onClick={() => handleRatingChange(category, star)}
+                            onMouseEnter={() => handleHoverRating(category, star)}
+                            onMouseLeave={() => handleHoverRating(category, 0)}
+                            aria-label={`Rate ${star} star${star !== 1 ? 's' : ''}`}
+                        >
+                            {star <= (hoverRatings[category] || userRatings[category]) ? '★' : '☆'}
+                        </button>
+                    ))}
+                </div>
+                <button
+                    onClick={() => handleRatingSubmit(category)}
+                    disabled={!userRatings[category]}
+                    className={`px-4 py-2 rounded-md text-white font-medium ${!userRatings[category] ? 'bg-gray-400 cursor-not-allowed' : 'bg-[#f2be5c] hover:bg-[#e0ac4a]'}`}
+                >
+                    Submit Rating
+                </button>
+            </div>
+        );
+    };
+
+    // Helper function to render rating display for a category
+    const renderRatingDisplay = (category, label) => {
+        return (
+            <div className="flex flex-col items-center mb-4 p-4 bg-white rounded-lg shadow-sm">
+                <span className="font-medium text-2xl text-[#254159]">{label}</span>
+                <div className="flex flex-col items-center">
+                    <span className="text-gray-600 text-sm font-bold mb-1">
+                        Average: {averageRatings[category].toFixed(1)} · Total: {totalRatings[category]} {totalRatings[category] === 1 ? 'rating' : 'ratings'}
+                    </span>
+                    <div className="flex">
+                        {[1, 2, 3, 4, 5].map((star) => (
+                            <span
+                                key={`${category}-avg-${star}`}
+                                className={`text-6xl ${star <= Math.round(averageRatings[category]) ? 'text-[#f2be5c]' : 'text-gray-300'}`}
+                            >
+                                ★
+                            </span>
+                        ))}
+                    </div>
+                </div>
+            </div>
+        );
+    };
 
     return (
         <div className="min-h-screen bg-[#f2ece4]">
@@ -147,58 +264,40 @@ const BusinessDetailPage = () => {
                         <h2 className="text-3xl font-bold text-[#254159] mb-2">
                             {businessInfo.centreName || business?.businessName}
                         </h2>
+                    </div>
 
-                        {/* Rating Display */}
-                        <div className="flex items-center mt-2 md:mt-0">
-                            <div className="flex mr-2">
-                                {[1, 2, 3, 4, 5].map((star) => (
-                                    <span
-                                        key={`avg-${star}`}
-                                        className={`text-2xl ${star <= Math.round(averageRating) ? 'text-[#f2be5c]' : 'text-gray-300'}`}
-                                    >
-                                        ★
-                                    </span>
-                                ))}
-                            </div>
-                            <span className="text-gray-600">
-                                ({averageRating.toFixed(1)} · {totalRatings} {totalRatings === 1 ? 'rating' : 'ratings'})
-                            </span>
+                    {/* Detailed Ratings Display */}
+                    <div className="mb-6 p-4 bg-white rounded-lg shadow-sm">
+                        <h3 className="text-xl font-semibold text-[#254159] mb-4">Center Ratings</h3>
+                        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+                        {renderRatingDisplay('workplaceCulture', 'Workplace Culture')}
+                        {renderRatingDisplay('wagesBenefits', 'Wages & Benefits')}
+                        {renderRatingDisplay('professionalDevelopment', 'Professional Development')}
+                        </div>
+                        <div className="grid grid-cols-1 md:grid-cols-1 lg:grid-cols-2 gap-4">
+                        {renderRatingDisplay('leadership', 'Leadership')}
+                        {renderRatingDisplay('inclusionSupport', 'Inclusion Support')}
                         </div>
                     </div>
 
-                    {/* Rating Input Section */}
-                    {currentUser?.uid !== businessId && !hasRated && (
-                        <div className="mb-6 p-4 bg-[#F4EDE8] rounded-lg shadow-sm">
-                            <h3 className="text-lg font-semibold text-[#254159] mb-2">Rate this center</h3>
-                            <div className="flex items-center mb-2">
-                                {[1, 2, 3, 4, 5].map((star) => (
-                                    <button
-                                        key={`rate-${star}`}
-                                        className={`text-2xl mx-1 focus:outline-none ${star <= (hoverRating || userRating) ? 'text-yellow-400' : 'text-gray-300'}`}
-                                        onClick={() => setUserRating(star)}
-                                        onMouseEnter={() => setHoverRating(star)}
-                                        onMouseLeave={() => setHoverRating(0)}
-                                        aria-label={`Rate ${star} star${star !== 1 ? 's' : ''}`}
-                                    >
-                                        {star <= (hoverRating || userRating) ? '★' : '☆'}
-                                    </button>
-                                ))}
-                            </div>
-                            <button
-                                onClick={handleRatingSubmit}
-                                disabled={!userRating}
-                                className={`px-4 py-2 rounded-md text-white font-medium ${!userRating ? 'bg-gray-400 cursor-not-allowed' : 'bg-[#f2be5c] hover:bg-[#e0ac4a]'}`}
-                            >
-                                Submit Rating
-                            </button>
+                    {/* Rating Input Sections */}
+                    {currentUser?.uid !== businessId && (
+                        <div className="space-y-4 mb-6">
+                            {!hasRated.workplaceCulture && renderRatingInput('workplaceCulture', 'Workplace Culture')}
+                            {!hasRated.wagesBenefits && renderRatingInput('wagesBenefits', 'Wages & Benefits')}
+                            {!hasRated.professionalDevelopment && renderRatingInput('professionalDevelopment', 'Professional Development')}
+                            {!hasRated.leadership && renderRatingInput('leadership', 'Leadership')}
+                            {!hasRated.inclusionSupport && renderRatingInput('inclusionSupport', 'Inclusion Support')}
                         </div>
                     )}
 
-                    {hasRated && (
-                        <div className="mb-6 p-4 bg-[#F1E8CD] text-[#f2be5c] rounded-lg">
-                            You've already rated this business
-                        </div>
-                    )}
+                    {/* Display if user has rated all categories */}
+                    {hasRated.workplaceCulture && hasRated.wagesBenefits &&
+                        hasRated.professionalDevelopment && hasRated.leadership && hasRated.inclusionSupport && (
+                            <div className="mb-6 p-4 bg-[#F1E8CD] text-[#f2be5c] rounded-lg">
+                                You've already rated this business
+                            </div>
+                        )}
 
                     <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mt-6">
                         <div>
