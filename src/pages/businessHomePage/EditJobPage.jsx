@@ -3,6 +3,7 @@ import { doc, getDoc, updateDoc } from "firebase/firestore";
 import { db } from "../../firebase/config";
 import { useParams, useNavigate } from "react-router-dom";
 import BusinessNavigation from "./components/BusinessNavigation";
+import { toast } from "react-hot-toast";
 
 const EditJobPage = () => {
   const { jobId } = useParams();
@@ -38,6 +39,7 @@ const EditJobPage = () => {
       startDate: jobData.startDate,
       applicationClosingDate: jobData.applicationClosingDate,
     });
+    toast.success("✅ Job updated successfully!");
     navigate("/business/activity");
   };
 

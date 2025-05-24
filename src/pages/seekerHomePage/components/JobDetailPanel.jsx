@@ -1,7 +1,32 @@
 import { useState } from "react";
+import { collection, addDoc, serverTimestamp } from "firebase/firestore";
+import { db } from "../../../firebase/config";
+import { useAuth } from "../../../context/AuthContext";
+import { toast } from "react-hot-toast";
 
 const JobDetailPanel = ({ job }) => {
   const [activeTab, setActiveTab] = useState("overview");
+  const { currentUser } = useAuth();
+
+  const handleApply = async () => {
+    if (!currentUser) {
+      toast.error("You must be logged in to apply.");
+      return;
+    }
+
+    try {
+      await addDoc(collection(db, "applications"), {
+        jobId: job.id,
+        seekerId: currentUser.uid,
+        appliedAt: serverTimestamp()
+      });
+
+      toast.success("✅ Application submitted!");
+    } catch (error) {
+      console.error("Failed to apply:", error);
+      toast.error("❌ Failed to apply.");
+    }
+  };
 
   const tabStyle = (tab) =>
     `px-4 py-2 border-b-2 text-sm font-medium cursor-pointer ${
@@ -64,7 +89,10 @@ const JobDetailPanel = ({ job }) => {
       </div>
 
       <div className="mt-6">
-        <button className="bg-[#26425A] hover:bg-[#f2be5c] text-white font-medium px-6 py-2 rounded-md transition">
+        <button
+          onClick={handleApply}
+          className="bg-[#26425A] hover:bg-[#f2be5c] text-white font-medium px-6 py-2 rounded-md transition"
+        >
           Apply Now
         </button>
       </div>
