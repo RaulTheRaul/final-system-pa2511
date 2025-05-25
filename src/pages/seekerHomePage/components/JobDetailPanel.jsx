@@ -7,6 +7,9 @@ import { toast } from "react-hot-toast";
 const JobDetailPanel = ({ job }) => {
   const [activeTab, setActiveTab] = useState("overview");
   const { currentUser } = useAuth();
+  const display = (label, value) => (
+  <p><strong>{label}:</strong> {value || "Not provided"}</p>
+  );
 
   const handleApply = async () => {
     if (!currentUser) {
@@ -17,6 +20,8 @@ const JobDetailPanel = ({ job }) => {
     try {
       await addDoc(collection(db, "applications"), {
         jobId: job.id,
+        jobTitle: job.title,
+        postedBy: job.company || "Unknown",
         seekerId: currentUser.uid,
         appliedAt: serverTimestamp()
       });
@@ -54,9 +59,7 @@ const JobDetailPanel = ({ job }) => {
         {activeTab === "overview" && (
           <>
             <p><strong>Position Overview:</strong><br />{job.positionOverview}</p>
-            <p><strong>Schedule:</strong> {job.schedule}</p>
-            <p><strong>Description:</strong><br />{job.description}</p>
-            <p><strong>Qualifications:</strong><br />{job.requirements}</p>
+            <p><strong>Qualifications:</strong><br />{job.qualifications}</p>
             <p><strong>Start Date:</strong> {job.startDate}</p>
             <p><strong>Contract Duration:</strong> {job.contractDuration || "Ongoing"}</p>
             <p><strong>Application Deadline:</strong> {job.closingDate || "Open until filled"}</p>
@@ -80,10 +83,10 @@ const JobDetailPanel = ({ job }) => {
 
         {activeTab === "pay" && (
           <>
-            <p><strong>Hourly Rate / Salary:</strong> {job.payRate}</p>
-            <p><strong>Allowances:</strong> {job.allowances}</p>
-            <p><strong>Bonuses:</strong> {job.bonuses}</p>
-            <p><strong>Professional Development:</strong> {job.professionalDevelopment}</p>
+            {display("Hourly Rate / Salary", job.hourlyRate)}
+    {display("Allowances", job.allowances)}
+    {display("Bonuses", job.bonus)}
+    {display("Professional Development", job.developmentOpportunities)}
           </>
         )}
       </div>

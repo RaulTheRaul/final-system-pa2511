@@ -61,7 +61,7 @@ const SeekerActivityPage = () => {
       try {
         const appsQuery = query(
           collection(db, "applications"),
-          where("userId", "==", currentUser.uid)
+          where("seekerId", "==", currentUser.uid)
         );
         const appsSnapshot = await getDocs(appsQuery);
         const appsData = appsSnapshot.docs.map((doc) => ({
