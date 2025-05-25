@@ -5,16 +5,19 @@ import { useAuth } from "../../../context/AuthContext";
 
 import ConfirmRevealModal from "./ConfirmRevealModal";
 
-
-const SeekerCard = ({ seekerInfo }) => {
+const SeekerCard = ({ seekerInfo, onViewProfile, currentlySelectedProfile, onClosePanel }) => {
   //Set variables for later use
   const [showContact, setShowContact] = useState(null); //Stores contact info
   const [revealed, setRevealed] = useState(false); //for revealing button
-  const [loading, setLoading] = useState(false)
-  const [showConfirmation, setShowConfirmation] = useState(false)
+  const [loading, setLoading] = useState(false);
+  const [showConfirmation, setShowConfirmation] = useState(false);
+  //const [showProfileModal, setShowProfileModal] = useState(false);
 
   const [allowMessage, setAllowMessage] = useState(false); //for message system
   const { currentUser } = useAuth();
+
+  //This will check if the seeker panel is selected on the right side
+  const isThisProfileSelected = currentlySelectedProfile && currentlySelectedProfile.id == seekerInfo.id;
 
    //This fucntion will make sure the reveal contact is only pressed once and will prevent the business from being charged
   useEffect(()=>{
@@ -46,8 +49,8 @@ const SeekerCard = ({ seekerInfo }) => {
         }
       }
     }, [currentUser, seekerInfo?.id, db, seekerInfo]);
-  
 
+    
   //This function will handle the initial click of the reveal button
   const handleRevealClick = () => {
     if ( loading || revealed ) return; //prevents action if already loading or revealed
@@ -99,7 +102,16 @@ const SeekerCard = ({ seekerInfo }) => {
   //This function will enable the closure of the confirmation modal
   const handleCancelReveal = () => {
     setShowConfirmation(false);
-  }
+  };
+
+ //Displays profile on right panel and toggles based on current selection.
+  const handleViewProfileClick = () => {
+    if(isThisProfileSelected) { 
+      onClosePanel(); //if profile is selected, close profile
+      } else if (onViewProfile) {
+      onViewProfile(seekerInfo); //otherwise open profile
+    };
+  };
 
   //This function will handle the message system
   //Note: This function will be added later
@@ -110,7 +122,8 @@ const SeekerCard = ({ seekerInfo }) => {
 
   return (
     //display basic seeker information
-    <div className="border-2 border-gray-400 p-4 rounded shadow mb-4 bg-white">
+    <div className="bg-white rounded-md shadow-md p-4 mb-4">
+      <div>
       <h3 className="text-xl font-semibold">{seekerInfo?.jobseekerInformation?.educationLevel || 'Not provided'}</h3>
       <p className="text-gray-700">Availability: {seekerInfo?.jobseekerInformation?.availability || 'Not provided'}</p>
       <p className="text-gray-700">Shift Preference: {seekerInfo?.jobseekerInformation?.shiftPreference || 'Not provided'}</p>
@@ -133,23 +146,27 @@ const SeekerCard = ({ seekerInfo }) => {
             <button
               className= {`px-4 py-2 rounded-md text-sm font-medium transition-colors duration-200 shadow-sm border
                        bg-[#26425A] text-white hover:bg-[#f2be5c] border-transparent
-                       ${(loading || revealed) ? ' ' : ''}`}
+                       ${loading ? ' ' : ''}`}
               onClick={handleRevealClick}
-              disabled={loading || revealed} //disable button once revealed.
+              disabled={loading} //disable button once revealed.
             >
               {loading ? 'Revealing...' :'Reveal Profile'}
             </button>
             )}
+
+            {/* Buttons that will appear once profile is revealed */}
           {revealed && (
             <div className="flex space-x-2">
+              {/* View Profile Button */}
               <button
               className="px-4 py-2 rounded-md text-sm font-medium transition-colors duration-200 shadow-sm border
                        bg-[#26425A] text-white hover:bg-[#f2be5c] border-transparent"
-              onClick={()=>console.log("View profile clicked", seekerInfo.id)}
+              onClick={handleViewProfileClick} 
               >
-                View Profile
+                {isThisProfileSelected ? "Hide Profile" : "View Profile"}
               </button>
 
+              {/* Message Button */}
               <button
               className="px-4 py-2 rounded-md text-sm font-medium transition-colors duration-200 shadow-sm border
                        bg-[#26425A] text-white hover:bg-[#f2be5c] border-transparent"
@@ -160,6 +177,7 @@ const SeekerCard = ({ seekerInfo }) => {
               </div>
           )}
         </div>
+      </div>
 
       {/* Rendering the confirmation modal */}
         <ConfirmRevealModal
@@ -167,12 +185,18 @@ const SeekerCard = ({ seekerInfo }) => {
         onConfirm={handleRevealContact}
         onCancel={handleCancelReveal}
         isLoading={loading}
-        title="Confirm Action"
+        title="Confirm Profile Reveal"
         message="Are you sure? This will deduct 5 credits from your account."
         />
 
+      {/* Render the View Profile modal
+          <ViewSeekerProfileModal
+            isOpen={showProfileModal}
+            onClose={handleCloseProfileModal}
+            seekerData={seekerInfo} //give seekerInfo to seekerData
+          />
+          */}
     </div>
-      
   )}
 
 export default SeekerCard;
