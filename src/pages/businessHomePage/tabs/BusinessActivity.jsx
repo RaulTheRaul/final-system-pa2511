@@ -82,7 +82,7 @@ const BusinessActivity = () => {
                                     recentReveal.map((reveal) => (
                                         <li key={reveal.id} 
                                             className={`mb-4 bg-white p-2 rounded shadow cursor-pointer hover:bg-gray-500 transition-colors duration-200
-                                                ${selectedSeeker && selectedSeeker.id === reveal.id ? 'border-2 border-blue-500' : '' } `}
+                                                ${selectedSeeker && selectedSeeker.id === reveal.id ? 'border-2 border-[#f2be5c]-500' : '' } `}
                                             onClick={() => handleViewProfile(reveal)}
                                         >   
                                             <p><span className="text-[#254159] font-semibold">{reveal.seeker?.fullName || "Name Not Provided"}</span></p>
