@@ -196,7 +196,7 @@ const BusinessDetailPage = () => {
     // Helper function to render rating input for a category
     const renderRatingInput = (category, label) => {
         return (
-            <div className="grid items-center sm:grid-cols-3 mb-6 p-4 bg-[#F4EDE8] rounded-lg shadow-sm">
+            <div className="grid items-center sm:grid-cols-3 mb-6 p-4 bg-white rounded-lg shadow-sm">
                 <h3 className="text-lg font-semibold text-[#254159] mb-2">Rate {label}</h3>
                 <div className="flex items-center mb-2">
                     {[1, 2, 3, 4, 5].map((star) => (
@@ -259,7 +259,7 @@ const BusinessDetailPage = () => {
                     ← Back to Businesses
                 </button>
 
-                <div className="bg-[#EEEEEE] rounded-lg shadow-sm p-6 mb-6">
+                <div className="bg-[#F8F8F8] rounded-lg shadow-sm p-6 mb-6">
                     <div className="flex flex-col md:flex-row justify-between items-start md:items-center mb-6">
                         <h2 className="text-3xl font-bold text-[#254159] mb-2">
                             {businessInfo.centreName || business?.businessName}

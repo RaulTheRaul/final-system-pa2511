@@ -5,7 +5,7 @@ const BusinessCard = ({ business }) => {
     const businessInfo = business.businessInformation || {};
 
     return (
-        <div className="bg-[#F1EEEB] border border-[#DDD] rounded-lg shadow-sm p-6 transition hover:shadow-md">
+        <div className="bg-white border border-[#DDD] rounded-lg shadow-sm p-6 transition hover:shadow-md">
             <div className="flex flex-col md:flex-row justify-between">
                 <div className="mb-4 md:mb-0">
                     <h3 className="text-xl font-semibold text-[#254159] mb-2">
