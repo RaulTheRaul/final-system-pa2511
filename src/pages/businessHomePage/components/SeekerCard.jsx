@@ -135,7 +135,8 @@ const SeekerCard = ({ seekerInfo, onViewProfile, currentlySelectedProfile, onClo
         //If info has been revealed, display continuously
          <div className="mt-4">
           <h4 className="font-semibold">Contact Information:</h4>
-          <p>{seekerInfo?.email || 'Email not provided'}</p>
+          <p>Name: {seekerInfo?.fullName}</p>
+          <p>Email: {seekerInfo?.email || 'Email not provided'}</p>
         </div>
       )} 
      
