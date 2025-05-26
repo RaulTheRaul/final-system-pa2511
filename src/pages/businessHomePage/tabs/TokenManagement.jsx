@@ -89,7 +89,10 @@ const TokenManagement = () => {
             const transactionReference = collection(db, 'users', currentUser.uid, 'transactions');
             const transactionQuery = query(
                 transactionReference,
-                orderBy('purchaseDate', 'desc'),
+                orderBy('purchaseDate', 'desc'), // You might need to order by a single, consistent date field
+                // If 'transactionDate' and 'purchaseDate' are not consistently present,
+                // you might need to adjust the orderBy or filter clientside after fetching all relevant documents.
+                // For now, let's assume one of them will exist and orderBy tries its best.
                 limit(50) // Limited to 50 Documents at a time
             );
 
@@ -97,11 +100,23 @@ const TokenManagement = () => {
             const transactionsList = [];
             querySnapshot.forEach((docSnap) => {
                 const data = docSnap.data();
+
+                // --- START OF FIX ---
+                let transactionTimestamp = null;
+                if (data.purchaseDate) {
+                    transactionTimestamp = data.purchaseDate.toDate();
+                } else if (data.transactionDate) { // Check for 'transactionDate' for deduction logs
+                    transactionTimestamp = data.transactionDate.toDate();
+                } else {
+                    transactionTimestamp = new Date(); // Fallback
+                }
+                // --- END OF FIX ---
+
                 transactionsList.push({
                     id: docSnap.id,
                     type: data.type || 'unknown',
                     amount: data.amount || 0,
-                    timestamp: data.purchaseDate?.toDate() || new Date(),
+                    timestamp: transactionTimestamp, // Use the determined timestamp
                     status: data.status || 'completed',
                     details: data.description || ''
                 });
@@ -321,7 +336,7 @@ const TokenManagement = () => {
                                                     </td>
                                                     <td className="px-6 py-4 whitespace-nowrap text-sm">
                                                         <span className={`px-3 py-1 inline-flex text-xs leading-5 font-semibold rounded-full ${transaction.type === 'purchase' ? 'bg-green-100 text-green-800' :
-                                                            transaction.type === 'used' ? 'bg-red-100 text-red-800' :
+                                                            transaction.type === 'used' || transaction.type === 'deduction' ? 'bg-red-100 text-red-800' : // Added 'deduction' type here
                                                                 'bg-blue-100 text-blue-800' // Default/unknown type
                                                             }`}>
                                                             {transaction.type.charAt(0).toUpperCase() + transaction.type.slice(1)}
