@@ -217,15 +217,3 @@ const SeekerCard = ({ seekerInfo, onViewProfile, currentlySelectedProfile, onClo
   )}
 
 export default SeekerCard;
-
-/* 
-//const [showProfileModal, setShowProfileModal] = useState(false);
-
-
-Render the View Profile modal
-          <ViewSeekerProfileModal
-            isOpen={showProfileModal}
-            onClose={handleCloseProfileModal}
-            seekerData={seekerInfo} //give seekerInfo to seekerData
-          />
-*/
