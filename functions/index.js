@@ -247,14 +247,14 @@ exports.stripeWebhook = onRequest(STRIPE_SECRETS, async (request, response) => {
             // 'db' variable points to 'centre-connect'
             const userRef = db.collection("users").doc(userId);
             logger.log(`[stripeWebhook Func] Attempting to set/merge tokenBalance in DB 'centre-connect' for user ${userId}`);
-            // Use set with merge for safety against race conditions or missing docs
+
             await userRef.set({
                 tokenBalance: admin.firestore.FieldValue.increment(tokensToAdd)
             }, { merge: true });
             logger.log(`[stripeWebhook Func] ✅ Successfully set/merged tokenBalance for user ${userId}`);
             //###### End Update Firestore ######
 
-            ////###### Optional Transaction Logging ######
+            ////###### Transaction Logging ######
             try {
                 const transactionRef = userRef.collection('transactions').doc(session.id); // Use session ID for idempotency
                 await transactionRef.set({
@@ -267,7 +267,7 @@ exports.stripeWebhook = onRequest(STRIPE_SECRETS, async (request, response) => {
             catch (transactionError) {
                 logger.error(`[stripeWebhook Func] Error creating transaction log:`, transactionError);
             }
-            //###### End Optional Transaction Logging ######
+            //###### End Transaction Logging ######
 
         }
         catch (error) {
@@ -288,3 +288,83 @@ exports.stripeWebhook = onRequest(STRIPE_SECRETS, async (request, response) => {
     response.status(200).send("Acknowledged"); // Send success response to Stripe
     //######End Acknowledge Stripe ######
 });
+
+
+//###### Cloud Function 3: Token deduction for jobseeker profile reveal ######
+exports.deductTokens = onCall(async (request) => {
+    logger.log("--- [deductTokens Func] Execution started (using secrets) ---");
+    logger.log("[deductTokens Func] Received request data:", request.data);
+
+    //###### AUTH CHECK ######
+    if (!request.auth) {
+        logger.error("[deductTokens Func] Authentication check FAILED. User is not authenticated.");
+        throw new HttpsError("unauthenticated", "Authentication required. You must be logged in to deduct tokens.");
+    }
+
+    const userId = request.auth.uid
+    logger.log(`[deductTokens Func] User authenticated successfully: UID=${userId}`);
+    //###### End Auth Check ######
+
+    //###### Validate Input Data ######
+    const tokensToDeduct = request.data?.tokensToDeduct;
+    const seekerId = request.data?.seekerId;
+
+    if (typeof tokensToDeduct !== 'number' || tokensToDeduct <= 0) {
+        logger.error("[deductTokens Func] Invalid tokensToDeduct value:", tokensToDeduct);
+        throw new HttpsError("invalid-argument", "Invalid request: A positive 'tokensToDeduct' number must be provided.");
+    }
+
+    if (!seekerId || typeof seekerId !== 'string') {
+        logger.error("[deductTokens Func] Missing or invalid seekerId:", seekerId);
+        throw new HttpsError("invalid-argument", "Invalid request: A valid 'seekerId' string must be provided.");
+    }
+    logger.log(`[deductTokens Func] Deducting ${tokensToDeduct} tokens for user ${userId} related to seeker ${seekerId}`);
+    //###### End Validate Data ######
+
+    //###### Update Firestore in 'centre-connect' DB ######
+    const userRef = db.collection("users").doc(userId);
+    try {
+        await db.runTransaction(async (transaction) => {
+            const userDoc = await transaction.get(userRef);
+
+            if (!userDoc.exists) {
+                logger.error(`[deductTokens Func] User document for ${userId} not found.`);
+                throw new HttpsError("not-found", "User profile not found.");
+            }
+
+            const currentTokenBalance = userDoc.data()?.tokenBalance || 0;
+            if (currentTokenBalance < tokensToDeduct) {
+                logger.warn(`[deductTokens Func] User ${userId} has insufficient tokens. Current: ${currentTokenBalance}, Needed: ${tokensToDeduct}`);
+                throw new HttpsError("failed-precondition", "Insufficient tokens to perform this action.");
+            }
+
+            const newTokenBalance = currentTokenBalance - tokensToDeduct;
+            transaction.update(userRef, {
+                tokenBalance: newTokenBalance
+            });
+            logger.log(`[deductTokens Func] Successfully deducted ${tokensToDeduct} tokens. New balance for ${userId}: ${newTokenBalance}`);
+
+            //###### Optional Transaction Logging ######
+            const transactionRef = userRef.collection('transactions').doc(); // Auto-generated ID for deduction
+            transaction.set(transactionRef, {
+                type: 'deduction',
+                amount: -tokensToDeduct, // Store as negative for deductions
+                description: `Profile reveal`,
+                seekerId: seekerId,
+                status: 'completed',
+                purchaseDate: admin.firestore.FieldValue.serverTimestamp()
+            });
+            logger.log(`[deductTokens Func] Transaction log created for deduction for user ${userId} and seeker ${seekerId}`);
+            //###### End Optional Transaction Logging ######
+        });
+
+        return { success: true, message: "Tokens deducted successfully." };
+
+    } catch (error) {
+        logger.error("[deductTokens Func] Error deducting tokens or updating Firestore:", error);
+        if (error.code === "failed-precondition" || error.code === "not-found") {
+            throw error; // Re-throw HttpsError directly
+        }
+        throw new HttpsError("internal", "Failed to deduct tokens.", error.message);
+    }
+})
