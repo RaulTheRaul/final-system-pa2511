@@ -36,10 +36,11 @@ const BusinessActivity = () => {
     const unsubscribe = onSnapshot(q, async (snapshot) => {
       const revealWithSeekers = [];
 
-      for (const docSnap of snapshot.docs) {
-        const revealData = docSnap.data();
-        const jobSeekerUID = revealData.seekerId;
-        const jobSeekerRef = doc(db, "users", jobSeekerUID);
+            for (const docSnap of snapshot.docs) {
+                const revealData = docSnap.data();
+                const jobSeekerUID = revealData.seekerId;
+
+                const jobSeekerRef = doc(db, "users", jobSeekerUID);
 
         try {
           const seekerSnap = await getDoc(jobSeekerRef);
