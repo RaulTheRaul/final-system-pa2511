@@ -15,6 +15,44 @@ const BusinessRecruitSeeker = () => {
     const [error, setError] = useState("");
     const [selectedProfile, setSelectedProfile] = useState(null);
 
+    //normalise data for consistent data fetching and ensures data has default values
+    const normalizeSeekerData = (rawSeekerData, docId) => {
+        const jobseekerInfo = rawSeekerData.jobseekerInformation || {};
+        const certifications = jobseekerInfo.jobseekerInformation || {};
+
+        return {
+            ...rawSeekerData,
+            id: docId,
+            fullName: rawSeekerData.fullName || "Name Not Provided",
+            email: rawSeekerData.email || 'N/A',
+            location: rawSeekerData.location || 'N/A', 
+
+            jobseekerInformation: { 
+                educationLevel: jobseekerInfo.educationLevel || 'N/A',
+                availability: jobseekerInfo.availability || 'N/A',
+                shiftPreference: jobseekerInfo.shiftPreference || 'N/A',
+                bio: jobseekerInfo.bio || 'N/A',
+                preferredRole: jobseekerInfo.preferredRole || 'N/A',
+                willingToRelocate: jobseekerInfo.willingToRelocate ?? 'N/A', 
+                educationInstitution: jobseekerInfo.educationInstitution || 'N/A',
+                graduationYear: jobseekerInfo.graduationYear || 'N/A',
+                resumeUrl: jobseekerInfo.resumeUrl || null, // Ensure resumeUrl is explicitly set
+                desiredPayRate: jobseekerInfo.desiredPayRate || 'N/A', 
+
+                certifications: { 
+                    anaphylaxis: certifications.anaphylaxis ?? false,
+                    anaphylaxisExpiry: certifications.anaphylaxisExpiry || 'N/A',
+                    asthma: certifications.asthma ?? false,
+                    asthmaExpiry: certifications.asthmaExpiry || 'N/A',
+                    childProtection: certifications.childProtection ?? false,
+                    childProtectionExpiry: certifications.childProtectionExpiry || 'N/A',
+                    firstAid: certifications.firstAid ?? false,
+                    firstAidExpiry: certifications.firstAidExpiry || 'N/A',
+                },
+                ...jobseekerInfo
+            }
+        }
+    }
     useEffect(() => {
         //fetch data
         const fetchSeekers = async () => {
@@ -30,10 +68,12 @@ const BusinessRecruitSeeker = () => {
                 const querySnapshot = await getDocs(seekerQuery);
 
                 //map the snapshot to an array
-                const seekerList = querySnapshot.docs.map(doc => ({
-                    id: doc.id,
-                    ...doc.data()
-                }));
+                const seekerList = querySnapshot.docs.map(doc => {
+                    const rawData = doc.data();
+                    return normalizeSeekerData(rawData, doc.id);
+                   // id: doc.id,
+                   // ...doc.data()
+                });
 
                 //Update state of seekers with fetched data
                 setJobSeekers(seekerList);
@@ -126,13 +166,14 @@ const BusinessRecruitSeeker = () => {
                     <ViewSeekerProfileModal 
                     seekerData={selectedProfile} 
                     onClose={handleCloseProfileModal} 
+                    isOpen={!!selectedProfile}
                     />
                 ) : (
                     <div className="text-gray-500 text-center mt-20">
                     <p>Select a Job Seeker to view the full profile.</p>
                     </div>
                 )}
-                </div>
+                    </div>
             </div>
         </div>
     );

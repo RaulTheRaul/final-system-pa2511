@@ -1,10 +1,10 @@
 import { useState } from "react";
 
-const ViewSeekerProfileModal = ({onClose, seekerData }) => {
+const ViewSeekerProfileModal = ({isOpen, onClose, seekerData }) => {
     const [activeTab, setActiveTab] = useState("overview")
 
     //Dont display data if not open or there is no data
-    if(!seekerData) {
+    if(!isOpen || !seekerData) {
         return null;
     }
 
@@ -118,6 +118,26 @@ const ViewSeekerProfileModal = ({onClose, seekerData }) => {
                         </p>
                         </div>
                     {/* Resume code here*/}
+                        <div>
+                            <button
+                                onClick={() => {
+                                    if (resumeUrl) {
+                                        window.open(resumeUrl, '_blank');
+                                    } else {
+                                        console.log("Resume not avaliable")
+                                    }
+                                }}
+                                className={`px-6 py-2 rounded-md text-base font-medium transition-colors duration-200 shadow-sm border
+                                bg-[#26425A] text-white hover:bg-[#f2be5c] border-transparent
+                                ${!resumeUrl ? 'opacity-50 cursor-not-allowed' : ''}`}
+                                disabled={!resumeUrl} //disable the download button if there is no resume
+                                >
+                                Download Resume
+                            </button>
+                            {!resumeUrl &&(
+                                <p className="text-sm text-gray-500">Resume Not Available</p>
+                            )}
+                        </div>
                     </div>
                 )}
 
