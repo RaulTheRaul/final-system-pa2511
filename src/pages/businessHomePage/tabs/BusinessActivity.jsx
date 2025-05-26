@@ -30,6 +30,7 @@ const BusinessActivity = () => {
             for (const docSnap of snapshot.docs) {
                 const revealData = docSnap.data();
                 const jobSeekerUID = revealData.seekerId;
+
                 const jobSeekerRef = doc(db, "users", jobSeekerUID);
 
                 try {

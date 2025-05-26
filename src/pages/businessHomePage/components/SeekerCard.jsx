@@ -6,13 +6,13 @@ import { useAuth } from "../../../context/AuthContext";
 import ConfirmRevealModal from "./ConfirmRevealModal";
 
 const SeekerCard = ({ seekerInfo, onViewProfile, currentlySelectedProfile, onClosePanel }) => {
+  
   //Set variables for later use
   const [showContact, setShowContact] = useState(null); //Stores contact info
   const [revealed, setRevealed] = useState(false); //for revealing button
   const [loading, setLoading] = useState(false);
   const [showConfirmation, setShowConfirmation] = useState(false);
-  //const [showProfileModal, setShowProfileModal] = useState(false);
-
+  
   const [allowMessage, setAllowMessage] = useState(false); //for message system
   const { currentUser } = useAuth();
 
@@ -127,7 +127,7 @@ const SeekerCard = ({ seekerInfo, onViewProfile, currentlySelectedProfile, onClo
       <h3 className="text-xl font-semibold">{seekerInfo?.jobseekerInformation?.educationLevel || 'Not provided'}</h3>
       <p className="text-gray-700">Availability: {seekerInfo?.jobseekerInformation?.availability || 'Not provided'}</p>
       <p className="text-gray-700">Shift Preference: {seekerInfo?.jobseekerInformation?.shiftPreference || 'Not provided'}</p>
-      <p className="text-gray-600">Hourly Rate: {seekerInfo?.jobseekerInformation?.desiredPayRate || 'Not provided'}</p>
+      <p className="text-gray-600">Role Preference: {seekerInfo?.jobseekerInformation?.preferredRole || 'Not provided'}</p>
       <p className="text-gray-600">Location: {seekerInfo?.jobseekerInformation?.location || 'Not provided'}</p>
 
       {/*When contact button is pressed*/}
@@ -190,14 +190,21 @@ const SeekerCard = ({ seekerInfo, onViewProfile, currentlySelectedProfile, onClo
         message="Are you sure? This will deduct 5 credits from your account."
         />
 
-      {/* Render the View Profile modal
+      
+          
+    </div>
+  )}
+
+export default SeekerCard;
+
+/* 
+//const [showProfileModal, setShowProfileModal] = useState(false);
+
+
+Render the View Profile modal
           <ViewSeekerProfileModal
             isOpen={showProfileModal}
             onClose={handleCloseProfileModal}
             seekerData={seekerInfo} //give seekerInfo to seekerData
           />
-          */}
-    </div>
-  )}
-
-export default SeekerCard;
+*/
