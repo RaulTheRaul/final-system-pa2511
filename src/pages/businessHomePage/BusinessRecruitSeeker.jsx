@@ -77,7 +77,7 @@ const BusinessRecruitSeeker = () => {
                 const querySnapshot = await getDocs(q);
 
                 //extract job seeker id from each document
-                const ids = new Set(querySnapshot.docs.map(doc => doc.data().jobseekerId));
+                const ids = new Set(querySnapshot.docs.map(doc => doc.data().seekerId));
                 setRevealedSeekerIds(ids); 
             } catch (error) {
                 //display an error message if failed to fetch seekers
@@ -181,7 +181,7 @@ const BusinessRecruitSeeker = () => {
             const newRevealDoc = doc(collection(db, "revealedTest"));
             await setDoc( newRevealDoc, {
                 businessId: currentUser.uid,
-                jobseekerId: seekerId,
+                seekerId: seekerId,
                 createdAt: serverTimestamp()
             })
             setRevealedSeekerIds(prev => new Set(prev).add(seekerId));

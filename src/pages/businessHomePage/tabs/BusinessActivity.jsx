@@ -44,6 +44,7 @@ const BusinessActivity = () => {
               console.warn("Missing seekerId in reveal data");
               continue;
             }
+
             const jobSeekerRef = doc(db, "users", jobSeekerUID);
             try {
               const seekerSnap = await getDoc(jobSeekerRef);
