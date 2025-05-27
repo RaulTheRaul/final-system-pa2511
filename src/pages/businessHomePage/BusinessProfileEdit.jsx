@@ -33,6 +33,7 @@ const BusinessProfileEdit = () => {
         //Business Information
         businessName: "",
         aceqcaRating: "",
+        licenseNumber: "",
 
         //Centre Information
         centreName: "",
@@ -40,8 +41,7 @@ const BusinessProfileEdit = () => {
         centrePhone: "",
         operatingHours: "",
         centreType: "",
-        teachingApproach: "",
-        roomCount: "",
+        websiteUrl: "",
         centreCapacity: "",
         staffToChildRatio: "",
         centreDescription: "",
@@ -66,6 +66,7 @@ const BusinessProfileEdit = () => {
                 //Business Information
                 businessName: userData.businessName || "",
                 aceqcaRating: businessInfo.aceqcaRating || "",
+                licenseNumber: businessInfo.licenseNumber || "",
 
                 //Centre Information
                 centreName: businessInfo.centreName || "",
@@ -73,9 +74,8 @@ const BusinessProfileEdit = () => {
                 centrePhone: businessInfo.centrePhone || "",
                 operatingHours: businessInfo.operatingHours || "",
                 centreType: businessInfo.centreType || "",
-                teachingApproach: businessInfo.teachingApproach || "",
-                roomCount: businessInfo.roomCount || "",
                 centreCapacity: businessInfo.centreCapacity || "",
+                websiteUrl: businessInfo.websiteUrl || "",
                 staffToChildRatio: businessInfo.staffToChildRatio || "",
                 centreDescription: businessInfo.centreDescription || "",
 
@@ -289,6 +289,8 @@ const BusinessProfileEdit = () => {
         //Basic Validation
         if (!formData.businessName || !formData.centreName || !formData.centreAddress) {
             setError("Please fill out all required fields");
+            setLoading(false);
+            return;
         }
 
         try {
@@ -330,15 +332,16 @@ const BusinessProfileEdit = () => {
                 //Business Information
                 businessName: formData.businessName,
                 aceqcaRating: formData.aceqcaRating,
+                licenseNumber: formData.licenseNumber,
+                logoUrl: finalLogoUrl,
 
                 //Centre Information
-                centreName: formData.businessName,
+                centreName: formData.centreName,
                 centreAddress: formData.centreAddress,
                 centrePhone: formData.centrePhone,
                 operatingHours: formData.operatingHours,
                 centreType: formData.centreType,
-                teachingApproach: formData.teachingApproach,
-                roomCount: formData.roomCount ? Number(formData.roomCount) : null,
+                websiteUrl: formData.websiteUrl,
                 centreCapacity: formData.centreCapacity ? Number(formData.centreCapacity) : null,
                 staffToChildRatio: formData.staffToChildRatio,
                 centreImageUrls: newCentreImageUrls, // Save the new centre image URLs
@@ -346,6 +349,7 @@ const BusinessProfileEdit = () => {
                 //Staff Benefits
                 centreDescription: formData.centreDescription,
                 staffBenefits: staffBenefitsArray,
+                careerOpportunities: formData.careerOpportunities,
 
                 //Update timestamp
                 updatedAt: new Date()
@@ -430,7 +434,7 @@ const BusinessProfileEdit = () => {
                             handleChange={handleChange}
                             handleCheckboxChange={handleCheckboxChange}
                         />
-{/* Business Logo Upload Section */}
+                        {/* Business Logo Upload Section */}
                         <div className="bg-white rounded-lg shadow-md p-6 border border-gray-200">
                             <h3 className="text-xl font-semibold text-[#254159] mb-4 border-b border-gray-300 pb-3">Business Logo</h3>
                             <div className="space-y-4">
@@ -539,7 +543,7 @@ const BusinessProfileEdit = () => {
                                 )}
                             </div>
                         </div>
-                        
+
                         {/* Uploading progress bar */}
                         {uploading && (
                             <div className="bg-blue-50 text-blue-600 p-4 rounded-md mb-6">

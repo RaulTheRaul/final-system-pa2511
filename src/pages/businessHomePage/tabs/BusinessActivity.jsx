@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { collection, query, where, getDoc, orderBy, doc, onSnapshot, deleteDoc} from "firebase/firestore";
+import { collection, query, where, getDoc, orderBy, doc, onSnapshot, deleteDoc } from "firebase/firestore";
 import { useNavigate } from "react-router-dom";
 import { db } from "../../../firebase/config";
 import { useAuth } from "../../../context/AuthContext";
@@ -16,72 +16,112 @@ const BusinessActivity = () => {
 
   // ✅ Fetch revealed seekers
   useEffect(() => {
-    if (!currentUser?.uid) return;
+    if (!currentUser?.uid) {
+      setLoading(false);
+      return;
+    }
 
-    const q = query(
-      collection(db, "revealedTest"),
-      where("businessId", "==", currentUser.uid),
-      orderBy("createdAt", "desc")
-    );
+    let unsubscribe = null;
 
-    const unsubscribe = onSnapshot(q, async (snapshot) => {
-      const revealWithSeekers = [];
+    try {
+      const q = query(
+        collection(db, "revealedTest"),
+        where("businessId", "==", currentUser.uid),
+        orderBy("createdAt", "desc")
+      );
 
-            for (const docSnap of snapshot.docs) {
-                const revealData = docSnap.data();
-                const jobSeekerUID = revealData.seekerId;
-                
-                //skips any documents that do not have seekerId
-              if (!jobSeekerUID){
-                  console.warn("Missing seekerId in reveal data");
-                  continue;
-                } 
+      unsubscribe = onSnapshot(
+        q,
+        async (snapshot) => {
+          const revealWithSeekers = [];
 
-                const jobSeekerRef = doc(db, "users", jobSeekerUID);
-        try {
-          const seekerSnap = await getDoc(jobSeekerRef);
+          for (const docSnap of snapshot.docs) {
+            const revealData = docSnap.data();
+            const jobSeekerUID = revealData.seekerId;
 
-          if (seekerSnap.exists()) {
-            const seekerData = seekerSnap.data();
-            revealWithSeekers.push({
-              id: docSnap.id,
-              createdAt: revealData.createdAt?.toDate().toLocaleString(),
-              seeker: seekerData,
-            });
-          } else {
-            console.log("Job seeker UID not found for reveal");
+            //skips any documents that do not have seekerId
+            if (!jobSeekerUID) {
+              console.warn("Missing seekerId in reveal data");
+              continue;
+            }
+
+            const jobSeekerRef = doc(db, "users", jobSeekerUID);
+            try {
+              const seekerSnap = await getDoc(jobSeekerRef);
+
+              if (seekerSnap.exists()) {
+                const seekerData = seekerSnap.data();
+                revealWithSeekers.push({
+                  id: docSnap.id,
+                  createdAt: revealData.createdAt?.toDate().toLocaleString(),
+                  seeker: seekerData,
+                });
+              } else {
+                console.log("Job seeker UID not found for reveal:", jobSeekerUID);
+              }
+            } catch (err) {
+              console.error("Error fetching revealed seeker:", err);
+            }
           }
-        } catch (err) {
-          console.error("Error fetching revealed seekers", err);
+
+          setRecentReveal(revealWithSeekers);
+        },
+        (error) => {
+          console.error("Error in revealed seekers listener:", error);
         }
+      );
+    } catch (error) {
+      console.error("Error setting up revealed seekers listener:", error);
+    }
+
+    return () => {
+      if (unsubscribe && typeof unsubscribe === 'function') {
+        unsubscribe();
       }
-
-      setRecentReveal(revealWithSeekers);
-    });
-
-    return () => unsubscribe();
+    };
   }, [currentUser?.uid]);
 
   // ✅ Fetch posted jobs
   useEffect(() => {
-    if (!currentUser?.uid) return;
-
-    const q = query(
-      collection(db, "jobs"),
-      where("businessId", "==", currentUser.uid),
-      orderBy("createdAt", "desc")
-    );
-
-    const unsubscribe = onSnapshot(q, (snapshot) => {
-      const jobList = snapshot.docs.map((doc) => ({
-        id: doc.id,
-        ...doc.data(),
-      }));
-      setJobs(jobList);
+    if (!currentUser?.uid) {
       setLoading(false);
-    });
+      return;
+    }
 
-    return () => unsubscribe();
+    let unsubscribe = null;
+
+    try {
+      const q = query(
+        collection(db, "jobs"),
+        where("businessId", "==", currentUser.uid),
+        orderBy("createdAt", "desc")
+      );
+
+      unsubscribe = onSnapshot(
+        q,
+        (snapshot) => {
+          const jobList = snapshot.docs.map((doc) => ({
+            id: doc.id,
+            ...doc.data(),
+          }));
+          setJobs(jobList);
+          setLoading(false);
+        },
+        (error) => {
+          console.error("Error in jobs listener:", error);
+          setLoading(false);
+        }
+      );
+    } catch (error) {
+      console.error("Error setting up jobs listener:", error);
+      setLoading(false);
+    }
+
+    return () => {
+      if (unsubscribe && typeof unsubscribe === 'function') {
+        unsubscribe();
+      }
+    };
   }, [currentUser?.uid]);
 
   const handleViewProfile = (revealEvent) => {
@@ -94,6 +134,17 @@ const BusinessActivity = () => {
 
   const handleCloseViewProfile = () => {
     setSelectedSeeker(null);
+  };
+
+  const handleDeleteJob = async (jobId) => {
+    try {
+      if (window.confirm("Are you sure you want to delete this job?")) {
+        await deleteDoc(doc(db, "jobs", jobId));
+      }
+    } catch (error) {
+      console.error("Error deleting job:", error);
+      alert("Error deleting job. Please try again.");
+    }
   };
 
   return (
@@ -111,8 +162,8 @@ const BusinessActivity = () => {
                   recentReveal.map((reveal) => (
                     <li
                       key={reveal.id}
-                      className={`mb-4 bg-white p-2 rounded shadow cursor-pointer hover:bg-gray-500 transition-colors duration-200
-                        ${selectedSeeker && selectedSeeker.id === reveal.id ? 'border-2 border-[#f2be5c]-500' : ''}`}
+                      className={`mb-4 bg-white p-2 rounded shadow cursor-pointer hover:bg-gray-100 transition-colors duration-200
+                        ${selectedSeeker && selectedSeeker.id === reveal.id ? 'border-2 border-[#f2be5c]' : ''}`}
                       onClick={() => handleViewProfile(reveal)}
                     >
                       <p><span className="text-[#254159] font-semibold">{reveal.seeker?.fullName || "Name Not Provided"}</span></p>
@@ -176,11 +227,7 @@ const BusinessActivity = () => {
                                   Edit
                                 </button>
                                 <button
-                                  onClick={async () => {
-                                    if (confirm("Are you sure you want to delete this job?")) {
-                                      await deleteDoc(doc(db, "jobs", job.id));
-                                    }
-                                  }}
+                                  onClick={() => handleDeleteJob(job.id)}
                                   className="bg-[#e57373] hover:bg-[#d64b4b] text-white font-semibold px-4 py-1.5 rounded-md transition"
                                 >
                                   Delete
