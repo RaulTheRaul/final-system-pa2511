@@ -1,6 +1,6 @@
 import { useParams, useNavigate } from "react-router-dom";
 import { useEffect, useState } from "react";
-import { doc, getDoc, deleteDoc } from "firebase/firestore";
+import { doc, getDoc, deleteDoc, collection, query, where, getDocs } from "firebase/firestore";
 import { db } from "../../firebase/config";
 import { useAuth } from "../../context/AuthContext";
 import BusinessNavigation from "./components/BusinessNavigation";
@@ -10,25 +10,39 @@ const ViewJobPage = () => {
   const { currentUser } = useAuth();
   const [job, setJob] = useState(null);
   const [loading, setLoading] = useState(true);
+  const [applicants, setApplicants] = useState([]);
   const navigate = useNavigate();
 
   useEffect(() => {
-    const fetchJob = async () => {
+    const fetchJobAndApplicants = async () => {
       try {
+        // Fetch job details
         const docRef = doc(db, "jobs", jobId);
         const docSnap = await getDoc(docRef);
 
         if (docSnap.exists()) {
           setJob(docSnap.data());
         }
+
+        // Fetch applicants for this job
+        const applicationsRef = collection(db, "applications");
+        const q = query(applicationsRef, where("jobId", "==", jobId));
+        const querySnapshot = await getDocs(q);
+        
+        const applicantsData = [];
+        querySnapshot.forEach((doc) => {
+          applicantsData.push(doc.data());
+        });
+        
+        setApplicants(applicantsData);
       } catch (err) {
-        console.error("Error fetching job:", err);
+        console.error("Error fetching data:", err);
       } finally {
         setLoading(false);
       }
     };
 
-    fetchJob();
+    fetchJobAndApplicants();
   }, [jobId]);
 
   const handleDelete = async () => {
@@ -89,6 +103,25 @@ const ViewJobPage = () => {
             <p><strong>Allowances:</strong> {job.allowances}</p>
             <p><strong>Bonus:</strong> {job.bonus}</p>
             <p><strong>Development Opportunities:</strong> {job.developmentOpportunities}</p>
+          </div>
+
+          <hr className="my-6" />
+
+          <div className="space-y-2 text-sm">
+            <h3 className="text-lg font-semibold text-[#254159]">Applicants ({applicants.length})</h3>
+            {applicants.length > 0 ? (
+              <div className="space-y-3">
+                {applicants.map((applicant, index) => (
+                  <div key={index} className="p-3 bg-gray-50 rounded-md">
+                    <p><strong>Name:</strong> {applicant.seekerName}</p>
+                    <p><strong>Email:</strong> {applicant.seekerEmail}</p>
+                    <p><strong>Applied on:</strong> {applicant.appliedAt?.toDate().toLocaleDateString()}</p>
+                  </div>
+                ))}
+              </div>
+            ) : (
+              <p>No applicants yet.</p>
+            )}
           </div>
 
           <div className="flex justify-between mt-8">
