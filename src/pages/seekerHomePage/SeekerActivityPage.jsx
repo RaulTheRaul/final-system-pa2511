@@ -88,7 +88,7 @@ const SeekerActivityPage = () => {
       <div className="max-w-7xl mx-auto p-6">
         <div className="flex flex-col md:flex-row gap-6">
           {/* Left Column - Applications + Saved Jobs */}
-          <div className="md:w-1/2 bg-[#EEEEEE] rounded-lg shadow-sm p-6">
+          <div className="md:w-1/2 bg-[#F8F8F8] rounded-lg shadow-sm p-6">
             <h2 className="text-2xl font-bold text-[#254159] mb-6">Your Activity</h2>
 
             {loading ? (
@@ -157,9 +157,9 @@ const SeekerActivityPage = () => {
           </div>
 
           {/* Right Column - Messages */}
-          <div className="md:w-1/2 bg-[#EEEEEE] rounded-lg shadow-sm p-6">
+          <div className="md:w-1/2 bg-[#F8F8F8] rounded-lg shadow-sm p-6">
             <h2 className="text-2xl font-bold text-[#254159] mb-6">Messages</h2>
-            <div className="bg-[#F1EEEB] p-6 rounded-lg text-center h-64 flex flex-col items-center justify-center">
+            <div className="bg-white p-6 rounded-lg text-center h-64 flex flex-col items-center justify-center">
               <div className="w-12 h-12 rounded-full bg-blue-100 flex items-center justify-center mb-3">
                 <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6 text-blue-500" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8 10h.01M12 10h.01M16 10h.01M9 16H5a2 2 0 01-2-2V6a2 2 0 012-2h14a2 2 0 012 2v8a2 2 0 01-2 2h-5l-5 5v-5z" />

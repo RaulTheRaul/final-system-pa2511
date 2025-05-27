@@ -1,6 +1,6 @@
 const JobCard = ({ job, saved, handleSave, handleUnsave, onView }) => {
   return (
-    <div className="bg-white border border-gray-200 rounded-lg shadow-sm p-4 relative transition hover:shadow-md">
+    <div className="bg-[#F8F8F8] border border-gray-200 rounded-lg shadow-sm p-4 relative transition hover:shadow-md">
       {/* ❤️ Save/Unsave button in top right corner */}
       <button
         onClick={(e) => {

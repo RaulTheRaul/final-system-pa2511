@@ -338,7 +338,7 @@ const SeekerProfileEditPage = () => {
             <SeekerNavigation />
 
             <div className="max-w-6xl mx-auto p-6">
-                <div className="bg-[#EEEEEE] rounded-lg shadow-sm p-6">
+                <div className="bg-white rounded-lg shadow-sm p-6">
                     <div className="flex justify-between items-center mb-6">
                         <h2 className="text-2xl font-bold text-[#254159]">Edit Your Profile</h2>
                         <button

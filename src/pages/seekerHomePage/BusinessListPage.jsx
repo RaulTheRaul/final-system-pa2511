@@ -48,7 +48,7 @@ const BusinessListPage = () => {
             <SeekerNavigation />
 
             <div className="max-w-6xl mx-auto p-6">
-                <div className="bg-[#EEEEEE] rounded-lg shadow-sm p-6 mb-6">
+                <div className="bg-[#F8F8F8] rounded-lg shadow-sm p-6 mb-6">
                     <div className="flex justify-between">
                         <h2 className="text-2xl font-bold text-[#254159] mb-6">Childcare Centers</h2>
                         <div className="relative">
