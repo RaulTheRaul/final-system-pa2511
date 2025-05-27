@@ -32,10 +32,11 @@ const BusinessActivity = () => {
                 const jobSeekerUID = revealData.seekerId;
                 
                 //skips any documents that do not have seekerId
-                if (!jobSeekerUID){
+              if (!jobSeekerUID){
                   console.warn("Missing seekerId in reveal data");
                   continue;
-                }
+                } 
+
                 const jobSeekerRef = doc(db, "users", jobSeekerUID);
         try {
           const seekerSnap = await getDoc(jobSeekerRef);
