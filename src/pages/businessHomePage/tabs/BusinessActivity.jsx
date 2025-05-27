@@ -1,14 +1,5 @@
 import { useEffect, useState } from "react";
-import {
-  collection,
-  query,
-  where,
-  getDoc,
-  orderBy,
-  doc,
-  onSnapshot,
-  deleteDoc,
-} from "firebase/firestore";
+import { collection, query, where, getDoc, orderBy, doc, onSnapshot, deleteDoc} from "firebase/firestore";
 import { useNavigate } from "react-router-dom";
 import { db } from "../../../firebase/config";
 import { useAuth } from "../../../context/AuthContext";
@@ -39,9 +30,13 @@ const BusinessActivity = () => {
             for (const docSnap of snapshot.docs) {
                 const revealData = docSnap.data();
                 const jobSeekerUID = revealData.seekerId;
-
+                
+                //skips any documents that do not have seekerId
+                if (!jobSeekerUID){
+                  console.warn("Missing seekerId in reveal data");
+                  continue;
+                }
                 const jobSeekerRef = doc(db, "users", jobSeekerUID);
-
         try {
           const seekerSnap = await getDoc(jobSeekerRef);
 

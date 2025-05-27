@@ -170,24 +170,6 @@ const BusinessRecruitSeeker = () => {
         if (!currentUser || !currentUser.uid){
             return;
         }
-
-        //Prevent re-writes in db if already revealed
-        if(revealedSeekerIds.has(seekerId)){
-            return;
-        }
-
-        try {
-            //create document in revealedTest
-            const newRevealDoc = doc(collection(db, "revealedTest"));
-            await setDoc( newRevealDoc, {
-                businessId: currentUser.uid,
-                jobseekerId: seekerId,
-                createdAt: serverTimestamp()
-            })
-            setRevealedSeekerIds(prev => new Set(prev).add(seekerId));
-        } catch (err) {
-            console.error("Error revealing profile in revealedTest:", err);
-        }
     };
     
     //Profile Modal Handles
