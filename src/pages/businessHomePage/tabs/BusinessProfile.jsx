@@ -10,7 +10,7 @@ const BusinessProfile = () => {
   const BusinessInfo = userData?.businessInformation || {};
   const logoUrl = BusinessInfo.logoUrl || '';
   const centreImageUrls = BusinessInfo.centreImageUrls || [];
-  
+
   const [averageRatings, setAverageRatings] = useState({
     workplaceCulture: 0,
     wagesBenefits: 0,
@@ -109,11 +109,30 @@ const BusinessProfile = () => {
 
       <div className="max-w-7xl mx-auto p-4 sm:p-6 lg:p-8">
         <div className="bg-[#F8F8F8] rounded-xl shadow-xl p-6 md:p-8 border border-gray-200">
-          <div className="flex justify-between items-center mb-8">
-            <h2 className="text-3xl font-bold text-[#254159]">Your Business Profile</h2>
+          {/* Header Section with Logo */}
+          <div className="flex flex-col lg:flex-row justify-between items-start lg:items-center mb-8 gap-4">
+            <div className="flex items-center gap-6">
+              {logoUrl && (
+                <div className="flex-shrink-0">
+                  <img
+                    src={logoUrl}
+                    alt="Business Logo"
+                    className="h-16 w-16 lg:h-20 lg:w-20 object-contain rounded-lg border border-gray-300 bg-white p-2 shadow-sm"
+                  />
+                </div>
+              )}
+              <div>
+                <h2 className="text-3xl font-bold text-[#254159]">
+                  {BusinessInfo?.businessName || "Your Business Profile"}
+                </h2>
+                {BusinessInfo?.centreName && BusinessInfo.centreName !== BusinessInfo.businessName && (
+                  <p className="text-lg text-gray-600 mt-1">{BusinessInfo.centreName}</p>
+                )}
+              </div>
+            </div>
             <Link
               to="/business/profile/edit"
-              className="bg-[#254159] hover:bg-[#f2be5c] text-white px-4 py-2 rounded-md flex items-center transition-colors"
+              className="bg-[#254159] hover:bg-[#f2be5c] text-white px-6 py-3 rounded-md flex items-center transition-colors font-medium"
             >
               Edit Business Profile
             </Link>
@@ -121,7 +140,7 @@ const BusinessProfile = () => {
 
           {/* Ratings Display Section */}
           <div className="bg-white rounded-lg shadow-md p-6 mb-8 border border-gray-200">
-            <h3 className="text-2xl font-semibold text-[#254159] mb-4 border-b border-gray-300 pb-3">Center Ratings</h3>
+            <h3 className="text-2xl font-semibold text-[#254159] mb-4 border-b border-gray-300 pb-3">Centre Ratings</h3>
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
               {renderRatingDisplay('workplaceCulture', 'Workplace Culture')}
               {renderRatingDisplay('wagesBenefits', 'Wages & Benefits')}
@@ -131,75 +150,82 @@ const BusinessProfile = () => {
             </div>
           </div>
 
-          {/* Business Logo Display */}
-          {logoUrl && (
-            <div className="bg-white rounded-lg shadow-md p-6 mb-8 border border-gray-200 flex items-center justify-center">
-              <img src={logoUrl} alt="Business Logo" className="max-h-32 object-contain" />
-            </div>
-          )}
-
           <div className="bg-white rounded-lg shadow-md p-6 mb-8 border border-gray-200">
-            <h3 className="text-2xl font-semibold text-[#254159] mb-4 border-b border-gray-300 pb-3">Business Information</h3>
+            <h3 className="text-2xl font-semibold text-[#254159] mb-6 border-b border-gray-300 pb-3">Business Information</h3>
             <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
               <div>
-                <p className="text-gray-600 font-medium">Business Name:</p>
-                <p className="text-gray-900">{BusinessInfo?.centreName || "—"}</p>
+                <p className="text-gray-600 font-medium mb-1">Business Name:</p>
+                <p className="text-gray-900 text-lg">{BusinessInfo?.businessName || "—"}</p>
               </div>
               <div>
-                <p className="text-gray-600 font-medium">Email:</p>
+                <p className="text-gray-600 font-medium mb-1">Email:</p>
                 <p className="text-gray-900">{currentUser?.email || "—"}</p>
               </div>
-            </div>
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mt-6">
               <div>
-                <p className="text-gray-600 font-medium">ACECQA Rating:</p>
-                <p className="text-gray-900">{BusinessInfo.acecqaRating || "—"}</p>
+                <p className="text-gray-600 font-medium mb-1">ACECQA Rating:</p>
+                <p className="text-gray-900">{BusinessInfo.aceqcaRating || "—"}</p>
               </div>
               <div>
-                <p className="text-gray-600 font-medium">Approved Provider License:</p>
-                <p className="text-gray-900">{BusinessInfo.licenseNumber || "—"}</p>
+                <p className="text-gray-600 font-medium mb-1">Approved Provider License:</p>
+                <p className="text-gray-900 font-mono text-sm">{BusinessInfo.licenseNumber || "—"}</p>
               </div>
             </div>
           </div>
 
           <div className="bg-white rounded-lg shadow-md p-6 mb-8 border border-gray-200">
-            <h3 className="text-2xl font-semibold text-[#254159] mb-4 border-b border-gray-300 pb-3">Centre Information</h3>
+            <h3 className="text-2xl font-semibold text-[#254159] mb-6 border-b border-gray-300 pb-3">Centre Information</h3>
             <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
               <div>
-                <p className="text-gray-600 font-medium">Centre Name:</p>
+                <p className="text-gray-600 font-medium mb-1">Centre Name:</p>
                 <p className="text-gray-900">{BusinessInfo.centreName || "—"}</p>
               </div>
               <div>
-                <p className="text-gray-600 font-medium">Phone:</p>
+                <p className="text-gray-600 font-medium mb-1">Phone:</p>
                 <p className="text-gray-900">{BusinessInfo.centrePhone || "—"}</p>
               </div>
               <div>
-                <p className="text-gray-600 font-medium">Centre Type:</p>
-                <p className="text-gray-900">{BusinessInfo.centreType || "—"}</p>
+                <p className="text-gray-600 font-medium mb-1">Centre Type:</p>
+                <p className="text-gray-900 capitalize">
+                  {BusinessInfo.centreType ? BusinessInfo.centreType.replace('-', ' ') : "—"}
+                </p>
               </div>
               <div>
-                <p className="text-gray-600 font-medium">Operating Hours:</p>
+                <p className="text-gray-600 font-medium mb-1">Operating Hours:</p>
                 <p className="text-gray-900">{BusinessInfo.operatingHours || "—"}</p>
               </div>
               <div>
-                <p className="text-gray-600 font-medium">Room Count:</p>
-                <p className="text-gray-900">{BusinessInfo.roomCount || "—"}</p>
+                <p className="text-gray-600 font-medium mb-1">Centre Capacity:</p>
+                <p className="text-gray-900">
+                  {BusinessInfo.centreCapacity ? `${BusinessInfo.centreCapacity} children` : "—"}
+                </p>
               </div>
               <div>
-                <p className="text-gray-600 font-medium">Centre Capacity:</p>
-                <p className="text-gray-900">{BusinessInfo.centreCapacity || "—"}</p>
-              </div>
-              <div>
-                <p className="text-gray-600 font-medium">Staff to Child Ratio:</p>
-                <p className="text-gray-900">{BusinessInfo.staffToChildRatio || "—"}</p>
-              </div>
-              <div>
-                <p className="text-gray-600 font-medium">Teaching Approach:</p>
-                <p className="text-gray-900">{BusinessInfo.teachingApproach || "—"}</p>
+                <p className="text-gray-600 font-medium mb-1">Staff Ratios Provided:</p>
+                <p className="text-gray-900 capitalize">
+                  {BusinessInfo.staffToChildRatio ? BusinessInfo.staffToChildRatio.replace('-', ' ') : "—"}
+                </p>
               </div>
               <div className="md:col-span-2">
-                <p className="text-gray-600 font-medium">Centre Address:</p>
+                <p className="text-gray-600 font-medium mb-1">Centre Address:</p>
                 <p className="text-gray-900">{BusinessInfo.centreAddress || "—"}</p>
+              </div>
+              <div className="md:col-span-2">
+                <p className="text-gray-600 font-medium mb-1">Website:</p>
+                {BusinessInfo.websiteUrl ? (
+                  <a
+                    href={BusinessInfo.websiteUrl}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="text-blue-600 hover:text-blue-800 hover:underline transition-colors inline-flex items-center gap-1"
+                  >
+                    Visit Website
+                    <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14" />
+                    </svg>
+                  </a>
+                ) : (
+                  <p className="text-gray-900">—</p>
+                )}
               </div>
             </div>
           </div>
@@ -207,11 +233,11 @@ const BusinessProfile = () => {
           {/* Centre Images Display */}
           {centreImageUrls.length > 0 && (
             <div className="bg-white rounded-lg shadow-md p-6 mb-8 border border-gray-200">
-              <h3 className="text-2xl font-semibold text-[#254159] mb-4 border-b border-gray-300 pb-3">Centre Photos</h3>
+              <h3 className="text-2xl font-semibold text-[#254159] mb-6 border-b border-gray-300 pb-3">Centre Photos</h3>
               <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
                 {centreImageUrls.map((url, index) => (
-                  <div key={index} className="w-full aspect-video rounded-md overflow-hidden shadow-sm border border-gray-200">
-                    <img src={url} alt={`Centre photo ${index + 1}`} className="w-full h-full object-cover" />
+                  <div key={index} className="w-full aspect-video rounded-lg overflow-hidden shadow-sm border border-gray-200 hover:shadow-md transition-shadow">
+                    <img src={url} alt={`Centre photo ${index + 1}`} className="w-full h-full object-cover hover:scale-105 transition-transform duration-300" />
                   </div>
                 ))}
               </div>
@@ -219,25 +245,25 @@ const BusinessProfile = () => {
           )}
 
           <div className="bg-white rounded-lg shadow-md p-6 border border-gray-200">
-            <h3 className="text-2xl font-semibold text-[#254159] mb-4 border-b border-gray-300 pb-3">Additional Information</h3>
+            <h3 className="text-2xl font-semibold text-[#254159] mb-6 border-b border-gray-300 pb-3">Additional Information</h3>
             <div className="space-y-6">
               <div>
-                <p className="text-gray-600 font-medium">Description:</p>
-                <div className="bg-gray-50 rounded-lg p-4 mt-2 text-gray-800 whitespace-pre-line">
+                <p className="text-gray-600 font-medium mb-2">Centre Description:</p>
+                <div className="bg-gray-50 rounded-lg p-4 text-gray-800 whitespace-pre-line leading-relaxed">
                   {BusinessInfo.centreDescription || "No description provided."}
                 </div>
               </div>
 
               <div>
-                <p className="text-gray-600 font-medium">Staff Benefits:</p>
-                <div className="flex flex-wrap gap-2 mt-2">
+                <p className="text-gray-600 font-medium mb-3">Staff Benefits:</p>
+                <div className="flex flex-wrap gap-2">
                   {Array.isArray(BusinessInfo.staffBenefits) && BusinessInfo.staffBenefits.length > 0 ? (
                     BusinessInfo.staffBenefits.map((benefit, index) => (
                       <span
                         key={index}
-                        className="bg-[#F8F8F8] border border-gray-200 text-[#254159] px-3 py-1 rounded-full text-sm font-medium"
+                        className="bg-[#f2be5c] bg-opacity-20 border border-[#f2be5c] text-[#254159] px-3 py-2 rounded-full text-sm font-medium hover:bg-opacity-30 transition-colors"
                       >
-                        {benefit}
+                        {benefit.trim()}
                       </span>
                     ))
                   ) : (
@@ -245,6 +271,15 @@ const BusinessProfile = () => {
                   )}
                 </div>
               </div>
+
+              {BusinessInfo.careerOpportunities && (
+                <div>
+                  <p className="text-gray-600 font-medium mb-2">Career Progression Opportunities:</p>
+                  <div className="bg-gray-50 rounded-lg p-4 text-gray-800 whitespace-pre-line leading-relaxed">
+                    {BusinessInfo.careerOpportunities}
+                  </div>
+                </div>
+              )}
             </div>
           </div>
         </div>
