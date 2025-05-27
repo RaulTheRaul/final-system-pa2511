@@ -63,7 +63,7 @@ const SeekerCard = ({ seekerInfo, onViewProfile, currentlySelectedProfile, onClo
     setShowConfirmation(true);
   }
 
-  //This function will handle the recent applicants and confirmation
+  //This function will handle the recent applicants and confirmations
   const handleRevealContact = async () => {
     if (loading || revealed) return; // Prevent revealing if already loading or revealed
     if (!currentUser) return;
@@ -143,7 +143,7 @@ const SeekerCard = ({ seekerInfo, onViewProfile, currentlySelectedProfile, onClo
 
   return (
     //display basic seeker information
-    <div className="bg-[#F8F8F8] rounded-md shadow-md p-4 mb-4">
+    <div className="bg-white rounded-md shadow-md p-4 mb-4">
       <div>
       <h3 className="text-xl font-semibold">{seekerInfo?.jobseekerInformation?.educationLevel || 'Not provided'}</h3>
       <p className="text-gray-700">Availability: {seekerInfo?.jobseekerInformation?.availability || 'Not provided'}</p>
