@@ -156,7 +156,7 @@ const BusinessActivity = () => {
           <div className="md:w-1/2 bg-[#F8F8F8] rounded-lg shadow-sm p-6">
             <h2 className="text-2xl font-bold text-[#254159] mb-6">Your Activity</h2>
             <div className="space-y-4 mt-4">
-              <h3 className="text-lg font-semibold text-gray-700 border-b pb-2">Recent Applicants</h3>
+              <h3 className="text-lg font-semibold text-gray-700 border-b pb-2">Revealed Profiles</h3>
               <ul className="mt-2">
                 {recentReveal.length > 0 ? (
                   recentReveal.map((reveal) => (
@@ -173,7 +173,7 @@ const BusinessActivity = () => {
                     </li>
                   ))
                 ) : (
-                  <li className="py-2 text-gray-500">No applicants revealed yet.</li>
+                  <li className="py-2 text-gray-500">No profiles revealed yet.</li>
                 )}
               </ul>
             </div>
