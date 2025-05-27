@@ -14,6 +14,14 @@ const BusinessDetailPage = () => {
     const { currentUser } = useAuth();
     const navigate = useNavigate();
 
+    const getLogoUrl = () => {
+        return business?.businessInformation?.logoUrl || '';
+    };
+
+    const getCentreImageUrls = () => {
+        return business?.businessInformation?.centreImageUrls || [];
+    };
+
     // Ratings state for each category
     const [userRatings, setUserRatings] = useState({
         workplaceCulture: 0,
@@ -270,13 +278,13 @@ const BusinessDetailPage = () => {
                     <div className="mb-6 p-4 bg-white rounded-lg shadow-sm">
                         <h3 className="text-xl font-semibold text-[#254159] mb-4">Center Ratings</h3>
                         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
-                        {renderRatingDisplay('workplaceCulture', 'Workplace Culture')}
-                        {renderRatingDisplay('wagesBenefits', 'Wages & Benefits')}
-                        {renderRatingDisplay('professionalDevelopment', 'Professional Development')}
+                            {renderRatingDisplay('workplaceCulture', 'Workplace Culture')}
+                            {renderRatingDisplay('wagesBenefits', 'Wages & Benefits')}
+                            {renderRatingDisplay('professionalDevelopment', 'Professional Development')}
                         </div>
                         <div className="grid grid-cols-1 md:grid-cols-1 lg:grid-cols-2 gap-4">
-                        {renderRatingDisplay('leadership', 'Leadership')}
-                        {renderRatingDisplay('inclusionSupport', 'Inclusion Support')}
+                            {renderRatingDisplay('leadership', 'Leadership')}
+                            {renderRatingDisplay('inclusionSupport', 'Inclusion Support')}
                         </div>
                     </div>
 
@@ -298,6 +306,13 @@ const BusinessDetailPage = () => {
                                 You've already rated this business
                             </div>
                         )}
+
+                    {/* Business Logo Display */}
+                    {getLogoUrl() && (
+                        <div className="bg-white rounded-lg shadow-md p-6 mb-6 border border-gray-200 flex items-center justify-center">
+                            <img src={getLogoUrl()} alt="Business Logo" className="max-h-32 object-contain" />
+                        </div>
+                    )}
 
                     <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mt-6">
                         <div>
@@ -351,21 +366,11 @@ const BusinessDetailPage = () => {
                                 </p>
 
                                 <p className="flex items-start">
-                                    <span className="font-medium w-32">Rooms:</span>
-                                    <span>{businessInfo.roomCount || "Not specified"}</span>
-                                </p>
-
-                                <p className="flex items-start">
                                     <span className="font-medium w-32">Ratio:</span>
                                     <span>{businessInfo.staffToChildRatio || "Not specified"}</span>
                                 </p>
 
-                                {businessInfo.staffBenefits && businessInfo.staffBenefits.length > 0 && (
-                                    <div className="flex items-start">
-                                        <span className="font-medium w-32">Staff Benefits:</span>
-                                        <span>{businessInfo.staffBenefits.join(", ")}</span>
-                                    </div>
-                                )}
+
                             </div>
                         </div>
                     </div>
@@ -373,14 +378,48 @@ const BusinessDetailPage = () => {
                     {businessInfo.centreDescription && (
                         <div className="mt-6 pt-6 border-t">
                             <h3 className="text-xl font-semibold text-[#254159] mb-4">About Us</h3>
-                            <p className="text-gray-700 whitespace-pre-line">{businessInfo.centreDescription}</p>
+                            <div className="space-y-6">
+                                <div className="text-gray-700 whitespace-pre-line">
+                                    {businessInfo.centreDescription}
+                                </div>
+                                
+                                <hr className="my-6" />
+
+                                {/* Staff Benefits Section */}
+                                <div>
+                                    <h4 className="text-lg font-semibold text-[#254159] mb-2">Staff Benefits</h4>
+                                    <div className="flex flex-wrap gap-2">
+                                        {Array.isArray(businessInfo.staffBenefits) && businessInfo.staffBenefits.length > 0 ? (
+                                            businessInfo.staffBenefits.map((benefit, index) => (
+                                                <span
+                                                    key={index}
+                                                    className="bg-[#F8F8F8] border border-gray-200 text-[#254159] px-3 py-1 rounded-full text-sm font-medium"
+                                                >
+                                                    {benefit}
+                                                </span>
+                                            ))
+                                        ) : (
+                                            <p className="text-gray-500 italic">No staff benefits listed.</p>
+                                        )}
+                                    </div>
+                                </div>
+                            </div>
                         </div>
                     )}
 
-                    {businessInfo.careerOpportunities && (
-                        <div className="mt-6 pt-6 border-t">
-                            <h3 className="text-xl font-semibold text-[#254159] mb-4">Career Opportunities</h3>
-                            <p className="text-gray-700 whitespace-pre-line">{businessInfo.careerOpportunities}</p>
+                    <hr className="my-6" />
+
+                    {/* Centre Images Display */}
+                    {getCentreImageUrls().length > 0 && (
+                        <div className="bg-white rounded-lg shadow-md p-6 mb-6 border border-gray-200">
+                            <h3 className="text-xl font-semibold text-[#254159] mb-4">Centre Photos</h3>
+                            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
+                                {getCentreImageUrls().map((url, index) => (
+                                    <div key={index} className="w-full aspect-video rounded-md overflow-hidden shadow-sm border border-gray-200">
+                                        <img src={url} alt={`Centre photo ${index + 1}`} className="w-full h-full object-cover" />
+                                    </div>
+                                ))}
+                            </div>
                         </div>
                     )}
 
@@ -392,7 +431,7 @@ const BusinessDetailPage = () => {
                         ) : (
                             <div className="space-y-4">
                                 {jobs.map(job => (
-                                    <div key={job.id} className="bg-[#F1EEEB] p-4 rounded-md shadow-sm border border-gray-200">
+                                    <div key={job.id} className="bg-white p-4 rounded-md shadow-sm border border-gray-200">
                                         <h4 className="text-lg font-semibold text-[#254159]">{job.title}</h4>
                                         <p className="text-sm text-gray-600 mb-2">{job.description}</p>
                                         <Link
