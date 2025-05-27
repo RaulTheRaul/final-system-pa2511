@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { collection, addDoc, serverTimestamp } from "firebase/firestore";
+import { collection, addDoc, serverTimestamp, getDoc, doc } from "firebase/firestore";
 import { db } from "../../../firebase/config";
 import { useAuth } from "../../../context/AuthContext";
 import { toast } from "react-hot-toast";
@@ -8,7 +8,7 @@ const JobDetailPanel = ({ job }) => {
   const [activeTab, setActiveTab] = useState("overview");
   const { currentUser } = useAuth();
   const display = (label, value) => (
-  <p><strong>{label}:</strong> {value || "Not provided"}</p>
+    <p><strong>{label}:</strong> {value || "Not provided"}</p>
   );
 
   const handleApply = async () => {
@@ -18,12 +18,18 @@ const JobDetailPanel = ({ job }) => {
     }
 
     try {
+      const userDoc = await getDoc(doc(db, "users", currentUser.uid));
+      const userData = userDoc.data();
+
+      // Retrieves relevant job info and seeker info
       await addDoc(collection(db, "applications"), {
         jobId: job.id,
         jobTitle: job.title,
         postedBy: job.company || "Unknown",
         seekerId: currentUser.uid,
-        appliedAt: serverTimestamp()
+        seekerName: userData?.fullName || "Unknown", 
+        seekerEmail: currentUser.email,
+        appliedAt: serverTimestamp(),
       });
 
       toast.success("✅ Application submitted!");
@@ -34,8 +40,7 @@ const JobDetailPanel = ({ job }) => {
   };
 
   const tabStyle = (tab) =>
-    `px-4 py-2 border-b-2 text-sm font-medium cursor-pointer ${
-      activeTab === tab ? "border-[#f2be5c] text-[#254159]" : "border-transparent text-gray-500 hover:text-[#254159]"
+    `px-4 py-2 border-b-2 text-sm font-medium cursor-pointer ${activeTab === tab ? "border-[#f2be5c] text-[#254159]" : "border-transparent text-gray-500 hover:text-[#254159]"
     }`;
 
   return (
@@ -84,9 +89,9 @@ const JobDetailPanel = ({ job }) => {
         {activeTab === "pay" && (
           <>
             {display("Hourly Rate / Salary", job.hourlyRate)}
-    {display("Allowances", job.allowances)}
-    {display("Bonuses", job.bonus)}
-    {display("Professional Development", job.developmentOpportunities)}
+            {display("Allowances", job.allowances)}
+            {display("Bonuses", job.bonus)}
+            {display("Professional Development", job.developmentOpportunities)}
           </>
         )}
       </div>

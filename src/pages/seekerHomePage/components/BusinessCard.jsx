@@ -31,19 +31,20 @@ const BusinessCard = ({ business }) => {
                     )}
                 </div>
 
-                <div className="flex flex-col justify-between">
+                <div className="flex flex-col">
                     {businessInfo.staffToChildRatio && (
                         <p className="text-sm text-gray-700 mb-1">
                             <span className="font-medium">Staff-to-Child Ratio:</span> {businessInfo.staffToChildRatio}
                         </p>
                     )}
-
+                    <div className="flex justify-end">
                     <Link
                         to={`/businesses/${business.id}`}
-                        className="px-4 py-2 bg-[#254159] text-white rounded-md hover:bg-[#f2be5c] transition-colors text-center mt-4"
+                        className="px-4 py-2 bg-[#254159] text-white rounded-md hover:bg-[#f2be5c] transition-colors text-center mt-8"
                     >
                         View Details
                     </Link>
+                    </div>
                 </div>
             </div>
 
