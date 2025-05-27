@@ -393,7 +393,7 @@ const BusinessDetailPage = () => {
                                             businessInfo.staffBenefits.map((benefit, index) => (
                                                 <span
                                                     key={index}
-                                                    className="bg-[#F8F8F8] border border-gray-200 text-[#254159] px-3 py-1 rounded-full text-sm font-medium"
+                                                    className="bg-[#f2be5c] bg-opacity-20 border border-[#f2be5c] text-[#254159] px-3 py-2 rounded-full text-sm font-medium hover:bg-opacity-30 transition-colors"
                                                 >
                                                     {benefit}
                                                 </span>
