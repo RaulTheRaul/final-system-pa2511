@@ -116,8 +116,8 @@ exports.createCheckoutSession = onCall(STRIPE_SECRETS, async (request) => {
     //NOTE: Got to setup app base URL once deployed live, Must also create page to thank user for purchase
 
     // Read App URL from regular env var (set via `config:set app.url=...` or hardcoded fallback)  
-    const appBaseUrl = process.env.APP_URL || 'http://localhost:5173'; // Use configured or default   #######!!!!! CHANGE ONCE DEPLOYED !!!! ########
-    const successUrl = `${appBaseUrl}/purchase-success?session_id={CHECKOUT_SESSION_ID}`;
+    const appBaseUrl = process.env.APP_URL || 'https://wsu-px.web.app'; // Use configured or default   #######!!!!! CHANGE ONCE DEPLOYED !!!! ########
+    const successUrl = `${appBaseUrl}/token-management`;
     const cancelUrl = `${appBaseUrl}/token-management`;
     logger.log(`[createCheckoutSession Func] Using Success URL: ${successUrl}, Cancel URL: ${cancelUrl}`);
     //###### End URLs ######

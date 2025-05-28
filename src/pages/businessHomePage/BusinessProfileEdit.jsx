@@ -367,6 +367,7 @@ const BusinessProfileEdit = () => {
                 doc(db, "users", currentUser.uid),
                 {
                     businessName: formData.businessName,
+                    email: currentUser.email,
                     businessInformation: updatedInfo,
                     setupCompleted: true
                 },

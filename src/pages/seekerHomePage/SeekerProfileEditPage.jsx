@@ -310,6 +310,7 @@ const SeekerProfileEditPage = () => {
                 doc(db, "users", currentUser.uid),
                 {
                     fullName: formData.fullName,
+                    email: currentUser.email,
                     jobseekerInformation: updatedInfo,
                     setupCompleted: true
                 },
