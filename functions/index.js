@@ -126,7 +126,7 @@ exports.createCheckoutSession = onCall(STRIPE_SECRETS, async (request) => {
         //###### USER TYPE CHECK ######
         const userDocRef = db.collection('users').doc(userId); // db targets 'centre-connect'
         const userDoc = await userDocRef.get();
-        if (!userDoc.exists() || userDoc.data()?.userType !== 'business') {
+        if (!userDoc.exists || userDoc.data()?.userType !== 'business') {
             logger.warn(`[createCheckoutSession V2] User ${userId} is not a business user or doc doesn't exist.`);
             throw new HttpsError('permission-denied', 'Only business users are permitted to purchase tokens.');
         }
