@@ -1,16 +1,48 @@
-import { useState } from "react";
-import { collection, addDoc, serverTimestamp, getDoc, doc } from "firebase/firestore";
+import { useState, useEffect } from "react";
+import {
+  collection,
+  addDoc,
+  serverTimestamp,
+  getDoc,
+  getDocs,
+  doc,
+  query,
+  where,
+} from "firebase/firestore";
 import { db } from "../../../firebase/config";
 import { useAuth } from "../../../context/AuthContext";
 import { toast } from "react-hot-toast";
 
 const JobDetailPanel = ({ job }) => {
   const [activeTab, setActiveTab] = useState("overview");
+  const [hasApplied, setHasApplied] = useState(false);
   const { currentUser } = useAuth();
+
   const display = (label, value) => (
     <p><strong>{label}:</strong> {value || "Not provided"}</p>
   );
 
+  // 🔍 Check if the current user already applied to this job
+  useEffect(() => {
+    const checkIfAlreadyApplied = async () => {
+      if (!currentUser || !job?.id) return;
+
+      const q = query(
+        collection(db, "applications"),
+        where("jobId", "==", job.id),
+        where("seekerId", "==", currentUser.uid)
+      );
+
+      const snapshot = await getDocs(q);
+      if (!snapshot.empty) {
+        setHasApplied(true);
+      }
+    };
+
+    checkIfAlreadyApplied();
+  }, [currentUser, job?.id]);
+
+  // ✅ Handle apply
   const handleApply = async () => {
     if (!currentUser) {
       toast.error("You must be logged in to apply.");
@@ -21,18 +53,18 @@ const JobDetailPanel = ({ job }) => {
       const userDoc = await getDoc(doc(db, "users", currentUser.uid));
       const userData = userDoc.data();
 
-      // Retrieves relevant job info and seeker info
       await addDoc(collection(db, "applications"), {
         jobId: job.id,
         jobTitle: job.title,
         postedBy: job.company || "Unknown",
         seekerId: currentUser.uid,
-        seekerName: userData?.fullName || "Unknown", 
+        seekerName: userData?.fullName || "Unknown",
         seekerEmail: currentUser.email,
         appliedAt: serverTimestamp(),
       });
 
       toast.success("✅ Application submitted!");
+      setHasApplied(true);
     } catch (error) {
       console.error("Failed to apply:", error);
       toast.error("❌ Failed to apply.");
@@ -40,7 +72,10 @@ const JobDetailPanel = ({ job }) => {
   };
 
   const tabStyle = (tab) =>
-    `px-4 py-2 border-b-2 text-sm font-medium cursor-pointer ${activeTab === tab ? "border-[#f2be5c] text-[#254159]" : "border-transparent text-gray-500 hover:text-[#254159]"
+    `px-4 py-2 border-b-2 text-sm font-medium cursor-pointer ${
+      activeTab === tab
+        ? "border-[#f2be5c] text-[#254159]"
+        : "border-transparent text-gray-500 hover:text-[#254159]"
     }`;
 
   return (
@@ -49,14 +84,33 @@ const JobDetailPanel = ({ job }) => {
       <p className="text-sm text-gray-600 mb-1">
         📍 {job.location} | 💼 {job.jobType} | 📅 Start: {job.startDate || "TBA"}
       </p>
-      <p className="text-sm text-gray-500 mb-4">Posted by: {job.company || "Unknown"}</p>
+      <p className="text-sm text-gray-500 mb-4">
+        Posted by: {job.company || "Unknown"}
+      </p>
 
       {/* Tabs */}
       <div className="flex border-b mb-4 space-x-4">
-        <button className={tabStyle("overview")} onClick={() => setActiveTab("overview")}>Overview</button>
-        <button className={tabStyle("responsibilities")} onClick={() => setActiveTab("responsibilities")}>Responsibilities</button>
-        <button className={tabStyle("fifo")} onClick={() => setActiveTab("fifo")}>FIFO Details</button>
-        <button className={tabStyle("pay")} onClick={() => setActiveTab("pay")}>Pay & Benefits</button>
+        <button
+          className={tabStyle("overview")}
+          onClick={() => setActiveTab("overview")}
+        >
+          Overview
+        </button>
+        <button
+          className={tabStyle("responsibilities")}
+          onClick={() => setActiveTab("responsibilities")}
+        >
+          Responsibilities
+        </button>
+        <button
+          className={tabStyle("fifo")}
+          onClick={() => setActiveTab("fifo")}
+        >
+          FIFO Details
+        </button>
+        <button className={tabStyle("pay")} onClick={() => setActiveTab("pay")}>
+          Pay & Benefits
+        </button>
       </div>
 
       {/* Tab Content */}
@@ -96,13 +150,23 @@ const JobDetailPanel = ({ job }) => {
         )}
       </div>
 
+      {/* Apply Button */}
       <div className="mt-6">
-        <button
-          onClick={handleApply}
-          className="bg-[#26425A] hover:bg-[#f2be5c] text-white font-medium px-6 py-2 rounded-md transition"
-        >
-          Apply Now
-        </button>
+        {hasApplied ? (
+          <button
+            className="bg-gray-400 cursor-not-allowed text-white font-medium px-6 py-2 rounded-md"
+            disabled
+          >
+             Applied
+          </button>
+        ) : (
+          <button
+            onClick={handleApply}
+            className="bg-[#26425A] hover:bg-[#f2be5c] text-white font-medium px-6 py-2 rounded-md transition"
+          >
+            Apply Now
+          </button>
+        )}
       </div>
     </div>
   );
