@@ -5,6 +5,7 @@ import { db, storage } from "../../firebase/config";
 import { ref, uploadBytesResumable, getDownloadURL } from "firebase/storage";
 import { useAuth } from "../../context/AuthContext";
 import SeekerNavigation from "./components/SeekerNavigation";
+import Footer from "../../components/footer";
 //Importing the different form sections components
 import PersonalInfoSection from "./components/profile/PersonalInfoSection";
 import QualificationSection from "./components/profile/QualificationSection";
@@ -449,6 +450,7 @@ const SeekerProfileEditPage = () => {
                     </form>
                 </div>
             </div>
+            <Footer />
         </div>
 
     );

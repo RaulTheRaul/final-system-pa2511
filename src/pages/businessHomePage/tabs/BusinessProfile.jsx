@@ -3,6 +3,7 @@ import { Link } from "react-router-dom";
 import { useAuth } from "../../../context/AuthContext";
 import BusinessNavigation from "../components/BusinessNavigation";
 import { doc, getDoc } from "firebase/firestore";
+import Footer from "../../../components/footer";
 import { db } from "../../../firebase/config";
 
 const BusinessProfile = () => {
@@ -284,6 +285,7 @@ const BusinessProfile = () => {
           </div>
         </div>
       </div>
+      <Footer />
     </div>
   );
 };

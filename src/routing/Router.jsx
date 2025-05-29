@@ -130,9 +130,9 @@ const Router = () => {
                     path="/business/jobs/view/:jobId"
                     element={
                         currentUser && userData && isBussiness() ? (
-                        <ViewJobPage />
+                            <ViewJobPage />
                         ) : (
-                        <Navigate to="/" replace />
+                            <Navigate to="/" replace />
                         )
                     }
                 />
@@ -141,9 +141,9 @@ const Router = () => {
                     path="/business/jobs/edit/:jobId"
                     element={
                         currentUser && userData && isBussiness() ? (
-                        <EditJobPage />
+                            <EditJobPage />
                         ) : (
-                        <Navigate to="/" replace />
+                            <Navigate to="/" replace />
                         )
                     }
                 />
@@ -194,9 +194,9 @@ const Router = () => {
                     path="/business/jobs/create"
                     element={
                         currentUser && userData && isBussiness() ? (
-                        <CreateJobPage />
+                            <CreateJobPage />
                         ) : (
-                        <Navigate to="/" replace />
+                            <Navigate to="/" replace />
                         )
                     }
                 />

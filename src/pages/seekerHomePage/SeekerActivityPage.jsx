@@ -11,6 +11,7 @@ import {
 import { db } from "../../firebase/config";
 import { useAuth } from "../../context/AuthContext";
 import SeekerNavigation from "./components/SeekerNavigation";
+import Footer from "../../components/footer";
 
 const SeekerActivityPage = () => {
   const { currentUser } = useAuth();
@@ -43,10 +44,10 @@ const SeekerActivityPage = () => {
 
       return jobSnap.exists()
         ? {
-            id: jobSnap.id,
-            ...jobSnap.data(),
-            savedAt: docSnap.data().savedAt,
-          }
+          id: jobSnap.id,
+          ...jobSnap.data(),
+          savedAt: docSnap.data().savedAt,
+        }
         : null;
     });
 
@@ -182,6 +183,7 @@ const SeekerActivityPage = () => {
           </div>
         </div>
       </div>
+      <Footer />
     </div>
   );
 };

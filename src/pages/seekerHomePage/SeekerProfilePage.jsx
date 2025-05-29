@@ -3,6 +3,7 @@ import { useState } from "react";
 import { useAuth } from "../../context/AuthContext";
 import SeekerNavigation from "./components/SeekerNavigation";
 import AccountSettingsModal from "./components/AccountSettingsModal";
+import Footer from "../../components/footer";
 
 const SeekerProfilePage = () => {
     const { userData, currentUser } = useAuth();
@@ -396,6 +397,7 @@ const SeekerProfilePage = () => {
                 isOpen={isSettingsModalOpen}
                 onClose={() => setIsSettingsModalOpen(false)}
             />
+            <Footer />
         </div>
     );
 };

@@ -16,14 +16,14 @@ const BusinessRecruitSeeker = () => {
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState("");
     const [selectedProfile, setSelectedProfile] = useState(null);               //store profile data
-    const [revealedSeekerIds, setRevealedSeekerIds] =useState(new Set());         // to store id of already revealed seekers
+    const [revealedSeekerIds, setRevealedSeekerIds] = useState(new Set());         // to store id of already revealed seekers
     const [isFilterOpen, setIsFilterOpen] = useState(false);                    //manage filter modal
     const [currentFilters, setCurrentFilters] = useState({                        //set default filter options
         educationLevel: null,
         location: null,
         availability: null,
         preferredRole: null,
-        shiftPreference: null, 
+        shiftPreference: null,
     });
 
     //normalise data for consistent data fetching and ensures data has default values
@@ -36,21 +36,21 @@ const BusinessRecruitSeeker = () => {
             id: docId,
             fullName: rawSeekerData.fullName || "Name Not Provided",
             email: rawSeekerData.email || 'N/A',
-            location: rawSeekerData.location || 'N/A', 
+            location: rawSeekerData.location || 'N/A',
 
-            jobseekerInformation: { 
+            jobseekerInformation: {
                 educationLevel: jobseekerInfo.educationLevel || 'N/A',
                 availability: jobseekerInfo.availability || 'N/A',
                 shiftPreference: jobseekerInfo.shiftPreference || 'N/A',
                 bio: jobseekerInfo.bio || 'N/A',
                 preferredRole: jobseekerInfo.preferredRole || 'N/A',
-                willingToRelocate: jobseekerInfo.willingToRelocate ?? 'N/A', 
+                willingToRelocate: jobseekerInfo.willingToRelocate ?? 'N/A',
                 educationInstitution: jobseekerInfo.educationInstitution || 'N/A',
                 graduationYear: jobseekerInfo.graduationYear || 'N/A',
                 resumeUrl: jobseekerInfo.resumeUrl || null, // Ensure resumeUrl is explicitly set
-                desiredPayRate: jobseekerInfo.desiredPayRate || 'N/A', 
+                desiredPayRate: jobseekerInfo.desiredPayRate || 'N/A',
 
-                certifications: { 
+                certifications: {
                     anaphylaxis: certifications.anaphylaxis ?? false,
                     anaphylaxisExpiry: certifications.anaphylaxisExpiry || 'N/A',
                     asthma: certifications.asthma ?? false,
@@ -77,8 +77,8 @@ const BusinessRecruitSeeker = () => {
                 const querySnapshot = await getDocs(q);
 
                 //extract job seeker id from each document
-                const ids = new Set(querySnapshot.docs.map(doc => doc.data().seekerId));
-                setRevealedSeekerIds(ids); 
+                const ids = new Set(querySnapshot.docs.map(doc => doc.data().jobseekerId));
+                setRevealedSeekerIds(ids);
             } catch (error) {
                 //display an error message if failed to fetch seekers
                 console.log('Error fetching job seekers', error);
@@ -94,7 +94,7 @@ const BusinessRecruitSeeker = () => {
 
     //fetch jobseekers data based on current filters
     //Callback to memorise the fetch seeker function and re-create if dependencies change to prevent loops.
-    const fetchSeekers = useCallback(async() =>{
+    const fetchSeekers = useCallback(async () => {
         console.log("BusinessRecruitSeeker: Starting fetchSeekers with filters:", currentFilters);
         setLoading(true);
         setError("");
@@ -108,36 +108,36 @@ const BusinessRecruitSeeker = () => {
 
             //apply the filter if not filter value is not null
             // Education Level
-            if (currentFilters.educationLevel){
+            if (currentFilters.educationLevel) {
                 seekerQuery = query(seekerQuery, where("jobseekerInformation.educationLevel", "==", currentFilters.educationLevel));
                 console.log("Applying educationLevel filter:", currentFilters.educationLevel);
             }
             // Location 
-            if (currentFilters.location){
+            if (currentFilters.location) {
                 seekerQuery = query(seekerQuery, where("location", "==", currentFilters.location));
                 console.log("Applying location filter:", currentFilters.location);
             }
             // Availability
-            if (currentFilters.availability){
+            if (currentFilters.availability) {
                 seekerQuery = query(seekerQuery, where("jobseekerInformation.availability", "==", currentFilters.availability));
                 console.log("Applying availability filter:", currentFilters.availability);
             }
             // Preferred Role
-            if (currentFilters.preferredRole){
+            if (currentFilters.preferredRole) {
                 seekerQuery = query(seekerQuery, where("jobseekerInformation.preferredRole", "==", currentFilters.preferredRole));
                 console.log("Applying preferredRole filter:", currentFilters.preferredRole);
             }
             // Shift Preference
-            if (currentFilters.shiftPreference){
+            if (currentFilters.shiftPreference) {
                 seekerQuery = query(seekerQuery, where("jobseekerInformation.shiftPreference", "==", currentFilters.shiftPreference));
                 console.log("Applying shiftPreference filter:", currentFilters.shiftPreference);
             }
 
             const querySnapshot = await getDocs(seekerQuery);
             console.log("BusinessRecruitSeeker: Job Seeker QuerySnapshot received:", querySnapshot.docs.length, "documents.");
-        
+
             //map query
-            const seekerList = querySnapshot.docs.map(doc =>{
+            const seekerList = querySnapshot.docs.map(doc => {
                 const rawData = doc.data();
                 const normalizedSeeker = normalizeSeekerData(rawData, doc.id);
                 return normalizedSeeker;
@@ -156,7 +156,7 @@ const BusinessRecruitSeeker = () => {
 
     //check if there is a database and call fetchSeekers
     useEffect(() => {
-        if ( db ){
+        if (db) {
             fetchSeekers();
         } else {
             console.log("BusinessRecruitSeeker: db not available");
@@ -167,21 +167,21 @@ const BusinessRecruitSeeker = () => {
     //This function will track if the business have already revealed the profile.
     // SeekerId - the id of the selected revealed seeker
     const handleRevealProfile = async (seekerId) => {
-        if (!currentUser || !currentUser.uid){
+        if (!currentUser || !currentUser.uid) {
             return;
         }
 
         //Prevent re-writes in db if already revealed
-        if(revealedSeekerIds.has(seekerId)){
+        if (revealedSeekerIds.has(seekerId)) {
             return;
         }
 
         try {
             //create document in revealedTest
             const newRevealDoc = doc(collection(db, "revealedTest"));
-            await setDoc( newRevealDoc, {
+            await setDoc(newRevealDoc, {
                 businessId: currentUser.uid,
-                seekerId: seekerId,
+                jobseekerId: seekerId,
                 createdAt: serverTimestamp()
             })
             setRevealedSeekerIds(prev => new Set(prev).add(seekerId));
@@ -189,32 +189,32 @@ const BusinessRecruitSeeker = () => {
             console.error("Error revealing profile in revealedTest:", err);
         }
     };
-    
+
     //Profile Modal Handles
-        //This function will open the view profile modal
-        const handleViewProfileInPanel  = (seekerData) => {
-            setSelectedProfile(seekerData);
-            handleRevealProfile(seekerData.id);
-        }
-  
-        //This function will handle the closure of the view profile modal
-        const handleCloseProfileModal = () => {
-            setSelectedProfile(null);
-        }
-    
+    //This function will open the view profile modal
+    const handleViewProfileInPanel = (seekerData) => {
+        setSelectedProfile(seekerData);
+        handleRevealProfile(seekerData.id);
+    }
+
+    //This function will handle the closure of the view profile modal
+    const handleCloseProfileModal = () => {
+        setSelectedProfile(null);
+    }
+
     //Filter Modal Handles
-        const handleOpenFilter = () => {
-            setIsFilterOpen(true);
-        }
+    const handleOpenFilter = () => {
+        setIsFilterOpen(true);
+    }
 
-        const handleCloseFilter = () => {
-            setIsFilterOpen(false);
-        }
+    const handleCloseFilter = () => {
+        setIsFilterOpen(false);
+    }
 
-        const handleApplyFilters = (filters) => {
-            console.log("Applying filters:", filters);
-            setCurrentFilters(filters);
-        }
+    const handleApplyFilters = (filters) => {
+        console.log("Applying filters:", filters);
+        setCurrentFilters(filters);
+    }
 
     if (error) {
         return <div className="bg-red-50 text-red-600 p-4 rounded-md">
@@ -230,17 +230,17 @@ const BusinessRecruitSeeker = () => {
             {/* left panel */}
             <div className="flex max-h-[calc(100vh-64px)]">
                 <div className=" w-1/2 border-r overflow-y-auto p-6">
-                    
-                        <div className="flex justify-between items-center mb-4"> {/*  */}
+
+                    <div className="flex justify-between items-center mb-4"> {/*  */}
                         <h2 className="text-2xl font-bold text-[#254159] mb-4">Available Applicants</h2>
-                            <button
-                                onClick={handleOpenFilter}
-                                className="px-4 py-2 rounded-md text-sm font-medium transition-colors duration-200 shadow-sm border border-transparent bg-[#f2be5c] text-white hover:bg-[#e0a44d]"
-                            >
-                                Filter Applicants
-                            </button>
-                        </div>
-                        
+                        <button
+                            onClick={handleOpenFilter}
+                            className="px-4 py-2 rounded-md text-sm font-medium transition-colors duration-200 shadow-sm border border-transparent bg-[#f2be5c] text-white hover:bg-[#e0a44d]"
+                        >
+                            Filter Applicants
+                        </button>
+                    </div>
+
                     {/* Display active filters // WIP*/}
 
 
@@ -278,22 +278,22 @@ const BusinessRecruitSeeker = () => {
 
                 {/* Right Panel*/}
                 <div className="w-1/2 overflow-y-auto p-6">
-                {selectedProfile ? (
-                    <ViewSeekerProfileModal 
-                    seekerData={selectedProfile} 
-                    onClose={handleCloseProfileModal} 
-                    isOpen={!!selectedProfile}
-                    />
-                ) : (
-                    <div className="text-gray-500 text-center mt-20">
-                    <p>Select a Job Seeker to view the full profile.</p>
-                    </div>
-                )}
-                    </div>
+                    {selectedProfile ? (
+                        <ViewSeekerProfileModal
+                            seekerData={selectedProfile}
+                            onClose={handleCloseProfileModal}
+                            isOpen={!!selectedProfile}
+                        />
+                    ) : (
+                        <div className="text-gray-500 text-center mt-20">
+                            <p>Select a Job Seeker to view the full profile.</p>
+                        </div>
+                    )}
+                </div>
             </div>
-            
+
             {/* Render Filter Modal*/}
-            <SearchFilterModal 
+            <SearchFilterModal
                 isOpen={isFilterOpen}
                 onClose={handleCloseFilter}
                 onApplyFilters={handleApplyFilters}

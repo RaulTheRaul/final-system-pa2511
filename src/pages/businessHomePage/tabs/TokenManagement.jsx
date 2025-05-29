@@ -6,6 +6,7 @@ import { loadStripe } from "@stripe/stripe-js";
 import BusinessNavigation from "../components/BusinessNavigation";
 import { doc, getDoc, collection, query, getDocs, orderBy, limit } from 'firebase/firestore';
 import AccountSettingsModal from "./AccountSettingsModal";
+import Footer from "../../../components/footer";
 
 // Load Stripe with publishable key
 const stripePromise = loadStripe(import.meta.env.VITE_STRIPE_PUBLISHABLE_KEY);
@@ -398,6 +399,7 @@ const TokenManagement = () => {
                 isOpen={isSettingsModalOpen}
                 onClose={() => setIsSettingsModalOpen(false)}
             />
+            <Footer />
         </div>
     );
 };

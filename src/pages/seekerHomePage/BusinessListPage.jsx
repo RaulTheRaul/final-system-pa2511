@@ -59,7 +59,7 @@ const BusinessListPage = () => {
                             />
                         </div>
                     </div>
-                    
+
                     {loading ? (
                         <div className="text-center py-8">
                             <p className="text-gray-600">Loading childcare centers...</p>
