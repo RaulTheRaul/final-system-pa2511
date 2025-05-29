@@ -1,13 +1,17 @@
-# ChildCare Platform Local Development Guide
+# Centre Connect Testing and Deploying Guide
 
 This project is built with React + Vite + Tailwind CSS and has been containerised with docker for consistent development.
+
+##NOTE
+As of the 29/05/2025 The website is currently up and running with the exact code found here in this project, it can be accessed via the following link: (https://wsu-px.web.app/)
 
 ## Prerequisites
 
 - [Docker Desktop](https://www.docker.com/products/docker-desktop/) (Windows/Mac)
-- [Docker Engine](https://docs.docker.com/engine/install/) (Linux)
+- [Docker Engine](https://docs.docker.com/engine/install/) (Windows/Mac)
+- [Node.js](https://nodejs.org/en)(Windows/Mac)
 
-## Getting Started
+## Getting Started (viewing the code locally)
 
 1. Clone the repository
 ```bash
@@ -72,6 +76,7 @@ Make sure you have [Node.js](https://nodejs.org/) installed, then install the Fi
 ```bash
 npm install -g firebase-tools
 ```
+Also before anything else ensure to install all the current dependencies:
 
 ---
 
@@ -108,11 +113,12 @@ firebase login
 
 ### 5. (Optional) Set the Firebase Project
 
-If you are working on a different Firebase project or haven't linked one yet:
+Please ensure the correct project is selected, use the wsu-px projec:
 
 ```bash
 firebase use --add
 ```
+If asked for an alias just type default and hit enter.
 
 ---
 
@@ -138,7 +144,7 @@ Follow the steps below to build the front-end and deploy it to Firebase Hosting.
 
 ### 1. Install Firebase CLI
 
-If you haven’t already, install the Firebase CLI globally:
+If you haven’t already, install the Firebase CLI  and node.js globally:
 
 ```bash
 npm install -g firebase-tools
@@ -154,8 +160,12 @@ If you haven’t linked the Firebase project yet:
 firebase login
 firebase use --add
 ```
+If asked for an alias just type default and hit enter.
 
-Select the appropriate Firebase project from the list or paste the project ID when prompted.
+Select the appropriate Firebase project from the list (wsu-px).
+
+Also ensure when in the root of the project (the folder "FINAL-SYSTEM-PA2511") to install all the required modules.
+```npm install```
 
 ---
 
@@ -214,7 +224,7 @@ If you encounter issues:
 1. Make sure Docker is running
 2. Try rebuilding the container:
    ```bash
-   docker-compose down
+   docker-compose down -v
    docker-compose up --build
    ```
 3. Check the logs:
