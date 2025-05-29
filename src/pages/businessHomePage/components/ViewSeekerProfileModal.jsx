@@ -41,7 +41,9 @@ const ViewSeekerProfileModal = ({ isOpen, onClose, seekerData }) => {
         childProtection = false,
         childProtectionExpiry = 'N/A',
         firstAid = false,
-        firstAidExpiry = 'N/A'
+        firstAidExpiry = 'N/A',
+        wwcc = false,
+        wwccExpiry = 'N/A'
     } = nestedCertifications;
 
     //Handles the tab on click
@@ -53,6 +55,30 @@ const ViewSeekerProfileModal = ({ isOpen, onClose, seekerData }) => {
     const formatBoolean = (value) => {
         return value ? "Yes" : "No";
     }
+
+    // Function to render certification with nice styling
+    const renderCertification = (name, hasIt, expiry) => {
+        return (
+            <div className={`p-3 rounded-lg border ${hasIt ? 'bg-green-50 border-green-200' : 'bg-gray-50 border-gray-200'}`}>
+                <div className="flex items-center justify-between">
+                    <div className="flex items-center gap-2">
+                        <div className={`w-2 h-2 rounded-full ${hasIt ? 'bg-green-500' : 'bg-gray-400'}`}></div>
+                        <span className={`font-medium ${hasIt ? 'text-green-800' : 'text-gray-600'}`}>
+                            {name}
+                        </span>
+                        <span className={`text-sm px-2 py-1 rounded-full ${hasIt ? 'bg-green-100 text-green-700' : 'bg-gray-100 text-gray-600'}`}>
+                            {hasIt ? 'Certified' : 'Not Certified'}
+                        </span>
+                    </div>
+                    {hasIt && expiry && expiry !== 'N/A' && (
+                        <span className="text-xs text-green-600">
+                            Expires: {expiry}
+                        </span>
+                    )}
+                </div>
+            </div>
+        );
+    };
 
     return (
 
@@ -152,11 +178,12 @@ const ViewSeekerProfileModal = ({ isOpen, onClose, seekerData }) => {
 
                 {/* Certifications content */}
                 {activeTab === 'certifications' && (
-                    <div className="space-y-4">
-                        <p><strong>Anaphylaxis:</strong>  {formatBoolean(anaphylaxis)} | (Expiry: {anaphylaxisExpiry})</p>
-                        <p><strong>Asthma:</strong> {formatBoolean(asthma)} | (Expiry: {asthmaExpiry})</p>
-                        <p><strong>Child Protection:</strong> {formatBoolean(childProtection)} | (Expiry: {childProtectionExpiry})</p>
-                        <p><strong>First Aid:</strong> {formatBoolean(firstAid)} | (Expiry: {firstAidExpiry})</p>
+                    <div className="space-y-3">
+                        {renderCertification("First Aid", firstAid, firstAidExpiry)}
+                        {renderCertification("Child Protection", childProtection, childProtectionExpiry)}
+                        {renderCertification("Working with Children Check", wwcc, wwccExpiry)}
+                        {renderCertification("Anaphylaxis Management", anaphylaxis, anaphylaxisExpiry)}
+                        {renderCertification("Asthma Management", asthma, asthmaExpiry)}
                     </div>
                 )}
 

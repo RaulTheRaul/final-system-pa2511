@@ -355,10 +355,6 @@ const BusinessDetailPage = () => {
                             <h3 className="text-xl font-semibold text-[#254159] mb-4">Center Details</h3>
 
                             <div className="space-y-3">
-                                <p className="flex items-start">
-                                    <span className="font-medium w-32">Approach:</span>
-                                    <span>{businessInfo.teachingApproach ? businessInfo.teachingApproach.replace(/-/g, ' ').replace(/(^\w{1})|(\s+\w{1})/g, letter => letter.toUpperCase()) : "Not specified"}</span>
-                                </p>
 
                                 <p className="flex items-start">
                                     <span className="font-medium w-32">Capacity:</span>
@@ -366,7 +362,7 @@ const BusinessDetailPage = () => {
                                 </p>
 
                                 <p className="flex items-start">
-                                    <span className="font-medium w-32">Ratio:</span>
+                                    <span className="font-medium w-32">Staff Ratios Provided:</span>
                                     <span>{businessInfo.staffToChildRatio || "Not specified"}</span>
                                 </p>
 
@@ -382,7 +378,7 @@ const BusinessDetailPage = () => {
                                 <div className="text-gray-700 whitespace-pre-line">
                                     {businessInfo.centreDescription}
                                 </div>
-                                
+
                                 <hr className="my-6" />
 
                                 {/* Staff Benefits Section */}

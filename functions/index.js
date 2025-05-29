@@ -117,8 +117,8 @@ exports.createCheckoutSession = onCall(STRIPE_SECRETS, async (request) => {
 
     // Read App URL from regular env var (set via `config:set app.url=...` or hardcoded fallback)  
     const appBaseUrl = process.env.APP_URL || 'https://wsu-px.web.app'; // Use configured or default   #######!!!!! CHANGE ONCE DEPLOYED !!!! ########
-    const successUrl = `${appBaseUrl}/token-management`;
-    const cancelUrl = `${appBaseUrl}/token-management`;
+    const successUrl = `${appBaseUrl}/business/tokens`;
+    const cancelUrl = `${appBaseUrl}/business/tokens`;
     logger.log(`[createCheckoutSession Func] Using Success URL: ${successUrl}, Cancel URL: ${cancelUrl}`);
     //###### End URLs ######
 

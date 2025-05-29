@@ -160,10 +160,10 @@ const JobseekerSetup = () => {
 
     return (
         <div className="min-h-screen bg-[#f2ece4] p-4 md:p-8">
-            <div className="max-w-2xl mx-auto bg-[#f2ece4] rounded-lg shadow-md p-6 md:p-8">
-                <h1 className="text-2xl font-bold text-[#254159] mb-6">Complete Your Profile</h1>
+            <div className="max-w-2xl mx-auto bg-[#ffffff] rounded-lg shadow-md p-6 md:p-8">
+                <h1 className="text-2xl font-bold text-[#254159] mb-6">Basic Profile Setup</h1>
                 <p className="text-gray-600 mb-6">
-                    Please fill in these basic details, you can change them later in the user profile.
+                    Please fill in these basic details, you can change them later in the user profile and add further information.
                 </p>
                 {error && (
                     <div className="bg-red-50 text-red-600 p-4 rounded-md mb-6">

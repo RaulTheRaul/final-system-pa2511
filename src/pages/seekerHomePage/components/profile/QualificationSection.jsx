@@ -203,6 +203,37 @@ const QualificationSection = ({ formData, handleChange, handleCheckboxChange }) 
                             </div>
                         )}
                     </div>
+                    <div className="border p-3 rounded-md">
+                        <div className="flex items-center mb-2">
+                            <input
+                                id="wwcc"
+                                name="wwcc"
+                                type="checkbox"
+                                checked={formData.wwcc}
+                                onChange={handleCheckboxChange}
+                                className="h-4 w-4 text-blue-600 focus:ring-[#f2be5c] border-gray-300 rounded"
+                            />
+                            <label htmlFor="wwcc" className="ml-2 block text-sm font-medium text-gray-700">
+                                Working with Children Check
+                            </label>
+                        </div>
+
+                        {formData.wwcc && (
+                            <div>
+                                <label htmlFor="wwccExpiry" className="block text-xs text-gray-700 mb-1">
+                                    Expiry Date
+                                </label>
+                                <input
+                                    id="wwccExpiry"
+                                    name="wwccExpiry"
+                                    type="date"
+                                    value={formData.wwccExpiry}
+                                    onChange={handleChange}
+                                    className="w-full px-2 py-1 text-sm border border-gray-300 rounded-md focus:outline-none focus:ring-[#f2be5c] focus:border-[#f2be5c]"
+                                />
+                            </div>
+                        )}
+                    </div>
                 </div>
 
 

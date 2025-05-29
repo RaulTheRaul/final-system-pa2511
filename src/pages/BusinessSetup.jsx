@@ -22,9 +22,7 @@ const BusinessSetup = () => {
         // Centre details
         operatingHours: userData?.businessInformation?.operatingHours || "",
         acecqaRating: userData?.businessInformation?.acecqaRating || "",
-        teachingApproach: userData?.businessInformation?.teachingApproach || "play-based",
         centreCapacity: userData?.businessInformation?.centreCapacity || "",
-        roomCount: userData?.businessInformation?.roomCount || "",
         staffToChildRatio: userData?.businessInformation?.staffToChildRatio || "",
         staffBenefits: Array.isArray(userData?.businessInformation?.staffBenefits)
             ? userData?.businessInformation?.staffBenefits.join(", ")
@@ -77,11 +75,9 @@ const BusinessSetup = () => {
                 // Centre details with appropriate types
                 operatingHours: formData.operatingHours,
                 acecqaRating: formData.acecqaRating,
-                teachingApproach: formData.teachingApproach,
 
                 // Convert string numbers to actual number type
                 centreCapacity: formData.centreCapacity ? Number(formData.centreCapacity) : null,
-                roomCount: formData.roomCount ? Number(formData.roomCount) : null,
 
                 staffToChildRatio: formData.staffToChildRatio,
 
@@ -121,7 +117,7 @@ const BusinessSetup = () => {
 
     return (
         <div className="min-h-screen bg-[#f2ece4] p-4 md:p-8">
-            <div className="max-w-2xl mx-auto bg-[#f2ece4] rounded-lg shadow-md p-6 md:p-8">
+            <div className="max-w-2xl mx-auto bg-[#ffffff] rounded-lg shadow-md p-6 md:p-8">
                 <h1 className="text-2xl font-bold text-[#254159] mb-6">Complete Your Centre Profile</h1>
                 <p className="text-gray-600 mb-6">
                     Before you can access the platform, please provide some important information about your centre.
@@ -273,26 +269,6 @@ const BusinessSetup = () => {
                                 Workplace Details
                             </h2>
                             <div className="space-y-4">
-                                <div>
-                                    <label htmlFor="teachingApproach" className="block text-sm font-medium text-[#0d1826] mb-1">
-                                        Teaching Approach
-                                    </label>
-                                    <select
-                                        id="teachingApproach"
-                                        name="teachingApproach"
-                                        value={formData.teachingApproach}
-                                        onChange={handleChange}
-                                        className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-[#f2be5c] focus:border-[#f2be5c]"
-                                    >
-                                        <option value="play-based">Play-Based Learning</option>
-                                        <option value="reggio-emilia">Reggio Emilia</option>
-                                        <option value="montessori">Montessori</option>
-                                        <option value="steiner">Steiner/Waldorf</option>
-                                        <option value="eylf">Early Years Learning Framework</option>
-                                        <option value="multiple">Multiple Approaches</option>
-                                        <option value="other">Other</option>
-                                    </select>
-                                </div>
 
                                 <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                                     <div>
@@ -310,35 +286,27 @@ const BusinessSetup = () => {
                                         />
                                     </div>
 
-                                    <div>
-                                        <label htmlFor="roomCount" className="block text-sm font-medium text-[#0d1826] mb-1">
-                                            Number of Rooms
-                                        </label>
-                                        <input
-                                            id="roomCount"
-                                            name="roomCount"
-                                            type="number"
-                                            min="0"
-                                            value={formData.roomCount}
-                                            onChange={handleChange}
-                                            className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-[#f2be5c] focus:border-[#f2be5c]"
-                                        />
-                                    </div>
                                 </div>
 
-                                <div>
-                                    <label htmlFor="staffToChildRatio" className="block text-sm font-medium text-[#0d1826] mb-1">
-                                        Staff-to-Child Ratios
+                                <div>{/*Input to get staff to child ratio*/}
+                                    <label htmlFor="staffToChildRatio" className="block text-sm font-medium text-gray-700 mb-2">
+                                        Staff to Child Ratios Provided
                                     </label>
-                                    <input
+                                    <select
                                         id="staffToChildRatio"
                                         name="staffToChildRatio"
-                                        type="text"
                                         value={formData.staffToChildRatio}
                                         onChange={handleChange}
-                                        placeholder="e.g., 1:4 for infants, 1:5 for toddlers"
                                         className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-[#f2be5c] focus:border-[#f2be5c]"
-                                    />
+                                    >
+                                        <option value="">Select ratio standard</option>
+                                        <option value="meeting-regulated">Meeting Regulated Ratios</option>
+                                        <option value="above-regulated">Above Regulated Ratios</option>
+                                        <option value="enhanced">Enhanced Ratios (Better than required)</option>
+                                    </select>
+                                    <p className="text-xs text-gray-500 mt-1">
+                                        Australian childcare regulations require specific staff-to-child ratios by age group
+                                    </p>
                                 </div>
 
                                 <div>

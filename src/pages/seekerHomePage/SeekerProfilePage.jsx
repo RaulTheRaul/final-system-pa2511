@@ -307,6 +307,17 @@ const SeekerProfilePage = () => {
                                 <div className="space-y-3">
                                     {jobseekerInfo.certifications ? (
                                         <>
+                                            {jobseekerInfo.certifications.wwcc && (
+                                                <div className="flex items-center justify-between p-3 bg-green-50 rounded-lg border border-green-200">
+                                                    <div className="flex items-center gap-2">
+                                                        <div className="w-2 h-2 bg-green-500 rounded-full"></div>
+                                                        <span className="text-green-800 font-medium">Working With Children Check</span>
+                                                    </div>
+                                                    {jobseekerInfo.certifications.wwccExpiry && (
+                                                        <span className="text-xs text-green-600">Expires: {jobseekerInfo.certifications.wwccExpiry}</span>
+                                                    )}
+                                                </div>
+                                            )}
                                             {jobseekerInfo.certifications.firstAid && (
                                                 <div className="flex items-center justify-between p-3 bg-green-50 rounded-lg border border-green-200">
                                                     <div className="flex items-center gap-2">

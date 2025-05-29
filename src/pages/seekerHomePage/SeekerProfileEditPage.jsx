@@ -50,6 +50,8 @@ const SeekerProfileEditPage = () => {
         anaphylaxisExpiry: "",
         asthma: false,
         asthmaExpiry: "",
+        wwcc: false,
+        wwccExpiry: "",
 
         //Additional qualifications
         additionalCourses: "",
@@ -98,6 +100,8 @@ const SeekerProfileEditPage = () => {
                 anaphylaxisExpiry: jobseekerInfo.certifications?.anaphylaxisExpiry || "",
                 asthma: jobseekerInfo.certifications?.asthma || false,
                 asthmaExpiry: jobseekerInfo.certifications?.asthmaExpiry || "",
+                wwcc: jobseekerInfo.certifications?.wwcc || false,
+                wwccExpiry: jobseekerInfo.certifications?.wwccExpiry || "",
 
                 //Additional qualifications
                 additionalCourses: Array.isArray(jobseekerInfo.additionalCourses)
@@ -271,6 +275,8 @@ const SeekerProfileEditPage = () => {
                     anaphylaxisExpiry: formData.anaphylaxisExpiry,
                     asthma: formData.asthma,
                     asthmaExpiry: formData.asthmaExpiry,
+                    wwcc: formData.wwcc,
+                    wwccExpiry: formData.wwccExpiry,
                 },
 
                 // Additional qualifications
