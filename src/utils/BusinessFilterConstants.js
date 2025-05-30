@@ -23,7 +23,7 @@ export const EDUCATION_LEVEL_OPTIONS = [
 ];
 
 export const LOCATION_OPTIONS = [
-    { value: 'any', label: 'Any Location' },
+   // { value: 'any', label: 'Any Location' },
    // { value: 'Sydney, NSW', label: 'Sydney, NSW' },
    // { value: 'Melbourne, VIC', label: 'Melbourne, VIC' },
    // { value: 'Brisbane, QLD', label: 'Brisbane, QLD' },

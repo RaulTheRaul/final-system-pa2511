@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import { 
     AVAILABILITY_OPTIONS,                       //part time, casual
     EDUCATION_LEVEL_OPTIONS,                     //diploma, bachelor
-    LOCATION_OPTIONS,
+    //LOCATION_OPTIONS,                            //location options but disabled for now. And can be implemented in the future
     PREFERRED_ROLE_OPTIONS,                      //educator, room leader
     SHIFT_PREFERENCE_OPTIONS                       //morning, afternoon
  } from "../../../utils/BusinessFilterConstants";
@@ -12,7 +12,7 @@ const SearchFilterModal = ({isOpen, onClose, onApplyFilters, initialFilters}) =>
     //variables with use state containing default value 
     const [selectedAvailability, setSelectedAvailability] = useState(initialFilters.availability || "N/A");
     const [selectedEducation, setSelectedEducation] = useState(initialFilters.educationLevel || "N/A");
-    const [selectedLocation, setSelectedLocation] = useState(initialFilters.location || "N/A");
+    //const [selectedLocation, setSelectedLocation] = useState(initialFilters.location || "N/A");                    //unuseable for now, can be used in future
     const [selectedRole, setSelectedRole] = useState(initialFilters.preferredRole || "N/A");
     const [selectedShift, setSelectedShift] = useState(initialFilters.shiftPreference || "N/A");
     
@@ -20,7 +20,7 @@ const SearchFilterModal = ({isOpen, onClose, onApplyFilters, initialFilters}) =>
     useEffect(() => {
         setSelectedAvailability(initialFilters.availability || "N/A");
         setSelectedEducation(initialFilters.educationLevel || "N/A");
-        setSelectedLocation(initialFilters.location || "N/A");
+        //setSelectedLocation(initialFilters.location || "N/A");
         setSelectedRole(initialFilters.preferredRole || "N/A");
         setSelectedShift(initialFilters.shiftPreference || "N/A");
     }, [initialFilters]);
@@ -34,7 +34,7 @@ const SearchFilterModal = ({isOpen, onClose, onApplyFilters, initialFilters}) =>
         const filters = {
             availability: selectedAvailability === "N/A" ? null : selectedAvailability,
             educationLevel: selectedEducation === "N/A" ? null : selectedEducation,
-            location: selectedLocation === "N/A" ? null : selectedLocation,
+            //location: selectedLocation === "N/A" ? null : selectedLocation,
             preferredRole: selectedRole === "N/A" ? null : selectedRole,
             shiftPreference: selectedShift === "N/A" ? null : selectedShift,
         };
@@ -46,7 +46,7 @@ const SearchFilterModal = ({isOpen, onClose, onApplyFilters, initialFilters}) =>
     const handleClearSelection = () => {
         setSelectedAvailability("N/A");
         setSelectedEducation("N/A");
-        setSelectedLocation("N/A");
+        //setSelectedLocation("N/A");
         setSelectedRole("N/A");
         setSelectedShift("N/A");
         onApplyFilters({ 
@@ -101,7 +101,7 @@ return (
                 </select>
             </div>
 
-            {/* Location Filter */}
+            {/* Location Filter 
             <div>
                 <label htmlFor="location" className="block text-sm font-medium text-gray-700 mb-1">
                     Location:
@@ -112,7 +112,7 @@ return (
                     onChange={(e) => setSelectedLocation(e.target.value)} //when user selects, retrieve new value
                     className="mt-1 block w-full pl-3 pr-10 py-2 text-base border-2 border-gray-400 focus:outline-none focus:ring-[#26425A] focus:border-[#26425A] sm:text-sm rounded-md"
                     >
-                    {/* Create drop down items */}
+                    
                     {LOCATION_OPTIONS.map((option) => (
                         <option
                             key={option.value} 
@@ -123,8 +123,8 @@ return (
                         </option>
                     ))}
                 </select>
-            </div>
-
+            </div>  */}
+           
             {/* Availability Filter */}
             <div>
                 <label htmlFor="availability" className="block text-sm font-medium text-gray-700 mb-1">

@@ -16,9 +16,9 @@ const BusinessRecruitSeeker = () => {
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState("");
     const [selectedProfile, setSelectedProfile] = useState(null);               //store profile data
-    const [revealedSeekerIds, setRevealedSeekerIds] = useState(new Set());         // to store id of already revealed seekers
+    const [revealedSeekerIds, setRevealedSeekerIds] = useState(new Set());      // to store id of already revealed seekers
     const [isFilterOpen, setIsFilterOpen] = useState(false);                    //manage filter modal
-    const [currentFilters, setCurrentFilters] = useState({                        //set default filter options
+    const [currentFilters, setCurrentFilters] = useState({                      //set default filter options
         educationLevel: null,
         location: null,
         availability: null,
@@ -72,13 +72,13 @@ const BusinessRecruitSeeker = () => {
             setLoading(true);
             try {
 
-                const revealedCollection = collection(db, "revealedTest");
-                const q = query(revealedCollection, where("businessId", "==", currentUser.uid));
-                const querySnapshot = await getDocs(q);
+                const revealedCollection = collection(db, "revealedTest");                              //query into the revealedTest collection
+                const q = query(revealedCollection, where("businessId", "==", currentUser.uid));        //store userId
+                const querySnapshot = await getDocs(q);                                                 //get all documents from query
 
                 //extract job seeker id from each document
                 const ids = new Set(querySnapshot.docs.map(doc => doc.data().jobseekerId));
-                setRevealedSeekerIds(ids);
+                setRevealedSeekerIds(ids);                                                              //store extracted data into a variable
             } catch (error) {
                 //display an error message if failed to fetch seekers
                 console.log('Error fetching job seekers', error);
@@ -103,7 +103,8 @@ const BusinessRecruitSeeker = () => {
             //get base query
             let seekerQuery = query(
                 collection(db, "users"),
-                where("userType", "==", "jobseeker")
+                where("userType", "==", "jobseeker"),
+                where("setupCompleted", "==", true)
             );
 
             //apply the filter if not filter value is not null
@@ -112,11 +113,11 @@ const BusinessRecruitSeeker = () => {
                 seekerQuery = query(seekerQuery, where("jobseekerInformation.educationLevel", "==", currentFilters.educationLevel));
                 console.log("Applying educationLevel filter:", currentFilters.educationLevel);
             }
-            // Location 
+            /* Location 
             if (currentFilters.location) {
                 seekerQuery = query(seekerQuery, where("location", "==", currentFilters.location));
                 console.log("Applying location filter:", currentFilters.location);
-            }
+            }*/
             // Availability
             if (currentFilters.availability) {
                 seekerQuery = query(seekerQuery, where("jobseekerInformation.availability", "==", currentFilters.availability));
@@ -202,15 +203,17 @@ const BusinessRecruitSeeker = () => {
         setSelectedProfile(null);
     }
 
-    //Filter Modal Handles
+    //Handles modal when open
     const handleOpenFilter = () => {
         setIsFilterOpen(true);
     }
 
+    //Handles modal when closes
     const handleCloseFilter = () => {
         setIsFilterOpen(false);
     }
 
+    //This handles the apply filter modal
     const handleApplyFilters = (filters) => {
         console.log("Applying filters:", filters);
         setCurrentFilters(filters);

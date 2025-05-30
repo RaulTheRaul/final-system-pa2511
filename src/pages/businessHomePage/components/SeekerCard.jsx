@@ -14,7 +14,7 @@ const SeekerCard = ({ seekerInfo, onViewProfile, currentlySelectedProfile, onClo
   const [loading, setLoading] = useState(false);
   const [showConfirmation, setShowConfirmation] = useState(false);
   
-  const [allowMessage, setAllowMessage] = useState(false); //for message system
+  //const [allowMessage, setAllowMessage] = useState(false); //for message system
   const { currentUser } = useAuth();
 
   // Initialize Cloud Functions // ADD THESE TWO LINES
@@ -29,6 +29,7 @@ const SeekerCard = ({ seekerInfo, onViewProfile, currentlySelectedProfile, onClo
 
     let unsubscribe;
 
+    //checks if its the current user and selected seeker
     if (currentUser && currentUser.uid && seekerInfo && seekerInfo.id) {
       const q = query(
         collection(db, "revealedTest"),
@@ -36,10 +37,12 @@ const SeekerCard = ({ seekerInfo, onViewProfile, currentlySelectedProfile, onClo
         where("seekerId", "==", seekerInfo.id)
       );
 
+      
       unsubscribe = onSnapshot(q, (snapshot) => {
+        //if the reveal document is found then hide the reveal button else dont reveal document
         if (snapshot.docs.length > 0) {
           setRevealed(true);
-          setShowContact({ email: seekerInfo.email });
+          setShowContact({ email: seekerInfo.email }); //display the job seekers email
         } else {
           setRevealed(false);
           setShowContact(null);
