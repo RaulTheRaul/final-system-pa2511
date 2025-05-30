@@ -24,6 +24,7 @@ const BusinessActivity = () => {
     let unsubscribe = null;
 
     try {
+      //query into the database and sort by reveal time
       const q = query(
         collection(db, "revealedTest"),
         where("businessId", "==", currentUser.uid),
@@ -33,25 +34,28 @@ const BusinessActivity = () => {
       unsubscribe = onSnapshot(
         q,
         async (snapshot) => {
-          const revealWithSeekers = [];
+          const revealWithSeekers = [];                                           //Empy array to store all reveal data
 
-          for (const docSnap of snapshot.docs) {
-            const revealData = docSnap.data();
-            const jobSeekerUID = revealData.seekerId;
+          //Iterate through each document and store relevant data
+          for (const docSnap of snapshot.docs) {                                  
+            const revealData = docSnap.data();                                    //Get content from revealed data
+            const jobSeekerUID = revealData.seekerId;                             //Get seekerId from reveal data
 
             //skips any documents that do not have seekerId
             if (!jobSeekerUID) {
               console.warn("Missing seekerId in reveal data");
               continue;
             }
-
-            const jobSeekerRef = doc(db, "users", jobSeekerUID);
+            
+            const jobSeekerRef = doc(db, "users", jobSeekerUID);                   //create reference of users using jobseekerUID data          
             try {
+              //fetch seeker profile
               const seekerSnap = await getDoc(jobSeekerRef);
 
+              //check if seeker profile exists
               if (seekerSnap.exists()) {
-                const seekerData = seekerSnap.data();
-                revealWithSeekers.push({
+                const seekerData = seekerSnap.data();                             //Get data of that seeker
+                revealWithSeekers.push({                                          //put all their data into an array
                   id: docSnap.id,
                   createdAt: revealData.createdAt?.toDate().toLocaleString(),
                   seeker: seekerData,
@@ -64,6 +68,7 @@ const BusinessActivity = () => {
             }
           }
 
+          //update recent reveals with new data
           setRecentReveal(revealWithSeekers);
         },
         (error) => {
@@ -73,7 +78,7 @@ const BusinessActivity = () => {
     } catch (error) {
       console.error("Error setting up revealed seekers listener:", error);
     }
-
+    
     return () => {
       if (unsubscribe && typeof unsubscribe === 'function') {
         unsubscribe();
@@ -124,6 +129,7 @@ const BusinessActivity = () => {
     };
   }, [currentUser?.uid]);
 
+  //this sets or clears the selected seeker state if the user clicks on view profile
   const handleViewProfile = (revealEvent) => {
     if (selectedSeeker && selectedSeeker.id === revealEvent.id) {
       setSelectedSeeker(null);
@@ -132,6 +138,7 @@ const BusinessActivity = () => {
     }
   };
 
+  //handles the close function when closing the profile
   const handleCloseViewProfile = () => {
     setSelectedSeeker(null);
   };
